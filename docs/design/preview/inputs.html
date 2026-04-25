@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><link rel="stylesheet" href="../ui_kits/website-v2/tokens.css">
+<style>body{padding:20px}.h{font-family:var(--font-mono);font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;padding:0 4px}.f{margin-bottom:18px;padding:0 4px}.lab{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;display:block;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.05em}
+.in{width:100%;padding:12px 14px;font-size:14px;font-family:var(--font-sans);background:var(--bg);border:1.5px solid var(--ink);color:var(--ink);outline:none;border-radius:0}
+.in-f{box-shadow:4px 4px 0 var(--ink);transform:translate(-2px,-2px)}
+.in-e{box-shadow:4px 4px 0 var(--accent);transform:translate(-2px,-2px)}
+.hint{font-size:11px;color:var(--muted);margin-top:6px;font-family:var(--font-mono)}
+.hint-e{color:var(--accent);font-weight:600}
+textarea.in{resize:vertical;min-height:80px}
+hr{border:0;border-top:1.5px solid var(--ink);margin:6px 0}</style>
+</head><body>
+<div class="h">// DEFAULT</div>
+<div class="f"><label class="lab">// 이름</label><input class="in" placeholder="백요한"></div>
+<hr>
+<div class="h">// FOCUS — hard shadow shifts on focus</div>
+<div class="f"><label class="lab">// 이메일</label><input class="in in-f" value="byh3071@gmail.com"><div class="hint">> 포커스 상태 — 보더 + 4px hard shadow + 2px translate</div></div>
+<hr>
+<div class="h">// ERROR — accent shadow</div>
+<div class="f"><label class="lab">// 이메일</label><input class="in in-e" value="잘못된이메일"><div class="hint hint-e">! 올바른 이메일 형식으로 입력해주세요</div></div>
+<hr>
+<div class="h">// TEXTAREA</div>
+<div class="f"><label class="lab">// 메시지</label><textarea class="in" placeholder="안녕하세요. 협업 문의드립니다..."></textarea></div>
+</body></html>

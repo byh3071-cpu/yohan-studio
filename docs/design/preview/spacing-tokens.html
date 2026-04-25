@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../ui_kits/website-v2/tokens.css">
+<style>body{padding:20px}.h{font-family:var(--font-mono);font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}.r{display:flex;align-items:center;gap:12px;margin-bottom:6px}.bar{background:var(--ink);height:10px}.l{font-size:11px;color:var(--muted);font-family:var(--font-mono);min-width:120px}.div{border:0;border-top:1.5px solid var(--ink);margin:18px 0}.bx{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}.box{background:var(--bg);border:1.5px solid var(--ink);width:64px;height:48px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:var(--muted)}</style>
+</head><body>
+<div class="h">// SPACING (4px base)</div>
+<div class="r"><div class="bar" style="width:4px"></div><div class="l">space-1 · 4px</div></div>
+<div class="r"><div class="bar" style="width:8px"></div><div class="l">space-2 · 8px</div></div>
+<div class="r"><div class="bar" style="width:16px"></div><div class="l">space-4 · 16px</div></div>
+<div class="r"><div class="bar" style="width:24px"></div><div class="l">space-6 · 24px (gutter)</div></div>
+<div class="r"><div class="bar" style="width:48px"></div><div class="l">space-12 · 48px</div></div>
+<div class="r"><div class="bar" style="width:96px"></div><div class="l">space-24 · 96px (section)</div></div>
+
+<hr class="div">
+<div class="h">// RADIUS (Phase 1 = 0 — Brutalism)</div>
+<div class="bx">
+<div><div class="box" style="border-radius:0">0</div><div class="l" style="text-align:center;margin-top:4px">none</div></div>
+<div style="opacity:0.35"><div class="box" style="border-radius:8px">8</div><div class="l" style="text-align:center;margin-top:4px">P2 only</div></div>
+</div>
+
+<hr class="div">
+<div class="h">// SHADOWS (Hard offset, no blur)</div>
+<div class="bx">
+<div><div class="box" style="box-shadow:2px 2px 0 var(--ink)">SM</div><div class="l" style="text-align:center;margin-top:4px">2px·2px</div></div>
+<div><div class="box" style="box-shadow:4px 4px 0 var(--ink)">MD</div><div class="l" style="text-align:center;margin-top:4px">4px·4px</div></div>
+<div><div class="box" style="box-shadow:6px 6px 0 var(--ink)">LG</div><div class="l" style="text-align:center;margin-top:4px">6px·6px</div></div>
+</div>
+
+<hr class="div">
+<div class="h">// BORDERS</div>
+<div class="bx">
+<div><div class="box" style="border:1.5px solid var(--ink)">1.5</div><div class="l" style="text-align:center;margin-top:4px">default</div></div>
+<div><div class="box" style="border:1px solid var(--ink)">1</div><div class="l" style="text-align:center;margin-top:4px">tag</div></div>
+<div><div class="box" style="border:1px dashed var(--muted-2)">dash</div><div class="l" style="text-align:center;margin-top:4px">meta-row</div></div>
+</div>
+</body></html>
