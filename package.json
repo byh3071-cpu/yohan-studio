@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "session:context": "node scripts/done-context.mjs",
     "dev": "next dev -p 3050",
     "build": "next build",
     "start": "next start",

@@ -1,0 +1,10 @@
+---
+description: Session handoff with Notion — read CLAUDE.md state, /done, session notes
+alwaysApply: true
+---
+
+# Session handoff (Yohan ↔ Notion)
+
+- **Session start**: Read repo root `CLAUDE.md` — especially `## 현재 상태 (노뚝이 …)` and any `docs/session-notes/YYYY-MM-DD.md` linked there. Treat that as priority context after the user’s message.
+- **Session end**: If the user is wrapping up or says `/done`, follow `CLAUDE.md` `## /done command`: gather **변경 파일** / **커밋** from git via tools (no need for the user to run `npm run session:context`). Then output **only** the `### 📋 세션 요약` block. Do not add a second narrative unless they ask.
+- **Repo hygiene**: Do not bulk-edit `## 현재 상태 (노뚝이)` or append session logs unless the user explicitly pastes updated text or asks to update those files. Human confirms Notion-side summaries before `CLAUDE.md` changes.
