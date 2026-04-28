@@ -13,6 +13,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yohan.studio"
 
+const GSC_GOOGLE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GSC_VERIFICATION?.trim() ||
+  "bq-eC8RKrpFaxv600G7KAk16rcAvXtKdD872ANYNeE4"
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -27,9 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
-  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
-    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
-    : {}),
+  verification: { google: GSC_GOOGLE_VERIFICATION },
 }
 
 export default function RootLayout({
