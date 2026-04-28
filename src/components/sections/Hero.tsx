@@ -162,7 +162,7 @@ export function Hero() {
         </div>
 
         <aside style={meta}>
-          <div style={metaTitle}>// 메타데이터</div>
+          <div style={metaTitle}>{"// 메타데이터"}</div>
           <div style={{ ...metaRow, paddingTop: 0 }}>
             <span style={metaKey}>이름</span>
             <span style={metaVal}>백요한</span>

@@ -47,17 +47,35 @@
   --radius:       0;          /* brutalism: no rounding */
 }
 
-/* Phase 2 placeholder — to be filled later */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #0A0A0A;
+    --surface:   #141414;
+    --surface-2: #1F1F1F;
+    --ink:       #F4F1EA;
+    --ink-2:     #DCD7CB;
+    --muted:     #968D7E;
+    --muted-2:   #6B6357;
+    --border:    #F4F1EA;
+    --shadow:    4px 4px 0 #F4F1EA;
+    --shadow-sm: 2px 2px 0 #F4F1EA;
+    --shadow-lg: 6px 6px 0 #F4F1EA;
+  }
+}
+
+/* Manual dark toggle — overrides @media above */
 [data-theme="dark"] {
-  --bg:           #0A0A0A;
-  --surface:      #141414;
-  --surface-2:    #1F1F1F;
-  --ink:          #F4F1EA;
-  --ink-2:        #DCD7CB;
-  --muted:        #968D7E;
-  --muted-2:      #6B6357;
-  --border:       #F4F1EA;
-  --shadow:       4px 4px 0 #F4F1EA;
+  --bg:        #0A0A0A;
+  --surface:   #141414;
+  --surface-2: #1F1F1F;
+  --ink:       #F4F1EA;
+  --ink-2:     #DCD7CB;
+  --muted:     #968D7E;
+  --muted-2:   #6B6357;
+  --border:    #F4F1EA;
+  --shadow:    4px 4px 0 #F4F1EA;
+  --shadow-sm: 2px 2px 0 #F4F1EA;
+  --shadow-lg: 6px 6px 0 #F4F1EA;
 }
 
 /* ─── RESET ─── */

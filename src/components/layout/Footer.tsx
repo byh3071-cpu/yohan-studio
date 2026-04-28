@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import Link from "next/link"
 
 const footer: CSSProperties = {
   background: "var(--ink)",
@@ -83,22 +84,22 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <div style={colTitle}>// SITE</div>
-            <a href="#hero" style={link}>
+            <div style={colTitle}>{"// SITE"}</div>
+            <Link href="/" style={link}>
               홈
-            </a>
-            <a href="#blog" style={link}>
+            </Link>
+            <Link href="/blog" style={link}>
               블로그
-            </a>
-            <a href="#portfolio" style={link}>
+            </Link>
+            <Link href="/portfolio" style={link}>
               포트폴리오
-            </a>
-            <a href="#store" style={link}>
+            </Link>
+            <Link href="/#store" style={link}>
               스토어
-            </a>
+            </Link>
           </div>
           <div>
-            <div style={colTitle}>// CONNECT</div>
+            <div style={colTitle}>{"// CONNECT"}</div>
             <a href="mailto:byh3071@gmail.com" style={link}>
               byh3071@gmail.com
             </a>
@@ -107,7 +108,7 @@ export function Footer() {
             </a>
           </div>
           <div>
-            <div style={colTitle}>// META</div>
+            <div style={colTitle}>{"// META"}</div>
             <div style={{ ...link, color: "var(--muted-2)" }}>v2.0 · Phase 1</div>
             <div style={{ ...link, color: "var(--muted-2)" }}>2026.04</div>
             <div style={{ ...link, color: "var(--muted-2)" }}>서울 / KR</div>

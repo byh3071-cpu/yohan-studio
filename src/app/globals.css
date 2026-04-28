@@ -5,3 +5,85 @@
 :root {
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
+
+/* MDX article body (v2 tokens) */
+.mdx-content {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+.mdx-content > * + * {
+  margin-top: 1.25em;
+}
+.mdx-content h2,
+.mdx-content h3 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.mdx-content h2 {
+  font-size: 1.65rem;
+  margin-top: 2.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: var(--border-w) solid var(--border);
+}
+.mdx-content h3 {
+  font-size: 1.25rem;
+  margin-top: 1.75rem;
+}
+.mdx-content a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.mdx-content strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.mdx-content ul {
+  padding-left: 1.35em;
+}
+.mdx-content li {
+  margin-top: 0.35em;
+}
+.mdx-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 0 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-style: italic;
+}
+.mdx-content pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+.mdx-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.12em 0.35em;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+}
+.mdx-content pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+}
+.mdx-content hr {
+  border: 0;
+  border-top: var(--border-w) solid var(--border);
+  margin: 2.5rem 0;
+}

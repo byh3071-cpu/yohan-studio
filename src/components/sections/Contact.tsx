@@ -117,7 +117,7 @@ export function Contact() {
   return (
     <section id="contact" style={section}>
       <div style={inner}>
-        <div style={eyebrow}>// 06 — contact</div>
+        <div style={eyebrow}>{"// 06 — contact"}</div>
         <h2 style={title}>
           연락하기<span style={accent}>.</span>
         </h2>
@@ -142,7 +142,7 @@ export function Contact() {
                 marginBottom: "6px",
               }}
             >
-              // MESSAGE SENT
+              {"// MESSAGE SENT"}
             </div>
             <div style={{ fontSize: "18px", fontWeight: 800 }}>메일 앱이 열렸다. 빠르게 답장할게.</div>
           </div>
@@ -150,7 +150,7 @@ export function Contact() {
           <form onSubmit={onSubmit}>
             <div style={fld}>
               <label style={lab} htmlFor="contact-name">
-                // 이름
+                {"// 이름"}
               </label>
               <input
                 id="contact-name"
@@ -165,7 +165,7 @@ export function Contact() {
             </div>
             <div style={fld}>
               <label style={lab} htmlFor="contact-email">
-                // 이메일
+                {"// 이메일"}
               </label>
               <input
                 id="contact-email"
@@ -180,7 +180,7 @@ export function Contact() {
             </div>
             <div style={fld}>
               <label style={lab} htmlFor="contact-message">
-                // 메시지
+                {"// 메시지"}
               </label>
               <textarea
                 id="contact-message"

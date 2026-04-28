@@ -143,7 +143,7 @@ export function Portfolio() {
       <div style={inner}>
         <div style={head}>
           <div>
-            <div style={eyebrow}>// 02 — 만든 것들</div>
+            <div style={eyebrow}>{"// 02 — 만든 것들"}</div>
             <h2 style={title}>
               포트폴리오<span style={accentMark}>.</span>
             </h2>

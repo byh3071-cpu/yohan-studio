@@ -1,0 +1,33 @@
+---
+title: "MDX 블로그 파이프라인"
+description: "next-mdx-remote RSC와 프론트매터로 정적 글을 렌더링하는 구조를 정리했다."
+date: "2026-04-20"
+tags:
+  - Next.js
+  - MDX
+  - Yohan Studio
+category: "DevLog"
+published: true
+---
+
+## 왜 MDX인가
+
+마크다운에 **컴포넌트**를 섞을 수 있어 문서형 콘텐츠에 적합하다. 이 사이트는 `next-mdx-remote/rsc`로 서버에서만 컴파일한다.
+
+### 체크리스트
+
+- 프론트매터로 메타데이터 분리
+- `published: false`면 목록·URL에서 제외
+- 디자인 토큰 기반 타이포로 본문 스타일 통일
+
+인용은 이렇게 보인다.
+
+> 에디토리얼 톤과 소프트 브루탈리즘을 같이 가져가려면 테두리와 섀도우를 토큰으로만 쓰는 게 낫다.
+
+코드 예시:
+
+```ts
+const slug = "hello-world"
+```
+
+끝.

@@ -93,7 +93,7 @@ export function About() {
   return (
     <section id="about" style={section}>
       <div style={inner}>
-        <div style={eyebrow}>// 05 — about</div>
+        <div style={eyebrow}>{"// 05 — about"}</div>
         <h2 style={title}>
           바리스타에서
           <br />
