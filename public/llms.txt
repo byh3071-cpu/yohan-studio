@@ -1,0 +1,34 @@
+# Yohan Studio
+
+> 백요한의 1인 기업 사이트. 바리스타 출신 바이브코더가 AI와 자동화로 콘텐츠와 제품을 만든다. Phase 1(랜딩 + 포트폴리오) 완료, Phase 2(블로그 + SEO + 디자인 v2) 진행 중.
+
+"바이브코더(vibe coder)"는 코드를 직접 타이핑하기보다 AI 코드 에이전트에게 시키고, 시스템을 설계하고, 결과물을 검증·통합하는 1인 개발 방식이다. 백요한은 카페에서 바리스타로 일하면서 AI 자동화에 빠졌고, 그 흐름이 자연스럽게 1인 기업 시드가 됐다.
+
+## About
+- [Home](https://yohan.studio): 자기소개, 메타데이터, 포트폴리오·블로그 진입
+- [Portfolio](https://yohan.studio/portfolio): 제작물 목록 (Yohan Studio 사이트 자체가 첫 작품)
+- [Design System](https://yohan.studio/design): v1→v2 진화, AI 분업, 로드맵 Phase 1~4
+
+## Blog
+- [Blog Index](https://yohan.studio/blog): 글 목록 + 태그/검색 필터
+- [바이브코딩 2시간 배포](https://yohan.studio/blog/vibe-coding-2hr-deploy): 0에서 Vercel 배포까지 2시간 사례
+- [Hello World](https://yohan.studio/blog/hello-world): 사이트 첫 글
+
+## Person
+- 이름: 백요한 (Yohan Baek)
+- 역할: 바리스타 + 바이브코더 · 1인 기업가
+- 위치: 서울 관악
+- 도구 스택: Claude Code, Codex, Cursor, Next.js, Notion, Vercel, MDX, Tailwind v4
+- 디자인: Editorial × Soft Brutalism (1.5px 보더, 4px hard shadow, 액센트 #FF5C28)
+- 연락: byh3071@gmail.com
+- GitHub: https://github.com/byh3071-cpu
+
+## Phases
+- Phase 1 (완료): 랜딩 + 포트폴리오 + Vercel 배포
+- Phase 2 (진행): MDX 블로그 + SEO/AEO + 다크모드 + 디자인 v2
+- Phase 3 (2026-05-17 ~ 2026-05-30): Supabase + Stripe 결제 + 스토어 + 뉴스레터
+- Phase 4 (2026-05-31 ~ 2026-06-13): n8n 멀티채널 자동 발행
+
+## Optional
+- [Sitemap](https://yohan.studio/sitemap.xml)
+- [Robots](https://yohan.studio/robots.txt)
