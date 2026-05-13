@@ -3,6 +3,14 @@ import path from "path"
 import matter from "gray-matter"
 import { compileMDX } from "next-mdx-remote/rsc"
 import type { ReactElement } from "react"
+import { BlogImage } from "@/components/blog/mdx/BlogImage"
+import { CodeBlock } from "@/components/blog/mdx/CodeBlock"
+
+const mdxComponents = {
+  pre: CodeBlock,
+  CodeBlock,
+  BlogImage,
+}
 
 const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog")
 
@@ -89,6 +97,23 @@ export function getPublishedPosts(): BlogPostMeta[] {
     .sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
+export type AdjacentPosts = {
+  prev: BlogPostMeta | null
+  next: BlogPostMeta | null
+}
+
+// 발행일 기준 내림차순 정렬에서 prev = 더 최근 글, next = 더 오래된 글.
+// 독자가 한 글을 다 읽고 다음으로 자연스럽게 넘어가는 방향(과거 → 미래)을 따라 next는 더 새 글로 잡는다.
+export function getAdjacentPosts(slug: string): AdjacentPosts {
+  const posts = getPublishedPosts()
+  const idx = posts.findIndex((p) => p.slug === slug)
+  if (idx === -1) return { prev: null, next: null }
+  return {
+    next: idx > 0 ? posts[idx - 1] : null,
+    prev: idx < posts.length - 1 ? posts[idx + 1] : null,
+  }
+}
+
 export async function compileBlogPost(slug: string): Promise<{
   meta: BlogPostMeta
   content: ReactElement
@@ -98,6 +123,7 @@ export async function compileBlogPost(slug: string): Promise<{
 
   const { content, frontmatter } = await compileMDX({
     source: raw,
+    components: mdxComponents,
     options: { parseFrontmatter: true },
   })
 

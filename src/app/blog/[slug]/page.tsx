@@ -3,7 +3,9 @@ import type { CSSProperties } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { compileBlogPost, getPublishedPosts, getPostMeta } from "@/lib/blog"
+import { PostNav } from "@/components/blog/PostNav"
+import { TableOfContents } from "@/components/blog/TableOfContents"
+import { compileBlogPost, getAdjacentPosts, getPublishedPosts, getPostMeta } from "@/lib/blog"
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -47,14 +49,15 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!compiled || !compiled.meta.published) notFound()
 
   const { meta, content } = compiled
+  const { prev, next } = getAdjacentPosts(slug)
   const isLocalThumb = meta.thumbnail?.startsWith("/")
 
   const section: CSSProperties = {
     background: "var(--bg)",
     padding: "32px 24px 96px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
-  const inner: CSSProperties = { maxWidth: "720px", margin: "0 auto" }
+  const main: CSSProperties = { minWidth: 0 }
   const back: CSSProperties = {
     display: "inline-block",
     marginBottom: "28px",
@@ -67,7 +70,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const hero: CSSProperties = {
     marginBottom: "40px",
     paddingBottom: "32px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const row: CSSProperties = {
     display: "flex",
@@ -79,14 +82,19 @@ export default async function BlogPostPage({ params }: PageProps) {
     fontSize: "12px",
     fontWeight: 600,
     letterSpacing: "0.05em",
-    color: "var(--muted)",
   }
   const cat: CSSProperties = { color: "var(--accent)", textTransform: "uppercase" }
+  const dateStyle: CSSProperties = {
+    color: "var(--accent)",
+    fontFamily: "var(--font-en)",
+    fontWeight: 500,
+    letterSpacing: "0.04em",
+  }
   const h1: CSSProperties = {
-    fontSize: "clamp(28px, 4vw, 40px)",
+    fontSize: "clamp(36px, 5.5vw, 64px)",
     fontWeight: 800,
     letterSpacing: "-0.03em",
-    lineHeight: 1.15,
+    lineHeight: 1.1,
     marginBottom: "16px",
     color: "var(--ink)",
   }
@@ -106,7 +114,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     fontWeight: 600,
     fontFamily: "var(--font-mono)",
     padding: "4px 10px",
-    border: "1px solid var(--ink)",
+    border: "1px solid var(--line)",
     color: "var(--ink)",
     letterSpacing: "0.03em",
     textTransform: "uppercase",
@@ -115,7 +123,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     marginTop: "28px",
     position: "relative",
     aspectRatio: "16 / 9",
-    border: "var(--border-w) solid var(--ink)",
+    border: "var(--border-w) solid var(--line)",
     boxShadow: "var(--shadow)",
     background: "var(--surface-2)",
     overflow: "hidden",
@@ -137,47 +145,51 @@ export default async function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div style={inner}>
-        <Link href="/blog" style={back}>
-          ← BLOG INDEX
-        </Link>
-        <header style={hero}>
-          <div style={row}>
-            <span style={cat}>{meta.category}</span>
-            <span>{meta.date}</span>
-          </div>
-          <h1 style={h1}>{meta.title}</h1>
-          <p style={desc}>{meta.description}</p>
-          <div style={tagsRow}>
-            {meta.tags.map((t) => (
-              <span key={t} style={tag}>
-                {t}
-              </span>
-            ))}
-          </div>
-          {meta.thumbnail && isLocalThumb ? (
-            <div style={thumbWrap}>
-              <Image
-                src={meta.thumbnail}
-                alt=""
-                fill
-                sizes="(max-width: 800px) 100vw, 720px"
-                style={{ objectFit: "cover" }}
-                priority
-              />
+      <div className="post-shell">
+        <div style={main}>
+          <Link href="/blog" style={back}>
+            ← BLOG INDEX
+          </Link>
+          <header style={hero}>
+            <div style={row}>
+              <span style={cat}>{meta.category}</span>
+              <span style={dateStyle}>{meta.date}</span>
             </div>
-          ) : meta.thumbnail && !isLocalThumb ? (
-            <div style={thumbWrap}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail URL */}
-              <img
-                src={meta.thumbnail}
-                alt=""
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              />
+            <h1 style={h1}>{meta.title}</h1>
+            <p style={desc}>{meta.description}</p>
+            <div style={tagsRow}>
+              {meta.tags.map((t) => (
+                <span key={t} style={tag}>
+                  {t}
+                </span>
+              ))}
             </div>
-          ) : null}
-        </header>
-        <div className="mdx-content">{content}</div>
+            {meta.thumbnail && isLocalThumb ? (
+              <div style={thumbWrap}>
+                <Image
+                  src={meta.thumbnail}
+                  alt=""
+                  fill
+                  sizes="(max-width: 800px) 100vw, 680px"
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              </div>
+            ) : meta.thumbnail && !isLocalThumb ? (
+              <div style={thumbWrap}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail URL */}
+                <img
+                  src={meta.thumbnail}
+                  alt=""
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+              </div>
+            ) : null}
+          </header>
+          <div className="mdx-content">{content}</div>
+          <PostNav prev={prev} next={next} />
+        </div>
+        <TableOfContents />
       </div>
     </article>
   )

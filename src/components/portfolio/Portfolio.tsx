@@ -8,10 +8,12 @@ function PortfolioCard({
   desc,
   tags,
   year,
+  github,
+  demo,
 }: PortfolioProject & { idx: number }) {
   const card: CSSProperties = {
     background: "var(--bg)",
-    border: "var(--border-w) solid var(--ink)",
+    border: "var(--border-w) solid var(--line)",
     boxShadow: "var(--shadow)",
     padding: "20px 22px 22px",
     display: "flex",
@@ -24,19 +26,19 @@ function PortfolioCard({
     justifyContent: "space-between",
     alignItems: "baseline",
     paddingBottom: "12px",
-    borderBottom: "1px solid var(--ink)",
+    borderBottom: "1px solid var(--line)",
   }
   const num: CSSProperties = {
-    fontFamily: "var(--font-mono)",
+    fontFamily: "var(--font-en)",
     fontSize: "12px",
-    fontWeight: 600,
+    fontWeight: 400,
     color: "var(--muted)",
     letterSpacing: "0.05em",
   }
   const yr: CSSProperties = {
-    fontFamily: "var(--font-mono)",
+    fontFamily: "var(--font-en)",
     fontSize: "12px",
-    fontWeight: 600,
+    fontWeight: 500,
     color: "var(--accent)",
     letterSpacing: "0.05em",
   }
@@ -65,9 +67,24 @@ function PortfolioCard({
     fontWeight: 600,
     fontFamily: "var(--font-mono)",
     padding: "3px 8px",
-    border: "1px solid var(--ink)",
+    border: "1px solid var(--line)",
     color: "var(--ink)",
     letterSpacing: "0.03em",
+    textTransform: "uppercase",
+  }
+  const linksRow: CSSProperties = {
+    display: "flex",
+    gap: "10px",
+    marginTop: "12px",
+    paddingTop: "12px",
+    borderTop: "1px solid var(--line)",
+  }
+  const linkStyle: CSSProperties = {
+    fontFamily: "var(--font-mono)",
+    fontSize: "11px",
+    fontWeight: 700,
+    color: "var(--accent)",
+    letterSpacing: "0.05em",
     textTransform: "uppercase",
   }
 
@@ -86,6 +103,20 @@ function PortfolioCard({
           </span>
         ))}
       </div>
+      {(github || demo) && (
+        <div style={linksRow}>
+          {github && (
+            <a href={github} target="_blank" rel="noreferrer noopener" style={linkStyle}>
+              GitHub →
+            </a>
+          )}
+          {demo && (
+            <a href={demo} target="_blank" rel="noreferrer noopener" style={linkStyle}>
+              Live →
+            </a>
+          )}
+        </div>
+      )}
     </article>
   )
 }
@@ -94,7 +125,7 @@ export function Portfolio() {
   const section: CSSProperties = {
     background: "var(--surface)",
     padding: "96px 24px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const inner: CSSProperties = { maxWidth: "var(--max-w)", margin: "0 auto" }
   const head: CSSProperties = {
@@ -104,7 +135,7 @@ export function Portfolio() {
     gap: "20px",
     paddingBottom: "32px",
     marginBottom: "40px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const eyebrow: CSSProperties = {
     fontFamily: "var(--font-mono)",
@@ -124,13 +155,14 @@ export function Portfolio() {
   }
   const accentMark: CSSProperties = { color: "var(--accent)" }
   const count: CSSProperties = {
-    fontFamily: "var(--font-mono)",
+    fontFamily: "var(--font-en)",
     fontSize: "13px",
-    fontWeight: 600,
+    fontWeight: 500,
     color: "var(--ink)",
-    border: "1.5px solid var(--ink)",
+    border: "1.5px solid var(--line)",
     padding: "8px 14px",
     background: "var(--bg)",
+    letterSpacing: "0.04em",
   }
   const grid: CSSProperties = {
     display: "grid",

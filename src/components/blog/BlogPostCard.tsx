@@ -11,7 +11,7 @@ type BlogPostCardProps = {
 export function BlogPostCard({ post, index }: BlogPostCardProps) {
   const card: CSSProperties = {
     background: "var(--bg)",
-    border: "var(--border-w) solid var(--ink)",
+    border: "var(--border-w) solid var(--line)",
     boxShadow: "var(--shadow)",
     display: "flex",
     flexDirection: "column",
@@ -21,7 +21,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
   const thumb: CSSProperties = {
     height: "160px",
     background: "var(--surface-2)",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
     position: "relative",
     display: "flex",
     alignItems: "center",
@@ -38,9 +38,10 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     top: "10px",
     left: "12px",
     fontSize: "11px",
-    fontWeight: 600,
-    fontFamily: "var(--font-mono)",
+    fontWeight: 500,
+    fontFamily: "var(--font-en)",
     color: "var(--muted)",
+    letterSpacing: "0.04em",
   }
   const body: CSSProperties = {
     padding: "20px 22px 22px",
@@ -54,7 +55,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     justifyContent: "space-between",
     alignItems: "baseline",
     paddingBottom: "12px",
-    borderBottom: "1px solid var(--ink)",
+    borderBottom: "1px solid var(--line)",
   }
   const cat: CSSProperties = {
     fontFamily: "var(--font-mono)",
@@ -96,7 +97,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     fontWeight: 600,
     fontFamily: "var(--font-mono)",
     padding: "3px 8px",
-    border: "1px solid var(--ink)",
+    border: "1px solid var(--line)",
     color: "var(--ink)",
     letterSpacing: "0.03em",
     textTransform: "uppercase",
@@ -124,6 +125,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
               alt=""
               fill
               sizes="(max-width: 768px) 100vw, 400px"
+              priority={index === 1}
               style={{ objectFit: "cover" }}
             />
           ) : post.thumbnail && !isLocalThumb ? (

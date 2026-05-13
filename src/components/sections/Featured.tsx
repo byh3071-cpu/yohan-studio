@@ -8,7 +8,7 @@ import { BlogCard } from "@/components/blog/BlogCard"
 function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number }) {
   const card: CSSProperties = {
     background: "var(--bg)",
-    border: "var(--border-w) solid var(--ink)",
+    border: "var(--border-w) solid var(--line)",
     boxShadow: "var(--shadow)",
     display: "flex",
     flexDirection: "column",
@@ -16,7 +16,7 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
   const thumb: CSSProperties = {
     height: "140px",
     background: "var(--surface-2)",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -33,8 +33,8 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
     top: "10px",
     left: "12px",
     fontSize: "11px",
-    fontWeight: 600,
-    fontFamily: "var(--font-mono)",
+    fontWeight: 400,
+    fontFamily: "var(--font-en)",
     color: "var(--muted)",
   }
   const body: CSSProperties = { padding: "20px 22px 22px" }
@@ -57,7 +57,7 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: "14px",
-    borderTop: "1px solid var(--ink)",
+    borderTop: "1px solid var(--line)",
   }
   const prc: CSSProperties = {
     fontSize: "20px",
@@ -65,14 +65,14 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
     color: "var(--ink)",
     letterSpacing: "-0.02em",
   }
-  const cta: CSSProperties = {
+  const badge: CSSProperties = {
     fontSize: "12px",
     fontWeight: 700,
     fontFamily: "var(--font-mono)",
     padding: "6px 12px",
-    background: "var(--accent)",
-    color: "var(--accent-ink)",
-    border: "1px solid var(--ink)",
+    background: "var(--surface-2)",
+    color: "var(--muted)",
+    border: "1px solid var(--line)",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
   }
@@ -87,7 +87,7 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
         <p style={dsc}>{desc}</p>
         <div style={row}>
           <span style={prc}>{price}</span>
-          <span style={cta}>BUY →</span>
+          <span style={badge} aria-label="판매 준비 중">준비 중</span>
         </div>
       </div>
     </article>
@@ -107,7 +107,7 @@ export function Featured() {
   const sectionStyle: CSSProperties = {
     background: "var(--bg)",
     padding: "96px 24px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const inner: CSSProperties = { maxWidth: "var(--max-w)", margin: "0 auto" }
   const block: CSSProperties = { marginBottom: "80px" }
@@ -119,7 +119,7 @@ export function Featured() {
     gap: "20px",
     paddingBottom: "24px",
     marginBottom: "32px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const eyebrow: CSSProperties = {
     fontFamily: "var(--font-mono)",
@@ -143,7 +143,7 @@ export function Featured() {
     fontSize: "12px",
     fontWeight: 700,
     padding: "8px 14px",
-    border: "1.5px solid var(--ink)",
+    border: "1.5px solid var(--line)",
     background: "var(--bg)",
     color: "var(--ink)",
     letterSpacing: "0.05em",
@@ -186,9 +186,12 @@ export function Featured() {
                 스토어<span style={accentMark}>.</span>
               </h2>
             </div>
-            <a href="#" style={more}>
-              모두 보기 →
-            </a>
+            <span
+              style={{ ...more, color: "var(--muted)", cursor: "default" }}
+              aria-label="스토어는 Phase 3 오픈 예정"
+            >
+              Phase 3 오픈 예정
+            </span>
           </div>
           <div style={grid}>
             {featuredProducts.map((p, i) => (

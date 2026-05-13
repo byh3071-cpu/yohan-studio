@@ -249,6 +249,48 @@ button {
   border-top: var(--border-w) solid var(--line);
 }
 
+/* Header nav — desktop inline, mobile hamburger panel (≤768px). */
+.site-header-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.nav-hamburger {
+  display: none;
+}
+@media (max-width: 768px) {
+  .nav-hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .site-header-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: var(--border-w) solid var(--line);
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px var(--gutter);
+    gap: 6px;
+  }
+  .site-header-nav.is-open {
+    display: flex;
+  }
+  .site-header-nav .nav-cta {
+    margin-top: 8px;
+    justify-content: center;
+  }
+}
+
 /* Editorial marquee — duplicate content twice for seamless loop, translate -50%. */
 @keyframes marquee {
   from {
@@ -291,6 +333,12 @@ button {
 }
 .mdx-content > * + * {
   margin-top: 1.25em;
+}
+/* Lead — 본문 첫 단락만 살짝 크게 잡아 hero에서 본문으로 자연스럽게 흐르게. */
+.mdx-content > p:first-of-type {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--ink);
 }
 .mdx-content h2,
 .mdx-content h3 {
@@ -419,6 +467,13 @@ button {
   transform: translate(-2px, -2px);
   box-shadow: var(--shadow);
 }
+
+/* Prev/Next 네비 카드 — 본문 끝. .post-card와 동일한 hover lift 재사용. */
+.post-nav-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow);
+}
+
 @media (max-width: 720px) {
   .post-card {
     grid-template-columns: 1fr !important;
@@ -431,8 +486,10 @@ button {
   .hero-meta {
     order: -1;
   }
-  /* Header: drop non-essential nav links, only CTA + ThemeToggle remain. */
-  .site-header-nav a:not(:last-of-type) {
-    display: none;
+}
+
+@media (max-width: 640px) {
+  .post-nav {
+    grid-template-columns: 1fr !important;
   }
 }

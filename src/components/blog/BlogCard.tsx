@@ -7,7 +7,7 @@ type Props = FeaturedBlog & { idx: number; slug?: string }
 export function BlogCard({ idx, date, title, excerpt, tags, slug }: Props) {
   const card: CSSProperties = {
     background: "var(--bg)",
-    border: "var(--border-w) solid var(--ink)",
+    border: "var(--border-w) solid var(--line)",
     boxShadow: "var(--shadow)",
     padding: "20px 22px 22px",
     display: "flex",
@@ -19,12 +19,12 @@ export function BlogCard({ idx, date, title, excerpt, tags, slug }: Props) {
     justifyContent: "space-between",
     alignItems: "baseline",
     paddingBottom: "12px",
-    borderBottom: "1px solid var(--ink)",
+    borderBottom: "1px solid var(--line)",
   }
   const num: CSSProperties = {
-    fontFamily: "var(--font-mono)",
+    fontFamily: "var(--font-en)",
     fontSize: "12px",
-    fontWeight: 600,
+    fontWeight: 500,
     color: "var(--muted)",
     letterSpacing: "0.05em",
   }
@@ -60,7 +60,7 @@ export function BlogCard({ idx, date, title, excerpt, tags, slug }: Props) {
     fontWeight: 600,
     fontFamily: "var(--font-mono)",
     padding: "3px 8px",
-    border: "1px solid var(--ink)",
+    border: "1px solid var(--line)",
     color: "var(--ink)",
     letterSpacing: "0.03em",
     textTransform: "uppercase",
