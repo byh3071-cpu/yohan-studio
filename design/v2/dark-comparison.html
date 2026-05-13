@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>요한 스튜디오 · 라이트 / 다크 비교</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="../../comparison/design-canvas.jsx"></script>
+<style>
+  body { margin: 0; font-family: 'Pretendard Variable', -apple-system, sans-serif; }
+  .ld-frame { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const Frame = ({ src }) => <iframe className="ld-frame" src={src} title={src}></iframe>;
+
+const App = () => (
+  <DesignCanvas title="요한 스튜디오 v2 · 라이트 / 다크 비교 — 모든 컴포넌트">
+
+    <DCSection id="full" title="Full Landing — 전체 페이지">
+      <DCArtboard id="full-light" label="LIGHT · paper + ink + orange" width={1200} height={3600}>
+        <Frame src="./index.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="full-dark" label="DARK · ink bg + off-white text + orange" width={1200} height={3600}>
+        <Frame src="./index.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="blog-post" title="Blog Post — 본문 페이지 (코드 블록 포함)">
+      <DCArtboard id="post-light" label="LIGHT" width={1080} height={2200}>
+        <Frame src="./blog-post.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="post-dark" label="DARK" width={1080} height={2200}>
+        <Frame src="./blog-post.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="hero" title="Hero — 비대칭 헤드라인 + 메타박스">
+      <DCArtboard id="hero-light" label="LIGHT" width={1200} height={760}>
+        <Frame src="./standalone/hero.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="hero-dark" label="DARK" width={1200} height={760}>
+        <Frame src="./standalone/hero.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="portfolio" title="Portfolio 카드 그리드">
+      <DCArtboard id="port-light" label="LIGHT" width={1200} height={920}>
+        <Frame src="./standalone/portfolio.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="port-dark" label="DARK" width={1200} height={920}>
+        <Frame src="./standalone/portfolio.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="featured" title="블로그 + 스토어 카드">
+      <DCArtboard id="feat-light" label="LIGHT" width={1200} height={1100}>
+        <Frame src="./standalone/featured.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="feat-dark" label="DARK" width={1200} height={1100}>
+        <Frame src="./standalone/featured.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="about" title="About 타임라인">
+      <DCArtboard id="about-light" label="LIGHT" width={1200} height={1100}>
+        <Frame src="./standalone/about.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="about-dark" label="DARK" width={1200} height={1100}>
+        <Frame src="./standalone/about.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="contact" title="Contact 폼">
+      <DCArtboard id="ct-light" label="LIGHT" width={1200} height={900}>
+        <Frame src="./standalone/contact.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="ct-dark" label="DARK" width={1200} height={900}>
+        <Frame src="./standalone/contact.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="header" title="Header / Footer">
+      <DCArtboard id="hd-light" label="HEADER · LIGHT" width={1200} height={120}>
+        <Frame src="./standalone/header.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="hd-dark" label="HEADER · DARK" width={1200} height={120}>
+        <Frame src="./standalone/header.html?theme=dark" />
+      </DCArtboard>
+      <DCArtboard id="ft-light" label="FOOTER · LIGHT (always-inverted)" width={1200} height={340}>
+        <Frame src="./standalone/footer.html?theme=light" />
+      </DCArtboard>
+      <DCArtboard id="ft-dark" label="FOOTER · DARK (deeper black)" width={1200} height={340}>
+        <Frame src="./standalone/footer.html?theme=dark" />
+      </DCArtboard>
+    </DCSection>
+
+  </DesignCanvas>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

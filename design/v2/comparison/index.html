@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>요한 스튜디오 · v1 vs v2 비교</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<style>
+  body { margin: 0; font-family: 'Pretendard Variable', -apple-system, sans-serif; }
+  .ab-frame { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const Frame = ({ src }) => <iframe className="ab-frame" src={src} title={src}></iframe>;
+
+const App = () => (
+  <DesignCanvas title="요한 스튜디오 · A/B 비교 — v1 다크 SaaS vs v2 Editorial Brutalism">
+    <DCSection id="full" title="Full Landing Page — 전체 비교">
+      <DCArtboard id="v1-full" label="v1 · Dark SaaS (Slate + Blue)" width={768} height={2400}>
+        <Frame src="../ui_kits/website/index.html" />
+      </DCArtboard>
+      <DCArtboard id="v2-full" label="v2 · Editorial Brutalism (Off-white + Ink + Orange)" width={1200} height={3600}>
+        <Frame src="../ui_kits/website-v2/index.html" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="hero" title="Hero — 첫인상">
+      <DCArtboard id="v1-hero" label="v1 · 중앙 정렬, 작은 헤드라인" width={768} height={700}>
+        <Frame src="../preview-v1/hero-v1.html" />
+      </DCArtboard>
+      <DCArtboard id="v2-hero" label="v2 · 비대칭, 거대 헤드라인 + 메타박스" width={900} height={700}>
+        <Frame src="../preview/hero.html" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="cards" title="Cards — 블로그/상품/포트폴리오">
+      <DCArtboard id="v1-cards" label="v1 · rounded-xl, soft hover" width={680} height={300}>
+        <Frame src="../preview-v1/cards-v1.html" />
+      </DCArtboard>
+      <DCArtboard id="v2-cards" label="v2 · 1.5px ink border + 4px hard shadow" width={760} height={300}>
+        <Frame src="../preview/cards.html" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="header" title="Header — 네비게이션">
+      <DCArtboard id="v1-header" label="v1 · 글래스모피즘, 슬레이트 다크" width={760} height={180}>
+        <Frame src="../preview-v1/header-v1.html" />
+      </DCArtboard>
+      <DCArtboard id="v2-header" label="v2 · 하드 보더, 액센트 CTA" width={760} height={180}>
+        <Frame src="../preview/header.html" />
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="palette" title="Color Palette — 톤 비교">
+      <DCArtboard id="v1-palette" label="v1 · Slate scale + Blue + Amber" width={760} height={260}>
+        <Frame src="../preview-v1/colors-v1.html" />
+      </DCArtboard>
+      <DCArtboard id="v2-palette" label="v2 · Paper + Ink + Orange" width={760} height={260}>
+        <Frame src="../preview/colors-base.html" />
+      </DCArtboard>
+    </DCSection>
+  </DesignCanvas>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

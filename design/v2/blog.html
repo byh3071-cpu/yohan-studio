@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>블로그 · 요한 스튜디오</title>
+<link rel="stylesheet" href="tokens.css">
+<script src="theme-init.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="V2Header.jsx"></script>
+<script type="text/babel" src="V2Footer.jsx"></script>
+<script type="text/babel" src="V2BlogIndex.jsx"></script>
+<style>
+  /* Mobile: collapse card row to single column, hide right tags */
+  @media (max-width: 720px) {
+    .post-card { grid-template-columns: 1fr !important; gap: 10px !important; }
+    .post-tags { display: none !important; }
+    header nav a:not(:last-child) { display: none; }
+    header nav button { margin-left: 0 !important; }
+  }
+  /* hide scrollbar on filter row */
+  div::-webkit-scrollbar { height: 4px; }
+  div::-webkit-scrollbar-thumb { background: var(--line); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const POSTS = [
+  { id: 1, date: '2026.04.10', category: 'vibe coding', title: 'Cursor 30분으로 MVP 만든 후기', desc: '처음엔 반신반의했다. AI가 정말로 코드를 짜줄 수 있을까. 30분 안에 일어난 일.', tags: ['CURSOR', 'VIBE', 'MVP'], href: './blog-post.html' },
+  { id: 2, date: '2026.03.22', category: 'automation', title: 'GAS로 카페 자동화한 방법', desc: '매일 반복하던 일을 자동화하는 데 걸린 시간은 이틀이었다. 카페사이 OS 빌드 로그.', tags: ['GAS', 'AUTO', 'CAFE'], href: '#' },
+  { id: 3, date: '2026.02.15', category: 'systems', title: '노션으로 1인 기업 운영하기', desc: '생각을 정리하는 도구가 시스템이 됐다. 요한 OS의 구조와 운영 원칙.', tags: ['NOTION', 'SYSTEM'], href: '#' },
+  { id: 4, date: '2026.02.02', category: 'tools', title: '노션 커스텀 대시보드 만들기', desc: 'Cursor → Vercel → 노션 임베드. 30분이면 나만의 대시보드가 생긴다.', tags: ['NOTION', 'CURSOR', 'VERCEL'], href: '#' },
+  { id: 5, date: '2026.01.18', category: 'vibe coding', title: '플렉시블 — 첫 Cursor MVP 빌드 로그', desc: '자리 랜덤 배치 앱. 처음 만든 Cursor 결과물의 처음부터 배포까지.', tags: ['CURSOR', 'VIBE', 'MVP'], href: '#' },
+  { id: 6, date: '2025.12.20', category: 'reflection', title: '바리스타가 코드를 만진다는 것', desc: '카페에서 일하면서 코드를 짠다. 그 사이의 시간이 어떻게 흐르는지.', tags: ['REFLECTION', 'CAFE'], href: '#' },
+  { id: 7, date: '2025.12.05', category: 'games', title: '도파민 러너 — HTML5 첫 MVP', desc: '작고 단순한 게임 하나. 코드 한 줄을 직접 짜지 않고 만들어졌다.', tags: ['HTML5', 'GAME', 'VIBE'], href: '#' },
+  { id: 8, date: '2025.11.28', category: 'tools', title: 'AI 도구 12개를 90일 쓴 후 남은 4개', desc: 'Cursor, Claude, Notion, n8n. 나머지는 왜 빠졌나.', tags: ['AI', 'TOOLS'], href: '#' },
+];
+
+const App = () => (
+  <div>
+    <V2Header />
+    <V2BlogIndex posts={POSTS} />
+    <V2Footer />
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

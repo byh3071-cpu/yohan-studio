@@ -42,3 +42,9 @@ next-env.d.ts
 
 # lazyweb (quick-references, screenshots, local cache)
 .lazyweb/
+
+# playwright MCP cache
+.playwright-mcp/
+
+# local dev server logs
+/logs/
