@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import type { CSSProperties } from "react"
+import { Suspense } from "react"
 import Link from "next/link"
 import { TagFilter } from "@/components/blog/TagFilter"
 import { getPublishedPosts } from "@/lib/blog"
@@ -15,13 +16,13 @@ export default function BlogIndexPage() {
   const section: CSSProperties = {
     background: "var(--bg)",
     padding: "48px 24px 96px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const inner: CSSProperties = { maxWidth: "var(--max-w)", margin: "0 auto" }
   const head: CSSProperties = {
     paddingBottom: "28px",
     marginBottom: "36px",
-    borderBottom: "var(--border-w) solid var(--ink)",
+    borderBottom: "var(--border-w) solid var(--line)",
   }
   const eyebrow: CSSProperties = {
     fontFamily: "var(--font-mono)",
@@ -70,7 +71,9 @@ export default function BlogIndexPage() {
           </h1>
           <p style={sub}>MDX · next-mdx-remote/rsc · 프론트매터 기반 정적 콘텐츠</p>
         </header>
-        <TagFilter posts={posts} />
+        <Suspense fallback={null}>
+          <TagFilter posts={posts} />
+        </Suspense>
       </div>
     </section>
   )

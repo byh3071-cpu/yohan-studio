@@ -13,7 +13,7 @@ export function Contact() {
   const section: CSSProperties = {
     background: "var(--bg)",
     padding: "96px 24px",
-    borderBottom: "1.5px solid var(--ink)",
+    borderBottom: "1.5px solid var(--line)",
   }
   const inner: CSSProperties = { maxWidth: "640px", margin: "0 auto" }
   const eyebrow: CSSProperties = {
@@ -38,7 +38,7 @@ export function Contact() {
     fontSize: "15px",
     color: "var(--ink-2)",
     marginBottom: "40px",
-    borderLeft: "3px solid var(--ink)",
+    borderLeft: "3px solid var(--line)",
     paddingLeft: "14px",
   }
 
@@ -61,11 +61,11 @@ export function Contact() {
       fontSize: "15px",
       fontFamily: "var(--font-sans)",
       background: "var(--bg)",
-      border: "1.5px solid var(--ink)",
+      border: "1.5px solid var(--line)",
       color: "var(--ink)",
       outline: "none",
       borderRadius: 0,
-      boxShadow: focus === k ? "4px 4px 0 var(--ink)" : "0 0 0 var(--ink)",
+      boxShadow: focus === k ? "4px 4px 0 var(--shadow-color)" : "0 0 0 var(--shadow-color)",
       transform: focus === k ? "translate(-2px, -2px)" : "translate(0, 0)",
       transition: "transform 80ms ease, box-shadow 80ms ease",
     }
@@ -79,8 +79,8 @@ export function Contact() {
     fontFamily: "var(--font-sans)",
     background: "var(--accent)",
     color: "var(--ink)",
-    border: "1.5px solid var(--ink)",
-    boxShadow: "4px 4px 0 var(--ink)",
+    border: "1.5px solid var(--line)",
+    boxShadow: "4px 4px 0 var(--shadow-color)",
     cursor: "pointer",
     borderRadius: 0,
   }
@@ -95,13 +95,13 @@ export function Contact() {
     fontSize: "12px",
     fontWeight: 700,
     padding: "8px 14px",
-    border: "1.5px solid var(--ink)",
+    border: "1.5px solid var(--line)",
     background: "var(--bg)",
     color: "var(--ink)",
     textDecoration: "none",
     letterSpacing: "0.05em",
     textTransform: "uppercase",
-    boxShadow: "2px 2px 0 var(--ink)",
+    boxShadow: "2px 2px 0 var(--shadow-color)",
   }
 
   function onSubmit(e: FormEvent) {
@@ -127,8 +127,8 @@ export function Contact() {
           <div
             style={{
               background: "var(--accent)",
-              border: "1.5px solid var(--ink)",
-              boxShadow: "4px 4px 0 var(--ink)",
+              border: "1.5px solid var(--line)",
+              boxShadow: "4px 4px 0 var(--shadow-color)",
               padding: "24px",
               textAlign: "center",
             }}

@@ -159,7 +159,7 @@ export function Hero() {
   return (
     <section id="hero" style={section}>
       <div
-        className="mx-auto grid w-full grid-cols-1 gap-10 md:grid-cols-[1.4fr_1fr] md:items-start"
+        className="mx-auto grid w-full grid-cols-1 gap-10 md:grid-cols-[minmax(0,1fr)_minmax(320px,380px)] md:items-start"
         style={inner}
       >
         <div className="hero-main" style={left}>

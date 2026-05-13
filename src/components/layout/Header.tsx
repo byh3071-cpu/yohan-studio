@@ -2,13 +2,14 @@ import type { CSSProperties } from "react"
 import { Suspense } from "react"
 import Link from "next/link"
 import { SiteHeaderNav } from "@/components/layout/SiteHeaderNav"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
 
 const headerStyle: CSSProperties = {
   position: "sticky",
   top: 0,
   zIndex: 50,
   background: "var(--bg)",
-  borderBottom: "var(--border-w) solid var(--ink)",
+  borderBottom: "var(--border-w) solid var(--line)",
   height: "64px",
   display: "flex",
   alignItems: "center",
@@ -25,9 +26,10 @@ const inner: CSSProperties = {
 }
 
 const logo: CSSProperties = {
+  fontFamily: "var(--font-en)",
   fontSize: "20px",
-  fontWeight: 800,
-  letterSpacing: "-0.03em",
+  fontWeight: 700,
+  letterSpacing: "0.025em",
   color: "var(--ink)",
   whiteSpace: "nowrap",
   display: "inline-flex",
@@ -52,9 +54,12 @@ export function Header() {
           <span style={dot} />
           <span style={{ marginLeft: 8 }}>STUDIO</span>
         </Link>
-        <Suspense fallback={null}>
-          <SiteHeaderNav />
-        </Suspense>
+        <div style={{ display: "inline-flex", alignItems: "center" }}>
+          <Suspense fallback={null}>
+            <SiteHeaderNav />
+          </Suspense>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )

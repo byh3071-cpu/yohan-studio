@@ -474,7 +474,10 @@ button {
   box-shadow: var(--shadow);
 }
 
-@media (max-width: 720px) {
+/* Synced with Tailwind md=768px so Hero's md:grid-cols breakpoint and the
+   single-column overrides below flip on the same pixel — closes the 721–767
+   gap where Hero collapsed to 1 col but .hero-meta order: -1 didn't apply. */
+@media (max-width: 767px) {
   .post-card {
     grid-template-columns: 1fr !important;
     gap: 10px !important;

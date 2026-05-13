@@ -4,7 +4,7 @@ import { aboutTimeline } from "@/data/aboutTimeline"
 const section: CSSProperties = {
   background: "var(--surface)",
   padding: "96px 24px",
-  borderBottom: "1.5px solid var(--ink)",
+  borderBottom: "1.5px solid var(--line)",
 }
 
 const inner: CSSProperties = { maxWidth: "var(--max-w)", margin: "0 auto" }
@@ -49,8 +49,8 @@ const it: CSSProperties = {
   position: "relative",
   marginBottom: "20px",
   background: "var(--bg)",
-  border: "1.5px solid var(--ink)",
-  boxShadow: "4px 4px 0 var(--ink)",
+  border: "1.5px solid var(--line)",
+  boxShadow: "4px 4px 0 var(--shadow-color)",
   padding: "16px 20px",
 }
 
@@ -62,7 +62,7 @@ function dot(active: boolean): CSSProperties {
     width: "18px",
     height: "18px",
     background: active ? "var(--accent)" : "var(--bg)",
-    border: "1.5px solid var(--ink)",
+    border: "1.5px solid var(--line)",
   }
 }
 

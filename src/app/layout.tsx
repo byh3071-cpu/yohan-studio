@@ -48,6 +48,53 @@ const GSC_GOOGLE_VERIFICATION =
   process.env.NEXT_PUBLIC_GSC_VERIFICATION?.trim() ||
   "bq-eC8RKrpFaxv600G7KAk16rcAvXtKdD872ANYNeE4"
 
+// Site-wide JSON-LD: Person + Organization + WebSite under a single @graph so
+// answer engines (ChatGPT / Perplexity / Gemini) can resolve the entity behind the brand.
+const SITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${BASE_URL}/#person`,
+      name: "백요한",
+      alternateName: "Yohan Baek",
+      jobTitle: "바이브코더 · 1인 기업가",
+      description:
+        "바리스타 출신 바이브코더. AI 코드 에이전트와 자동화 워크플로로 콘텐츠와 제품을 만드는 1인 기업가.",
+      url: BASE_URL,
+      email: "byh3071@gmail.com",
+      worksFor: { "@id": `${BASE_URL}/#org` },
+      knowsAbout: [
+        "바이브코딩",
+        "AI 코드 에이전트",
+        "Next.js",
+        "Notion",
+        "자동화 워크플로",
+        "1인 기업",
+      ],
+      sameAs: ["https://github.com/byh3071-cpu"],
+    },
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#org`,
+      name: "Yohan Studio",
+      alternateName: "요한 스튜디오",
+      url: BASE_URL,
+      description:
+        "백요한의 1인 기업. 바이브코딩 · AI 자동화 · 콘텐츠 · 제품을 한 사람이 직접 설계하고 운영한다.",
+      founder: { "@id": `${BASE_URL}/#person` },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "Yohan Studio",
+      inLanguage: "ko-KR",
+      publisher: { "@id": `${BASE_URL}/#org` },
+    },
+  ],
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -80,6 +127,10 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT_SCRIPT}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD) }}
+        />
         <ThemeProvider>
           <Header />
           <main className="flex-1">{children}</main>
