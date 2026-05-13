@@ -193,8 +193,8 @@ const tableWrap: CSSProperties = {
 }
 const tRow: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "120px 1fr 1fr",
-  gap: "16px",
+  gridTemplateColumns: "var(--design-table-cols, 120px 1fr 1fr)",
+  gap: "var(--design-table-gap, 16px)",
   padding: "14px 18px",
   borderBottom: "1px dashed var(--muted-2)",
   alignItems: "baseline",
@@ -279,8 +279,8 @@ const phaseList: CSSProperties = {
 }
 const phaseCard: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "180px 1fr",
-  gap: "24px",
+  gridTemplateColumns: "var(--design-phase-cols, 180px 1fr)",
+  gap: "var(--design-phase-gap, 24px)",
   border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow-sm)",
   background: "var(--bg)",
@@ -336,9 +336,57 @@ const phaseBullet: CSSProperties = {
   background: "var(--accent)",
 }
 
+const responsiveDesignStyles = `
+@media (max-width: 640px) {
+  .design-evolution-table {
+    --design-table-cols: 1fr;
+    --design-table-gap: 8px;
+  }
+
+  .design-evolution-header {
+    display: none !important;
+  }
+
+  .design-evolution-row {
+    padding: 16px !important;
+  }
+
+  .design-evolution-row > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .design-evolution-row > span:nth-child(2)::before,
+  .design-evolution-row > span:nth-child(3)::before {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .design-evolution-row > span:nth-child(2)::before {
+    content: "v1";
+  }
+
+  .design-evolution-row > span:nth-child(3)::before {
+    content: "v2";
+  }
+
+  .design-phase-card {
+    --design-phase-cols: 1fr;
+    --design-phase-gap: 16px;
+  }
+}
+`
+
 export default function DesignHistoryPage() {
   return (
     <section style={section}>
+      <style>{responsiveDesignStyles}</style>
       <div style={inner}>
         <Link href="/" style={back}>
           ← HOME
@@ -360,14 +408,18 @@ export default function DesignHistoryPage() {
               <h2 style={blockTitle}>v1 → v2</h2>
             </div>
           </div>
-          <div style={tableWrap}>
-            <div style={tHeader}>
+          <div className="design-evolution-table" style={tableWrap}>
+            <div className="design-evolution-header" style={tHeader}>
               <span>속성</span>
               <span>v1 (Slate)</span>
               <span>v2 (Editorial × Brutalism)</span>
             </div>
             {evolution.map((r, i) => (
-              <div key={r.label} style={i === evolution.length - 1 ? tRowLast : tRow}>
+              <div
+                key={r.label}
+                className="design-evolution-row"
+                style={i === evolution.length - 1 ? tRowLast : tRow}
+              >
                 <span style={tLabel}>{r.label}</span>
                 <span style={tV1}>{r.v1}</span>
                 <span style={tV2}>{r.v2}</span>
@@ -406,7 +458,7 @@ export default function DesignHistoryPage() {
           </div>
           <div style={phaseList}>
             {roadmap.map((p) => (
-              <article key={p.phase} style={phaseCard}>
+              <article key={p.phase} className="design-phase-card" style={phaseCard}>
                 <div style={phaseLeft}>
                   <span style={phaseLabel}>{p.phase}</span>
                   <h3 style={phaseTitle}>{p.title}</h3>
