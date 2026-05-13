@@ -3,7 +3,7 @@ import type { CSSProperties } from "react"
 const section: CSSProperties = {
   background: "var(--bg)",
   padding: "80px 24px 120px",
-  borderBottom: "var(--border-w) solid var(--ink)",
+  borderBottom: "var(--border-w) solid var(--line)",
 }
 
 const inner: CSSProperties = {
@@ -22,9 +22,6 @@ const eyebrow: CSSProperties = {
   textTransform: "uppercase",
   color: "var(--muted)",
   marginBottom: "36px",
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
 }
 
 const eyeMark: CSSProperties = {
@@ -45,13 +42,21 @@ const title: CSSProperties = {
 
 const accentMark: CSSProperties = { color: "var(--accent)", display: "inline" }
 
+// Editorial serif italic emphasis for a single headline word.
+// Same size as surrounding sans, differs only in style — italic synthesizes for Korean glyphs.
+const serifEm: CSSProperties = {
+  fontFamily: "var(--font-serif)",
+  fontStyle: "italic",
+  fontWeight: 600,
+}
+
 const sub: CSSProperties = {
   fontSize: "17px",
   lineHeight: 1.65,
   color: "var(--ink-2)",
   maxWidth: "480px",
   marginBottom: "40px",
-  borderLeft: "3px solid var(--ink)",
+  borderLeft: "3px solid var(--line)",
   paddingLeft: "18px",
 }
 
@@ -66,7 +71,7 @@ const btnPrimary: CSSProperties = {
   fontWeight: 700,
   background: "var(--accent)",
   color: "var(--accent-ink)",
-  border: "var(--border-w) solid var(--ink)",
+  border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow)",
   textDecoration: "none",
   whiteSpace: "nowrap",
@@ -81,7 +86,7 @@ const btnGhost: CSSProperties = {
   fontWeight: 700,
   background: "var(--bg)",
   color: "var(--ink)",
-  border: "var(--border-w) solid var(--ink)",
+  border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow-sm)",
   textDecoration: "none",
   whiteSpace: "nowrap",
@@ -89,7 +94,7 @@ const btnGhost: CSSProperties = {
 
 const meta: CSSProperties = {
   background: "var(--surface)",
-  border: "var(--border-w) solid var(--ink)",
+  border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow)",
   padding: "24px",
 }
@@ -103,7 +108,26 @@ const metaTitle: CSSProperties = {
   color: "var(--muted)",
   marginBottom: "20px",
   paddingBottom: "14px",
-  borderBottom: "1px solid var(--ink)",
+  borderBottom: "1px solid var(--line)",
+}
+
+const issueBlock: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "11px",
+  fontWeight: 600,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+  color: "var(--muted)",
+  marginBottom: "18px",
+  paddingBottom: "14px",
+  borderBottom: "1px solid var(--line)",
+}
+
+const issueLine: CSSProperties = { padding: "4px 0" }
+
+const issueDivider: CSSProperties = {
+  borderTop: "1px dashed var(--muted-2)",
+  margin: "2px 0",
 }
 
 const metaRow: CSSProperties = {
@@ -120,6 +144,8 @@ const metaKey: CSSProperties = {
   color: "var(--muted)",
   textTransform: "uppercase",
   letterSpacing: "0.05em",
+  whiteSpace: "nowrap",
+  flexShrink: 0,
 }
 
 const metaVal: CSSProperties = {
@@ -136,17 +162,24 @@ export function Hero() {
         className="mx-auto grid w-full grid-cols-1 gap-10 md:grid-cols-[1.4fr_1fr] md:items-start"
         style={inner}
       >
-        <div style={left}>
-          <div style={eyebrow}>
-            <span style={eyeMark} />
-            01 / 바이브코더 · 1인 기업
+        <div className="hero-main" style={left}>
+          <div className="marquee" style={eyebrow} aria-label="01 / 바이브코더 · 1인 기업">
+            <div className="marquee-track">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <span key={i} className="marquee-item" aria-hidden={i > 0}>
+                  <span style={eyeMark} />
+                  01 / 바이브코더 · 1인 기업
+                </span>
+              ))}
+            </div>
           </div>
           <h1 style={title}>
             바리스타<span style={accentMark}>,</span>
             <br />
             그리고
             <br />
-            바이브<span style={accentMark}>코더</span>.
+            <span style={serifEm}>바이브</span>
+            <span style={accentMark}>코더</span>.
           </h1>
           <p style={sub}>
             카페에서 일하면서 AI와 자동화에 빠졌다. 코드를 직접 짜는 대신 AI에게 시키고, 시스템을 설계하고, 결과물을 만든다.
@@ -161,7 +194,12 @@ export function Hero() {
           </div>
         </div>
 
-        <aside style={meta}>
+        <aside className="hero-meta" style={meta}>
+          <div style={issueBlock}>
+            <div style={issueLine}>ISSUE No. 01</div>
+            <div style={issueDivider} />
+            <div style={issueLine}>MAY · 2026</div>
+          </div>
           <div style={metaTitle}>{"// 메타데이터"}</div>
           <div style={{ ...metaRow, paddingTop: 0 }}>
             <span style={metaKey}>이름</span>

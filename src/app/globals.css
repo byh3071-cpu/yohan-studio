@@ -1,15 +1,292 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
-@import "tailwindcss";
-@import "../styles/tokens.css";
+/*
+  Yohan Studio — globals.css
+  Editorial × Soft Brutalism · Tailwind v4 (CSS-first)
 
-:root {
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  Order matters:
+    1. Pretendard webfont  (must precede Tailwind so its @font-face wins cascade ties)
+    2. Tailwind v4 entry   (registers @layer theme, base, components, utilities)
+    3. @theme              (extends Tailwind's theme — exposes bg/ink/accent as utilities + CSS vars)
+    4. :root aliases       (short names for inline-style components: var(--bg), var(--ink), …)
+    5. Dark mode           (prefers-color-scheme + manual [data-theme="dark"] override)
+    6. Body / primitives   (.frame .btn .tag .label .rule)
+    7. .mdx-content        (article body styling)
+*/
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
+@import "tailwindcss";
+
+/* ─── 3. Tailwind theme extension ──────────────────────────────────────
+   v4 emits both CSS vars (--color-*) AND utilities (bg-*, text-*, border-*).
+   Names follow v4 namespaces: --color-*, --font-*, --text-*, --shadow-*. */
+@theme {
+  /* Light tokens (defaults — overridden in dark blocks below) */
+  --color-bg: #f4f1ea;
+  --color-surface: #eeeae0;
+  --color-surface-2: #e5e0d2;
+  --color-ink: #0a0a0a;
+  --color-ink-2: #2b2723;
+  --color-muted: #6b6357;
+  --color-muted-2: #968d7e;
+  --color-accent: #ff5c28;
+  --color-accent-ink: #0a0a0a;
+
+  /* Border + shadow split per design/v2/tokens.css */
+  --color-line: #0a0a0a;
+  --color-line-soft: #968d7e;
+  --color-shadow-ink: #0a0a0a;
+
+  /* Footer keeps inverted palette in both themes for visual anchor */
+  --color-footer-bg: #0a0a0a;
+  --color-footer-text: #f4f1ea;
+  --color-footer-muted: #968d7e;
+  --color-footer-line: #6b6357;
+
+  --font-sans:
+    "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --font-en:
+    var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, monospace;
+  --font-serif:
+    var(--font-source-serif), "Source Serif 4", "Pretendard Variable",
+    "Pretendard", Georgia, serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3.5rem;
+  --text-5xl: 5rem;
+
+  --shadow-brutal-sm: 2px 2px 0 #0a0a0a;
+  --shadow-brutal: 4px 4px 0 #0a0a0a;
+  --shadow-brutal-lg: 6px 6px 0 #0a0a0a;
+
+  --radius-none: 0;
 }
 
-/* MDX article body (v2 tokens) */
+/* ─── 4. Short-name aliases ────────────────────────────────────────────
+   Existing components consume CSS vars directly (e.g. var(--bg), var(--ink)).
+   Keeping the short names means we don't have to rewrite every inline style. */
+:root {
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --surface-2: var(--color-surface-2);
+  --ink: var(--color-ink);
+  --ink-2: var(--color-ink-2);
+  --muted: var(--color-muted);
+  --muted-2: var(--color-muted-2);
+  --accent: var(--color-accent);
+  --accent-ink: var(--color-accent-ink);
+
+  --line: var(--color-line);
+  --line-soft: var(--color-line-soft);
+  --border: var(--color-line); /* legacy alias — prefer --line in new code */
+  --border-w: 1.5px;
+
+  --shadow-color: var(--color-shadow-ink);
+  --shadow: 4px 4px 0 var(--shadow-color);
+  --shadow-sm: 2px 2px 0 var(--shadow-color);
+  --shadow-lg: 6px 6px 0 var(--shadow-color);
+
+  --footer-bg: var(--color-footer-bg);
+  --footer-text: var(--color-footer-text);
+  --footer-muted: var(--color-footer-muted);
+  --footer-line: var(--color-footer-line);
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  --max-w: 1200px;
+  --gutter: 24px;
+  --radius: 0;
+
+  color-scheme: light;
+}
+
+/* ─── 5. Dark mode ─────────────────────────────────────────────────────
+   System dark applies only when user hasn't forced a theme (data-theme unset
+   or set to "dark"). data-theme="light" is the explicit light-lock escape. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0a0a0a;
+    --color-surface: #141414;
+    --color-surface-2: #1f1f1f;
+    --color-ink: #f4f1ea;
+    --color-ink-2: #dcd7cb;
+    --color-muted: #94a3b8;
+    --color-muted-2: #6b6357;
+    --color-line: #334155;
+    --color-line-soft: #2a2a2a;
+    --color-shadow-ink: #f4f1ea;
+    --color-footer-bg: #000000;
+    --color-footer-text: #f4f1ea;
+    --color-footer-muted: #6b6357;
+    --color-footer-line: #1f1f1f;
+    --shadow-brutal-sm: 2px 2px 0 #f4f1ea;
+    --shadow-brutal: 4px 4px 0 #f4f1ea;
+    --shadow-brutal-lg: 6px 6px 0 #f4f1ea;
+    color-scheme: dark;
+  }
+}
+
+/* Manual override — wins over @media via specificity (attribute selector beats :root). */
+[data-theme="dark"] {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1f1f1f;
+  --color-ink: #f4f1ea;
+  --color-ink-2: #dcd7cb;
+  --color-muted: #94a3b8;
+  --color-muted-2: #6b6357;
+  --color-line: #334155;
+  --color-line-soft: #2a2a2a;
+  --color-shadow-ink: #f4f1ea;
+  --color-footer-bg: #000000;
+  --color-footer-text: #f4f1ea;
+  --color-footer-muted: #6b6357;
+  --color-footer-line: #1f1f1f;
+  --shadow-brutal-sm: 2px 2px 0 #f4f1ea;
+  --shadow-brutal: 4px 4px 0 #f4f1ea;
+  --shadow-brutal-lg: 6px 6px 0 #f4f1ea;
+  color-scheme: dark;
+}
+
+/* ─── 6. Body + primitives ─────────────────────────────────────────────
+   Tailwind preflight already resets box-sizing/margin/padding. */
+html {
+  transition: background 200ms ease;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.frame {
+  border: var(--border-w) solid var(--line);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+.frame-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  border: var(--border-w) solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 0;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--shadow-color);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 0;
+  letter-spacing: 0.02em;
+}
+.tag-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rule {
+  border: 0;
+  border-top: var(--border-w) solid var(--line);
+}
+
+/* Editorial marquee — duplicate content twice for seamless loop, translate -50%. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  overflow: hidden;
+  width: 100%;
+}
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 24px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* ─── 7. MDX article body ─────────────────────────────────────────────── */
 .mdx-content {
   font-size: 1.0625rem;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--ink-2);
 }
 .mdx-content > * + * {
@@ -22,12 +299,13 @@
   letter-spacing: -0.02em;
   color: var(--ink);
   line-height: 1.25;
+  scroll-margin-top: 88px; /* sticky header offset for ToC links */
 }
 .mdx-content h2 {
   font-size: 1.65rem;
   margin-top: 2.25rem;
   padding-bottom: 0.5rem;
-  border-bottom: var(--border-w) solid var(--border);
+  border-bottom: var(--border-w) solid var(--line);
 }
 .mdx-content h3 {
   font-size: 1.25rem;
@@ -50,29 +328,30 @@
   margin-top: 0.35em;
 }
 .mdx-content blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 4px solid var(--accent);
   padding: 0.75rem 0 0.75rem 1.25rem;
   margin: 1.5rem 0;
   background: var(--surface);
   color: var(--ink-2);
   font-style: italic;
 }
+/* Bare ```fence``` falls back to .mdx-content pre. CodeBlock component overrides via inline style. */
 .mdx-content pre {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   line-height: 1.55;
   padding: 1.1rem 1.25rem;
   overflow-x: auto;
-  border: var(--border-w) solid var(--ink);
+  border: var(--border-w) solid var(--line);
   box-shadow: var(--shadow-sm);
-  background: var(--surface);
-  color: var(--ink);
+  background: #0a0a0a;
+  color: #f4f1ea;
 }
 .mdx-content code {
   font-family: var(--font-mono);
   font-size: 0.9em;
   padding: 0.12em 0.35em;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
 }
@@ -80,10 +359,80 @@
   padding: 0;
   border: 0;
   background: transparent;
+  color: inherit;
   font-size: inherit;
 }
 .mdx-content hr {
   border: 0;
-  border-top: var(--border-w) solid var(--border);
+  border-top: var(--border-w) solid var(--line);
   margin: 2.5rem 0;
+}
+.mdx-content figure {
+  margin: 2rem 0;
+}
+.mdx-content figure img,
+.mdx-content > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border-w) solid var(--line);
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+}
+.mdx-content figcaption {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ─── 8. Blog post layout ───────────────────────────────────────────────
+   Two columns: 680px main + 220px sticky ToC. Collapses to single column
+   at 960px (ToC hidden) per design/v2/blog-post.html media queries. */
+.post-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 680px) 220px;
+  gap: 40px;
+  max-width: 940px;
+  margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .post-shell {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 680px;
+  }
+  .post-toc {
+    display: none !important;
+  }
+}
+
+/* ─── 9. Blog index cards ────────────────────────────────────────────────
+   Row card: [date | title+desc | tags]. Hover lifts with translate + harder
+   shadow. <720px collapses to single column and hides trailing tag column
+   per design/v2/blog.html. */
+.post-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow);
+}
+@media (max-width: 720px) {
+  .post-card {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .post-tags {
+    display: none !important;
+  }
+  /* Hero: lift the meta panel above the main copy so it reads first on mobile. */
+  .hero-meta {
+    order: -1;
+  }
+  /* Header: drop non-essential nav links, only CTA + ThemeToggle remain. */
+  .site-header-nav a:not(:last-of-type) {
+    display: none;
+  }
 }
