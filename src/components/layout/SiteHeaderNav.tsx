@@ -50,6 +50,7 @@ const entries: { label: string; href: string; match: (p: string) => boolean }[] 
   { label: "홈", href: "/", match: (p) => p === "/" },
   { label: "쇼룸", href: "/showroom", match: (p) => p === "/showroom" },
   { label: "진단", href: "/diagnosis", match: (p) => p === "/diagnosis" },
+  { label: "서비스", href: "/services", match: (p) => p === "/services" },
   { label: "블로그", href: "/blog", match: (p) => p === "/blog" || p.startsWith("/blog/") },
   { label: "포트폴리오", href: "/portfolio", match: (p) => p === "/portfolio" },
   { label: "디자인", href: "/design", match: (p) => p === "/design" },
