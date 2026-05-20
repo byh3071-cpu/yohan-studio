@@ -249,45 +249,58 @@ button {
   border-top: var(--border-w) solid var(--line);
 }
 
-/* Header nav — desktop inline, mobile hamburger panel (≤768px). */
-.site-header-nav {
+/* Header nav — PRD Phase 2: Blog / Showroom / Diagnosis / Services + menu. */
+.site-header-primary {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
 }
 .nav-hamburger {
-  display: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
-@media (max-width: 768px) {
-  .nav-hamburger {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-  }
-  .site-header-nav {
+.site-header-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: var(--gutter);
+  width: min(320px, calc(100vw - (var(--gutter) * 2)));
+  background: var(--bg);
+  border: var(--border-w) solid var(--line);
+  box-shadow: var(--shadow);
+  flex-direction: column;
+  align-items: stretch;
+  padding: 16px;
+  gap: 12px;
+}
+.site-header-menu.is-open {
+  display: flex;
+}
+.site-header-menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.site-header-menu-divider {
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 640px) {
+  .site-header-primary {
     display: none;
-    position: absolute;
-    top: 100%;
+  }
+  .site-header-menu {
     left: 0;
     right: 0;
-    background: var(--bg);
-    border-bottom: var(--border-w) solid var(--line);
-    box-shadow: var(--shadow);
-    flex-direction: column;
-    align-items: stretch;
+    width: auto;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
     padding: 16px var(--gutter);
-    gap: 6px;
-  }
-  .site-header-nav.is-open {
-    display: flex;
-  }
-  .site-header-nav .nav-cta {
-    margin-top: 8px;
-    justify-content: center;
   }
 }
 

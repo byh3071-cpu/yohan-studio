@@ -16,7 +16,7 @@ const wrap: CSSProperties = {
 
 const head: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "auto 1fr",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
   gap: "24px",
   alignItems: "start",
 }
@@ -46,7 +46,7 @@ const totalValue: CSSProperties = {
 
 const grid: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "minmax(280px, 1fr) minmax(260px, 1fr)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
   gap: "32px",
   alignItems: "start",
 }

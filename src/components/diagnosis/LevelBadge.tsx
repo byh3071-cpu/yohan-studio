@@ -5,6 +5,8 @@ const wrap: CSSProperties = {
   display: "inline-flex",
   flexDirection: "column",
   gap: "8px",
+  width: "100%",
+  boxSizing: "border-box",
   padding: "18px 22px",
   background: "var(--accent)",
   color: "var(--accent-ink)",
