@@ -48,6 +48,10 @@ const GSC_GOOGLE_VERIFICATION =
   process.env.NEXT_PUBLIC_GSC_VERIFICATION?.trim() ||
   "3OUsp9VZJ9Hdp-HFKhDtaipWOlVK5MtOLZOT-Xjzmno"
 
+const NAVER_SITE_VERIFICATION =
+  process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION?.trim() ||
+  "4adadf6805682cfe2018d26a6102793e31e964d9"
+
 // Site-wide JSON-LD: Person + Organization + WebSite under a single @graph so
 // answer engines (ChatGPT / Perplexity / Gemini) can resolve the entity behind the brand.
 const SITE_JSON_LD = {
@@ -109,7 +113,12 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
-  verification: { google: GSC_GOOGLE_VERIFICATION },
+  verification: {
+    google: GSC_GOOGLE_VERIFICATION,
+    other: {
+      "naver-site-verification": NAVER_SITE_VERIFICATION,
+    },
+  },
 }
 
 export default function RootLayout({
