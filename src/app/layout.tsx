@@ -46,7 +46,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yohan.studio"
 
 const GSC_GOOGLE_VERIFICATION =
   process.env.NEXT_PUBLIC_GSC_VERIFICATION?.trim() ||
-  "bq-eC8RKrpFaxv600G7KAk16rcAvXtKdD872ANYNeE4"
+  "3OUsp9VZJ9Hdp-HFKhDtaipWOlVK5MtOLZOT-Xjzmno"
 
 // Site-wide JSON-LD: Person + Organization + WebSite under a single @graph so
 // answer engines (ChatGPT / Perplexity / Gemini) can resolve the entity behind the brand.
