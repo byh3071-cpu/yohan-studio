@@ -91,12 +91,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     letterSpacing: "0.04em",
   }
   const h1: CSSProperties = {
-    fontSize: "clamp(36px, 5.5vw, 64px)",
+    fontSize: "clamp(28px, 3.6vw, 46px)",
     fontWeight: 800,
     letterSpacing: "-0.03em",
-    lineHeight: 1.1,
+    lineHeight: 1.15,
     marginBottom: "16px",
     color: "var(--ink)",
+    maxWidth: "100%",
   }
   const desc: CSSProperties = {
     fontSize: "17px",
