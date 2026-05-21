@@ -13,6 +13,8 @@ export default async function Image({ params }: Props) {
   const title = meta?.title ?? "요한 스튜디오"
   const category = meta?.category ?? ""
   const date = meta?.date ?? ""
+  const titleFontSize =
+    title.length > 42 ? 38 : title.length > 32 ? 44 : title.length > 24 ? 52 : 64
 
   return new ImageResponse(
     (
@@ -68,9 +70,9 @@ export default async function Image({ params }: Props) {
         {/* Title */}
         <div
           style={{
-            fontSize: title.length > 30 ? "52px" : "64px",
+            fontSize: titleFontSize,
             fontWeight: 900,
-            lineHeight: 1.1,
+            lineHeight: 1.12,
             letterSpacing: "-0.03em",
             color: "#0A0A0A",
             maxWidth: "960px",
