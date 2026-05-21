@@ -6,6 +6,7 @@ import { GoogleAnalytics } from "@next/third-parties/google"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
+import { getSiteUrl } from "@/lib/siteUrl"
 import "./globals.css"
 
 // Precedence: ?theme= URL param  →  localStorage  →  system preference  →  light
@@ -42,7 +43,7 @@ const sourceSerif = Source_Serif_4({
   weight: ["400", "600"],
 })
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yohan.studio"
+const BASE_URL = getSiteUrl()
 
 const GSC_GOOGLE_VERIFICATION =
   process.env.NEXT_PUBLIC_GSC_VERIFICATION?.trim() ||
