@@ -250,8 +250,15 @@ button {
 }
 
 /* Header nav — PRD Phase 2: Blog / Showroom / Diagnosis / Services + menu. */
+header {
+  position: relative;
+}
+.site-header-actions {
+  flex-shrink: 0;
+  min-width: 0;
+}
 .site-header-primary {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 4px;
   flex-wrap: nowrap;
@@ -263,6 +270,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 4px;
+  flex-shrink: 0;
 }
 .site-header-menu {
   display: none;
@@ -277,6 +285,7 @@ button {
   align-items: stretch;
   padding: 16px;
   gap: 12px;
+  z-index: 60;
 }
 .site-header-menu.is-open {
   display: flex;
@@ -289,10 +298,16 @@ button {
 .site-header-menu-divider {
   border-top: 1px solid var(--line);
 }
-@media (max-width: 640px) {
+/* md(768px) 이하: 링크 5개+햄버거 동시 노출 시 우측 클립 → 햄버거만 */
+@media (min-width: 769px) {
   .site-header-primary {
+    display: inline-flex;
+  }
+  .nav-hamburger {
     display: none;
   }
+}
+@media (max-width: 768px) {
   .site-header-menu {
     left: 0;
     right: 0;
