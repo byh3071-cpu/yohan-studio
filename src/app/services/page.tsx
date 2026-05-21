@@ -2,6 +2,7 @@ import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { services } from "@/data/services"
 import { PricingSection } from "@/components/services/PricingSection"
+import { getSiteUrl } from "@/lib/siteUrl"
 
 export const metadata: Metadata = {
   title: "Services — Yohan Studio",
@@ -51,7 +52,7 @@ const lead: CSSProperties = {
   maxWidth: "640px",
 }
 
-const SITE_ORIGIN = "https://yohan-studio.vercel.app"
+const SITE_ORIGIN = getSiteUrl()
 
 function buildServiceJsonLd(contactUrl: string) {
   return {
