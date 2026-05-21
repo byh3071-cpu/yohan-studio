@@ -174,22 +174,23 @@ export function Hero() {
             </div>
           </div>
           <h1 style={title}>
-            바리스타<span style={accentMark}>,</span>
+            AI 시대의
             <br />
-            그리고
+            1인 기업
             <br />
-            <span style={serifEm}>바이브</span>
-            <span style={accentMark}>코더</span>.
+            <span style={serifEm}>운영체계</span>
+            <span style={accentMark}>.</span>
           </h1>
           <p style={sub}>
-            카페에서 일하면서 AI와 자동화에 빠졌다. 코드를 직접 짜는 대신 AI에게 시키고, 시스템을 설계하고, 결과물을 만든다.
+            좋은 시스템은 나를 복제한다. 좋은 AI는 나를 확장한다.
+            진단으로 빈 곳을 찾고, 템플릿으로 메우고, 같이 짓는다.
           </p>
           <div style={ctaRow}>
-            <a href="#portfolio" style={btnPrimary}>
-              포트폴리오 보기 →
+            <a href="/diagnosis" style={btnPrimary}>
+              AI&rsquo;m Scan 진단하기 →
             </a>
-            <a href="#blog" style={btnGhost}>
-              블로그 읽기
+            <a href="/services" style={btnGhost}>
+              서비스 보기
             </a>
           </div>
         </div>

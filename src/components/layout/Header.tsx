@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react"
-import { Suspense } from "react"
 import Link from "next/link"
 import { SiteHeaderNav } from "@/components/layout/SiteHeaderNav"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
@@ -54,10 +53,8 @@ export function Header() {
           <span style={dot} />
           <span style={{ marginLeft: 8 }}>STUDIO</span>
         </Link>
-        <div style={{ display: "inline-flex", alignItems: "center" }}>
-          <Suspense fallback={null}>
-            <SiteHeaderNav />
-          </Suspense>
+        <div className="site-header-actions" style={{ display: "inline-flex", alignItems: "center" }}>
+          <SiteHeaderNav />
           <ThemeToggle />
         </div>
       </div>

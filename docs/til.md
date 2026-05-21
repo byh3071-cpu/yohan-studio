@@ -26,3 +26,14 @@
 - **`useSearchParams` 사용 컴포넌트는 `<Suspense>` 경계 필수**: Next.js 16 빌드에서 dynamic rendering 강제 또는 build error. 부모(서버 컴포넌트)에서 `<Suspense fallback={null}>` 로 감싸면 `/blog` 가 정적 prerender 유지 + URL 쿼리 sync 모두 가능. (세션 4)
 - **`router.replace(url, { scroll: false })` 패턴**: 필터/검색 상태를 URL 쿼리로 sync할 때, scroll 점프 없이 URL만 업데이트. browser history도 push 아닌 replace라 뒤로 가기 폭증 안 함. (세션 4)
 - **IntersectionObserver `entries` 콜백은 "변한 항목"만 받음**: 현재 화면에 보이는 전체가 아님. ToC active heading 추적 시 `entries.filter(isIntersecting)` 만 보면 빠른 스크롤에서 active dot이 튄다. 별도 visible Set을 유지하는 패턴이 안정. (세션 4 / Codex 리뷰)
+
+## 2026-05-20 (세션 5 — Phase 2 AI'm OS Edition / subagent-driven 실행)
+
+- **`writing-plans` 스킬은 task 단위 commit + 인라인 코드 블록 필수**: 계획에 "Similar to Task N" 같은 참조를 두면 subagent 가 디스패치 순서대로 안 읽힐 때 fail. 같은 코드라도 매 task 별로 인라인 풀-쓰기. (세션 5)
+- **`subagent-driven-development` 의 spec+quality 리뷰는 mechanical paste 태스크에서 비용 대비 효과 낮음**: 33 task × 3 reviewer = 99 agent 호출. 코드 블록이 plan 에 통째 박혀 있을 때는 "did paste copy correctly?" 만 검증하면 됨. 한 reviewer 로 combined 가능 (skill 약간 deviate). (세션 5)
+- **`useSearchParams` 사용 컴포넌트 `<Suspense>` 누락 시 Next 16 build error**: server page 에서 `<Suspense fallback={null}><Client /></Suspense>` 로 감싸야 정적 prerender 유지. (세션 5, Plan 011 Showroom)
+- **`Record<Area, string>` 인덱싱 시 callback param 에 `(a: string)` 명시하면 strict mode 가 widen 으로 잡거나 통과시키지만 안정성 잃음**: `.map((a, i) =>` 형태로 implicit Area 추론 유지. `(a: string, i: number)` 추가는 spec deviation. (세션 5, Plan 012 ResultPanel)
+- **`.env.example` 도 프로젝트 `.gitignore` `.env*` 패턴에 매칭되어 무 트래킹**: 환경 변수 의존하는 feature 출시 시 `.env.example` 커밋 가정 금지. 별도 핸드오프 문서나 README 변경으로 키 전달. (세션 5, Plan 013 NEXT_PUBLIC_CONTACT_FORM_URL)
+- **subagent 가 `git stash apply` 실행하면 사용자 WIP 가 working tree 로 빠져나옴**: review subagent 에 git 권한 줄 때 stash/branch 조작 명시 금지. 발견 시 `git restore .` 로 working tree 복원 (stash 는 살아있음). (세션 5)
+- **subagent 디스패치 중 사용자가 branch 를 reorg 하면 commit 이 의도치 않은 브랜치에 떨어진다**: 매 implementer 디스패치 전 `git branch --show-current` 확인 + prompt 안에 "must be on X branch, else BLOCKED" 가드 삽입. cherry-pick 으로 복귀 가능하지만 사전 방지가 안전. (세션 5)
+- **SVG 레이더 차트는 외부 라이브러리 없이 `axisPoint(i, n, r) = [CX + r·cos(θ), CY + r·sin(θ)], θ = 2π·i/n - π/2` 패턴으로 30줄 안에 그릴 수 있다**: recharts/d3 의존성 추가 전에 polygon points 직접 계산 검토. (세션 5, ScoreRadar)
