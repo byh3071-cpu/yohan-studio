@@ -35,12 +35,19 @@ export type QaLink = {
   text: string
 }
 
+export type QaAccessibilityViolationSampleNode = {
+  target: string[]
+  html: string
+  failureSummary: string
+}
+
 export type QaAccessibilityViolation = {
   id: string
   impact: string | null
   help: string
   helpUrl: string
   nodes: number
+  sampleNodes?: QaAccessibilityViolationSampleNode[]
 }
 
 export type QaRouteReport = {

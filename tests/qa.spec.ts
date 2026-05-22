@@ -290,6 +290,11 @@ async function runRoute(
       help: v.help,
       helpUrl: v.helpUrl,
       nodes: v.nodes.length,
+      sampleNodes: v.nodes.slice(0, 5).map((n) => ({
+        target: (n.target ?? []).map((t) => String(t)),
+        html: (n.html ?? "").slice(0, 240),
+        failureSummary: (n.failureSummary ?? "").slice(0, 600),
+      })),
     }))
     for (const v of axeViolations) {
       issues.push({
