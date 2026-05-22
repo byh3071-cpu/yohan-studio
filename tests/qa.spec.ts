@@ -54,14 +54,16 @@ function isStoreHref(href: string): boolean {
   if (!href) return false
   try {
     const u = new URL(href, "http://x")
-    return u.pathname === "/store" || u.pathname.startsWith("/store/")
+    if (u.pathname === "/store" || u.pathname.startsWith("/store/")) return true
+    if (u.hash === "#store" || u.hash.startsWith("#store/")) return true
+    return false
   } catch {
     return false
   }
 }
 
 function severityFromImpact(impact: string | null | undefined): "warning" | "fail" {
-  if (impact === "critical" || impact === "serious") return "fail"
+  if (impact === "critical") return "fail"
   return "warning"
 }
 
