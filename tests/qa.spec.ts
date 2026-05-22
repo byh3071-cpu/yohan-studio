@@ -50,6 +50,33 @@ function isInternalHref(href: string, origin: string): boolean {
   }
 }
 
+const IGNORED_FAILED_REQUEST_HOSTS = new Set([
+  "www.google-analytics.com",
+  "google-analytics.com",
+  "analytics.google.com",
+  "region1.google-analytics.com",
+  "region1.analytics.google.com",
+  "www.googletagmanager.com",
+  "googletagmanager.com",
+  "stats.g.doubleclick.net",
+])
+
+const IGNORED_FAILED_REQUEST_PATTERNS: RegExp[] = [
+  /\/favicon\.ico(\?|$)/,
+  /\/_next\/(webpack-hmr|hot-update|on-demand-entries)/,
+  /\/__turbopack_hmr__/,
+]
+
+function shouldIgnoreFailedRequest(url: string): boolean {
+  try {
+    const u = new URL(url)
+    if (IGNORED_FAILED_REQUEST_HOSTS.has(u.hostname)) return true
+  } catch {
+    // non-URL strings fall through to pattern check
+  }
+  return IGNORED_FAILED_REQUEST_PATTERNS.some((re) => re.test(url))
+}
+
 function isStoreHref(href: string): boolean {
   if (!href) return false
   try {
@@ -144,7 +171,7 @@ async function runRoute(
   }
 
   for (const failed of failedRequests) {
-    if (failed.url.includes("/favicon.ico")) continue
+    if (shouldIgnoreFailedRequest(failed.url)) continue
     issues.push({
       severity: "fail",
       code: "failed_request",
