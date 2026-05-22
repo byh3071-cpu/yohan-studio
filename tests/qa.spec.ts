@@ -18,7 +18,12 @@ import type {
 } from "../src/lib/qa/types"
 
 const ARTIFACTS_DIR = path.join(process.cwd(), "qa-artifacts")
-const SCREENSHOTS_DIR = path.join(ARTIFACTS_DIR, "screenshots")
+const PUBLIC_SCREENSHOTS_DIR = path.join(
+  process.cwd(),
+  "public",
+  "qa-artifacts",
+  "screenshots",
+)
 const REPORT_PATH = path.join(ARTIFACTS_DIR, "report.raw.json")
 const SUMMARY_PATH = path.join(ARTIFACTS_DIR, "report.summary.json")
 
@@ -104,7 +109,7 @@ function statusFromIssues(issues: QaIssue[]): QaStatus {
 
 async function ensureDirs(): Promise<void> {
   await fs.mkdir(ARTIFACTS_DIR, { recursive: true })
-  await fs.mkdir(SCREENSHOTS_DIR, { recursive: true })
+  await fs.mkdir(PUBLIC_SCREENSHOTS_DIR, { recursive: true })
 }
 
 async function runRoute(
@@ -304,9 +309,10 @@ async function runRoute(
   }
 
   const screenshotFile = `${slugifyRoute(route.path)}-${viewport}.png`
-  const screenshotPath = path.join(SCREENSHOTS_DIR, screenshotFile)
+  const screenshotFsPath = path.join(PUBLIC_SCREENSHOTS_DIR, screenshotFile)
+  const screenshotWebPath = `/qa-artifacts/screenshots/${screenshotFile}`
   try {
-    await page.screenshot({ path: screenshotPath, fullPage: true })
+    await page.screenshot({ path: screenshotFsPath, fullPage: true })
   } catch (err) {
     issues.push({
       severity: "warning",
@@ -337,7 +343,7 @@ async function runRoute(
     pageErrors,
     failedRequests,
     accessibilityViolations: axeViolations,
-    screenshotPath: path.relative(process.cwd(), screenshotPath),
+    screenshotPath: screenshotWebPath,
     status: statusFromIssues(issues),
     issues,
   }
