@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "qa:install": "playwright install chromium",
-    "qa:test": "playwright test tests/qa.spec.ts --trace on"
+    "qa:test": "playwright test tests/qa.spec.ts --trace on",
+    "qa:summarize": "tsx scripts/qa-summarize.ts"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.4",

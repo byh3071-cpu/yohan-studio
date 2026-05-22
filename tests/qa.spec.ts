@@ -3,6 +3,7 @@ import AxeBuilder from "@axe-core/playwright"
 import fs from "node:fs/promises"
 import path from "node:path"
 import { QA_ROUTES } from "../src/lib/qa/routes"
+import { buildSummary } from "../src/lib/qa/summary"
 import type {
   QaAccessibilityViolation,
   QaConsoleMessage,
@@ -19,6 +20,7 @@ import type {
 const ARTIFACTS_DIR = path.join(process.cwd(), "qa-artifacts")
 const SCREENSHOTS_DIR = path.join(ARTIFACTS_DIR, "screenshots")
 const REPORT_PATH = path.join(ARTIFACTS_DIR, "report.raw.json")
+const SUMMARY_PATH = path.join(ARTIFACTS_DIR, "report.summary.json")
 
 const PORT = Number(process.env.QA_PORT ?? 3050)
 const BASE_URL = (process.env.QA_BASE_URL ?? `http://localhost:${PORT}`).replace(/\/$/, "")
@@ -422,4 +424,7 @@ test.afterAll(async () => {
   }
 
   await fs.writeFile(REPORT_PATH, JSON.stringify(report, null, 2) + "\n", "utf8")
+
+  const summaryReport = buildSummary(report)
+  await fs.writeFile(SUMMARY_PATH, JSON.stringify(summaryReport, null, 2) + "\n", "utf8")
 })

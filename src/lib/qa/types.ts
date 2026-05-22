@@ -78,3 +78,54 @@ export type QaReport = {
   summary: QaReportSummary
   routes: QaRouteReport[]
 }
+
+export type QaRouteSummary = {
+  name: string
+  path: string
+  viewport: QaViewport
+  status: QaStatus
+  url: string
+  title: string
+  headline: string
+  issueCount: number
+  issueCodes: string[]
+  screenshotPath: string
+}
+
+export type QaIssueAggregate = {
+  code: string
+  severity: QaIssueSeverity
+  count: number
+  routes: Array<{ name: string; path: string; viewport: QaViewport }>
+  sampleMessage: string
+}
+
+export type QaLinkAggregate = {
+  href: string
+  text: string
+  foundOn: Array<{ name: string; path: string; viewport: QaViewport }>
+}
+
+export type QaRouteHotspot = {
+  name: string
+  path: string
+  viewport: QaViewport
+  status: QaStatus
+  issueCount: number
+  failCount: number
+  warningCount: number
+}
+
+export type QaSummaryReport = {
+  createdAt: string
+  baseUrl: string
+  sourceCreatedAt: string
+  totals: QaReportSummary
+  routes: QaRouteSummary[]
+  issueAggregates: QaIssueAggregate[]
+  hotspots: QaRouteHotspot[]
+  storeLinks: QaLinkAggregate[]
+  externalLinks: QaLinkAggregate[]
+  missingH1: Array<{ name: string; path: string; viewport: QaViewport }>
+  pagesWithoutTitle: Array<{ name: string; path: string; viewport: QaViewport }>
+}
