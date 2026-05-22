@@ -314,8 +314,8 @@ function phaseStatusStyle(status: RoadmapItem["status"]): CSSProperties {
     alignSelf: "flex-start",
     marginTop: "4px",
   }
-  if (status === "완료") return { ...base, background: "var(--accent)", color: "var(--accent-ink)", bordercolor: "var(--accent-text)" }
-  if (status === "진행 중") return { ...base, background: "var(--bg)", color: "var(--accent-text)", bordercolor: "var(--accent-text)" }
+  if (status === "완료") return { ...base, background: "var(--accent)", color: "var(--accent-ink)", borderColor: "var(--accent)" }
+  if (status === "진행 중") return { ...base, background: "var(--bg)", color: "var(--accent-text)", borderColor: "var(--accent)" }
   return { ...base, background: "var(--surface-2)", color: "var(--muted)" }
 }
 const phaseItems: CSSProperties = {
