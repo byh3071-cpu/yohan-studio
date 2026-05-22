@@ -30,7 +30,9 @@ function runQa(): Promise<RunResult> {
     const child = spawn(cmd, ["run", "qa:test"], {
       cwd: process.cwd(),
       env: process.env,
-      shell: false,
+      // Windows의 .cmd shim은 shell을 통해야 직접 exec 가능 (Node 22 spawn EINVAL 회피).
+      // 인자는 하드코딩이라 인젝션 위험 없음.
+      shell: isWin,
       windowsHide: true,
     })
 
