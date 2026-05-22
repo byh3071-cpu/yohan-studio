@@ -8,6 +8,7 @@ import { QaHotspots } from "@/components/qa/QaHotspots"
 import { QaIssueAggregateTable } from "@/components/qa/QaIssueAggregateTable"
 import { QaLinkPanel } from "@/components/qa/QaLinkPanel"
 import { QaRouteGrid } from "@/components/qa/QaRouteGrid"
+import { QaRunButton } from "@/components/qa/QaRunButton"
 
 export const metadata: Metadata = {
   title: "QA Report (admin)",
@@ -19,6 +20,7 @@ export const dynamic = "force-dynamic"
 
 export default async function QaAdminPage() {
   const summary = await loadSummaryReport()
+  const isDev = process.env.NODE_ENV !== "production"
 
   const section: CSSProperties = {
     background: "var(--bg)",
@@ -51,6 +53,7 @@ export default async function QaAdminPage() {
               createdAt={summary.createdAt}
               sourceCreatedAt={summary.sourceCreatedAt}
             />
+            {isDev && <QaRunButton />}
             <QaIssueAggregateTable aggregates={summary.issueAggregates} />
             <QaHotspots hotspots={summary.hotspots} />
             <QaRouteGrid routes={summary.routes} />
@@ -61,7 +64,10 @@ export default async function QaAdminPage() {
             />
           </>
         ) : (
-          <QaEmpty />
+          <>
+            {isDev && <QaRunButton />}
+            <QaEmpty />
+          </>
         )}
       </div>
     </section>
