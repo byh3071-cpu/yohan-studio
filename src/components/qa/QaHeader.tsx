@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { QaReportSummary } from "@/lib/qa/types"
 
 type Props = {
@@ -35,7 +35,7 @@ export function QaHeader({ totals, baseUrl, createdAt, sourceCreatedAt }: Props)
     color: "var(--ink)",
     marginBottom: "16px",
   }
-  const accent: CSSProperties = { color: "var(--accent)" }
+  const accent: CSSProperties = { color: "var(--accent-text)" }
   const meta: CSSProperties = {
     fontFamily: "var(--font-mono)",
     fontSize: "12px",

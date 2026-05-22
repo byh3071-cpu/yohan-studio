@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import { showroomProjects } from "@/data/showroomProjects"
 
 const wrap: CSSProperties = {
@@ -24,7 +24,7 @@ const eyebrow: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.12em",
   textTransform: "uppercase",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   marginBottom: "12px",
 }
 

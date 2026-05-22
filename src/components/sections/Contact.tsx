@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import type { CSSProperties, FormEvent } from "react"
 import { useState } from "react"
@@ -33,7 +33,7 @@ export function Contact() {
     color: "var(--ink)",
     marginBottom: "12px",
   }
-  const accent: CSSProperties = { color: "var(--accent)" }
+  const accent: CSSProperties = { color: "var(--accent-text)" }
   const sub: CSSProperties = {
     fontSize: "15px",
     color: "var(--ink-2)",

@@ -27,9 +27,15 @@
   --color-ink: #0a0a0a;
   --color-ink-2: #2b2723;
   --color-muted: #6b6357;
-  --color-muted-2: #968d7e;
+  --color-muted-2: #5a5247;
   --color-accent: #ff5c28;
   --color-accent-ink: #0a0a0a;
+  /* Text-safe accent — darker brand orange for use as text color on light bg.
+     Keep --color-accent for backgrounds/buttons (where dark ink contrast wins). */
+  /* AA-large threshold (≥3:1) on cream bg. Brand-leaning chestnut.
+     Trade-off: small (≤14px) labels still flagged by axe AA-normal (4.5).
+     Acceptable to keep vibrant brand identity. Document in ADR. */
+  --color-accent-text: #cc4818;
 
   /* Border + shadow split per design/v2/tokens.css */
   --color-line: #0a0a0a;
@@ -84,6 +90,7 @@
   --muted-2: var(--color-muted-2);
   --accent: var(--color-accent);
   --accent-ink: var(--color-accent-ink);
+  --accent-text: var(--color-accent-text);
 
   --line: var(--color-line);
   --line-soft: var(--color-line-soft);
@@ -124,10 +131,11 @@
     --color-ink: #f4f1ea;
     --color-ink-2: #dcd7cb;
     --color-muted: #94a3b8;
-    --color-muted-2: #6b6357;
+    --color-muted-2: #968d7e;
     --color-line: #334155;
     --color-line-soft: #2a2a2a;
     --color-shadow-ink: #f4f1ea;
+    --color-accent-text: #ff5c28;
     --color-footer-bg: #000000;
     --color-footer-text: #f4f1ea;
     --color-footer-muted: #6b6357;
@@ -388,7 +396,7 @@ header {
   margin-top: 1.75rem;
 }
 .mdx-content a {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;

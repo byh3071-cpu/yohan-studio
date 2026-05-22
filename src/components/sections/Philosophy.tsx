@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 
 const section: CSSProperties = {
   background: "var(--surface)",
@@ -30,7 +30,7 @@ const quote: CSSProperties = {
   maxWidth: "920px",
 }
 
-const accent: CSSProperties = { color: "var(--accent)" }
+const accent: CSSProperties = { color: "var(--accent-text)" }
 
 const grid: CSSProperties = {
   display: "grid",
@@ -56,7 +56,7 @@ const num: CSSProperties = {
   fontSize: "11px",
   fontWeight: 600,
   letterSpacing: "0.06em",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 
 const title: CSSProperties = {

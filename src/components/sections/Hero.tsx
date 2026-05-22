@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 
 const section: CSSProperties = {
   background: "var(--bg)",
@@ -40,7 +40,7 @@ const title: CSSProperties = {
   marginBottom: "32px",
 }
 
-const accentMark: CSSProperties = { color: "var(--accent)", display: "inline" }
+const accentMark: CSSProperties = { color: "var(--accent-text)", display: "inline" }
 
 // Editorial serif italic emphasis for a single headline word.
 // Same size as surrounding sans, differs only in style — italic synthesizes for Korean glyphs.

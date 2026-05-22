@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import { showroomProjects } from "@/data/showroomProjects"
 
@@ -38,7 +38,7 @@ const title: CSSProperties = {
   color: "var(--ink)",
 }
 
-const accentMark: CSSProperties = { color: "var(--accent)" }
+const accentMark: CSSProperties = { color: "var(--accent-text)" }
 
 const link: CSSProperties = {
   fontFamily: "var(--font-mono)",
@@ -85,7 +85,7 @@ const cat: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.08em",
   textTransform: "uppercase",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 
 const year: CSSProperties = {

@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import type { FeaturedBlog } from "@/data/featured"
 
@@ -32,7 +32,7 @@ export function BlogCard({ idx, date, title, excerpt, tags, slug }: Props) {
     fontFamily: "var(--font-mono)",
     fontSize: "12px",
     fontWeight: 600,
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     letterSpacing: "0.05em",
   }
   const ttl: CSSProperties = {

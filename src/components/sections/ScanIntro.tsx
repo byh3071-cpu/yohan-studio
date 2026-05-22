@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import { AREAS, AREA_LABELS_KO } from "@/data/aimScanQuestions"
 
@@ -40,7 +40,7 @@ const title: CSSProperties = {
   color: "var(--ink)",
 }
 
-const accent: CSSProperties = { color: "var(--accent)" }
+const accent: CSSProperties = { color: "var(--accent-text)" }
 
 const lead: CSSProperties = {
   fontSize: "16px",
@@ -141,7 +141,7 @@ const areaLabel: CSSProperties = {
 const areaNum: CSSProperties = {
   fontFamily: "var(--font-en)",
   fontSize: "12px",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   fontWeight: 600,
 }
 

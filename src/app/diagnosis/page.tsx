@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { DiagnosisForm } from "@/components/diagnosis/DiagnosisForm"
 
@@ -41,7 +41,7 @@ const title: CSSProperties = {
   marginBottom: "16px",
 }
 
-const accentMark: CSSProperties = { color: "var(--accent)" }
+const accentMark: CSSProperties = { color: "var(--accent-text)" }
 
 const lead: CSSProperties = {
   fontSize: "16px",

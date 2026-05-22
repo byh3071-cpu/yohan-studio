@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import type { BlogPostMeta } from "@/lib/blog"
 
@@ -27,7 +27,7 @@ const dateCol: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.05em",
 }
-const dateText: CSSProperties = { color: "var(--accent)" }
+const dateText: CSSProperties = { color: "var(--accent-text)" }
 const catText: CSSProperties = {
   color: "var(--muted)",
   textTransform: "uppercase",

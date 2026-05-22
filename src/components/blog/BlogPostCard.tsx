@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { BlogPostMeta } from "@/lib/blog"
@@ -61,7 +61,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     fontFamily: "var(--font-mono)",
     fontSize: "11px",
     fontWeight: 600,
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     letterSpacing: "0.06em",
     textTransform: "uppercase",
   }
@@ -107,7 +107,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     fontSize: "12px",
     fontWeight: 700,
     marginTop: "8px",
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     letterSpacing: "0.04em",
   }
 

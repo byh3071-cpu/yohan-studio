@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { ShowroomProject } from "@/data/showroomProjects"
 
 const card: CSSProperties = {
@@ -23,7 +23,7 @@ const cat: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "11px",
   fontWeight: 600,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   letterSpacing: "0.08em",
   textTransform: "uppercase",
 }
@@ -102,7 +102,7 @@ const link: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "11px",
   fontWeight: 700,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   letterSpacing: "0.05em",
   textTransform: "uppercase",
   textDecoration: "none",

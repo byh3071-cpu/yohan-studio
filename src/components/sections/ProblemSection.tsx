@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 
 const section: CSSProperties = {
@@ -33,7 +33,7 @@ const title: CSSProperties = {
   color: "var(--ink)",
 }
 
-const accent: CSSProperties = { color: "var(--accent)" }
+const accent: CSSProperties = { color: "var(--accent-text)" }
 
 const grid: CSSProperties = {
   display: "grid",
@@ -57,7 +57,7 @@ const num: CSSProperties = {
   fontSize: "32px",
   fontWeight: 800,
   lineHeight: 1,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 
 const heading: CSSProperties = {

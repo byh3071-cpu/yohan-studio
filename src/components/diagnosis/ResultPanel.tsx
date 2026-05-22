@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import type { ScanResult } from "@/lib/aimScan"
 import { AREA_LABELS_KO, AREA_DESC } from "@/data/aimScanQuestions"
@@ -63,7 +63,7 @@ const sectionTitle: CSSProperties = {
   fontWeight: 700,
   letterSpacing: "0.1em",
   textTransform: "uppercase",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   paddingBottom: "8px",
   borderBottom: "1px solid var(--line)",
 }
@@ -80,7 +80,7 @@ const itemNum: CSSProperties = {
   fontFamily: "var(--font-en)",
   fontSize: "13px",
   fontWeight: 600,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   width: "20px",
   flexShrink: 0,
 }

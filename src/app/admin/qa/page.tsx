@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { CSSProperties } from "react"
 import Link from "next/link"
 import { loadSummaryReport } from "@/lib/qa/loadReport"
@@ -36,7 +36,7 @@ export default async function QaAdminPage() {
     fontSize: "12px",
     fontWeight: 600,
     letterSpacing: "0.06em",
-    color: "var(--accent)",
+    color: "var(--accent-text)",
   }
 
   return (

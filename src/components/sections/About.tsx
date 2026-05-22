@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import { aboutTimeline } from "@/data/aboutTimeline"
 
 const section: CSSProperties = {
@@ -28,7 +28,7 @@ const title: CSSProperties = {
   marginBottom: "48px",
 }
 
-const accent: CSSProperties = { color: "var(--accent)" }
+const accent: CSSProperties = { color: "var(--accent-text)" }
 
 const tl: CSSProperties = {
   position: "relative",
@@ -70,7 +70,7 @@ const dt: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "12px",
   fontWeight: 600,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   letterSpacing: "0.05em",
   marginBottom: "4px",
 }

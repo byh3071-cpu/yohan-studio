@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 
 // 6 Q&A — answer-engine friendly. 자연어 질의를 그대로 받도록 한 문장 핵심 + 부연 한 단락.
 // 콘텐츠 변경 시 schema.org FAQPage 가 자동 동기화된다 (mainEntity 매핑이 이 배열 그대로).
@@ -115,7 +115,7 @@ const qMark: CSSProperties = {
   fontFamily: "var(--font-en)",
   fontSize: "13px",
   fontWeight: 700,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   letterSpacing: "0.05em",
   whiteSpace: "nowrap",
 }

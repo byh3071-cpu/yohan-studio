@@ -65,7 +65,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     fontSize: "12px",
     fontWeight: 600,
     letterSpacing: "0.06em",
-    color: "var(--accent)",
+    color: "var(--accent-text)",
   }
   const hero: CSSProperties = {
     marginBottom: "40px",
@@ -83,9 +83,9 @@ export default async function BlogPostPage({ params }: PageProps) {
     fontWeight: 600,
     letterSpacing: "0.05em",
   }
-  const cat: CSSProperties = { color: "var(--accent)", textTransform: "uppercase" }
+  const cat: CSSProperties = { color: "var(--accent-text)", textTransform: "uppercase" }
   const dateStyle: CSSProperties = {
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     fontFamily: "var(--font-en)",
     fontWeight: 500,
     letterSpacing: "0.04em",

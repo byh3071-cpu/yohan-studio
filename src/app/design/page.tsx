@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { CSSProperties } from "react"
 import Link from "next/link"
 
@@ -128,7 +128,7 @@ const back: CSSProperties = {
   fontSize: "12px",
   fontWeight: 600,
   letterSpacing: "0.06em",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 
 const pageHead: CSSProperties = {
@@ -152,7 +152,7 @@ const pageTitle: CSSProperties = {
   letterSpacing: "-0.03em",
   color: "var(--ink)",
 }
-const accent: CSSProperties = { color: "var(--accent)" }
+const accent: CSSProperties = { color: "var(--accent-text)" }
 const pageSub: CSSProperties = {
   marginTop: "16px",
   fontSize: "16px",
@@ -255,7 +255,7 @@ const aiTag: CSSProperties = {
   fontSize: "10px",
   fontWeight: 700,
   letterSpacing: "0.08em",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 const aiScope: CSSProperties = {
   fontFamily: "var(--font-mono)",
@@ -293,7 +293,7 @@ const phaseLabel: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.08em",
   textTransform: "uppercase",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 const phaseTitle: CSSProperties = {
   fontSize: "17px",
@@ -314,8 +314,8 @@ function phaseStatusStyle(status: RoadmapItem["status"]): CSSProperties {
     alignSelf: "flex-start",
     marginTop: "4px",
   }
-  if (status === "완료") return { ...base, background: "var(--accent)", color: "var(--accent-ink)", borderColor: "var(--accent)" }
-  if (status === "진행 중") return { ...base, background: "var(--bg)", color: "var(--accent)", borderColor: "var(--accent)" }
+  if (status === "완료") return { ...base, background: "var(--accent)", color: "var(--accent-ink)", bordercolor: "var(--accent-text)" }
+  if (status === "진행 중") return { ...base, background: "var(--bg)", color: "var(--accent-text)", bordercolor: "var(--accent-text)" }
   return { ...base, background: "var(--surface-2)", color: "var(--muted)" }
 }
 const phaseItems: CSSProperties = {

@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { PortfolioProject } from "@/data/portfolioProjects"
 import { portfolioProjects } from "@/data/portfolioProjects"
 
@@ -39,7 +39,7 @@ function PortfolioCard({
     fontFamily: "var(--font-en)",
     fontSize: "12px",
     fontWeight: 500,
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     letterSpacing: "0.05em",
   }
   const titleS: CSSProperties = {
@@ -83,7 +83,7 @@ function PortfolioCard({
     fontFamily: "var(--font-mono)",
     fontSize: "11px",
     fontWeight: 700,
-    color: "var(--accent)",
+    color: "var(--accent-text)",
     letterSpacing: "0.05em",
     textTransform: "uppercase",
   }
@@ -153,7 +153,7 @@ export function Portfolio() {
     letterSpacing: "-0.03em",
     color: "var(--ink)",
   }
-  const accentMark: CSSProperties = { color: "var(--accent)" }
+  const accentMark: CSSProperties = { color: "var(--accent-text)" }
   const count: CSSProperties = {
     fontFamily: "var(--font-en)",
     fontSize: "13px",

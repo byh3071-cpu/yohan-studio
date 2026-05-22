@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { Service } from "@/data/services"
 
 const card: CSSProperties = {
@@ -31,7 +31,7 @@ const eyebrow: CSSProperties = {
   fontWeight: 700,
   letterSpacing: "0.1em",
   textTransform: "uppercase",
-  color: "var(--accent)",
+  color: "var(--accent-text)",
 }
 
 const duration: CSSProperties = {

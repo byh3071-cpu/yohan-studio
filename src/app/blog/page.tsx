@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { CSSProperties } from "react"
 import { Suspense } from "react"
 import Link from "next/link"
@@ -40,7 +40,7 @@ export default function BlogIndexPage() {
     letterSpacing: "-0.03em",
     color: "var(--ink)",
   }
-  const accent: CSSProperties = { color: "var(--accent)" }
+  const accent: CSSProperties = { color: "var(--accent-text)" }
   const sub: CSSProperties = {
     marginTop: "16px",
     fontSize: "15px",
@@ -55,7 +55,7 @@ export default function BlogIndexPage() {
     fontSize: "12px",
     fontWeight: 600,
     letterSpacing: "0.06em",
-    color: "var(--accent)",
+    color: "var(--accent-text)",
   }
 
   return (

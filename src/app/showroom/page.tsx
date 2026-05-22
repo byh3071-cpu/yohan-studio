@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { FeaturedBanner } from "@/components/showroom/FeaturedBanner"
@@ -47,7 +47,7 @@ const title: CSSProperties = {
   color: "var(--ink)",
 }
 
-const accentMark: CSSProperties = { color: "var(--accent)" }
+const accentMark: CSSProperties = { color: "var(--accent-text)" }
 
 const count: CSSProperties = {
   fontFamily: "var(--font-en)",

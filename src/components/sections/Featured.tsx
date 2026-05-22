@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import type { FeaturedProduct } from "@/data/featured"
 import { featuredProducts } from "@/data/featured"
@@ -137,7 +137,7 @@ export function Featured() {
     letterSpacing: "-0.03em",
     color: "var(--ink)",
   }
-  const accentMark: CSSProperties = { color: "var(--accent)" }
+  const accentMark: CSSProperties = { color: "var(--accent-text)" }
   const more: CSSProperties = {
     fontFamily: "var(--font-mono)",
     fontSize: "12px",

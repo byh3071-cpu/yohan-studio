@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+﻿import type { CSSProperties } from "react"
 import Link from "next/link"
 import type { BlogPostMeta } from "@/lib/blog"
 
@@ -55,7 +55,7 @@ const dateStyle: CSSProperties = {
   fontFamily: "var(--font-en)",
   fontSize: "11px",
   fontWeight: 500,
-  color: "var(--accent)",
+  color: "var(--accent-text)",
   letterSpacing: "0.04em",
 }
 
