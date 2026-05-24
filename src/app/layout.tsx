@@ -51,7 +51,7 @@ const GSC_GOOGLE_VERIFICATION =
 
 const NAVER_SITE_VERIFICATION =
   process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION?.trim() ||
-  "4adadf6805682cfe2018d26a6102793e31e964d9"
+  "4fee04b25e0cb8b3174f9a741a16636cafeed6cf"
 
 // Site-wide JSON-LD: Person + Organization + WebSite under a single @graph so
 // answer engines (ChatGPT / Perplexity / Gemini) can resolve the entity behind the brand.
@@ -133,6 +133,9 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} ${sourceSerif.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <meta name="naver-site-verification" content={NAVER_SITE_VERIFICATION} />
+      </head>
       <body className="flex min-h-screen flex-col antialiased">
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT_SCRIPT}
