@@ -1,5 +1,5 @@
 import type { ReactElement } from "react"
-import SnapContextPost, { post as snapcontextPost } from "@/app/blog/posts/snapcontext-v013-store-journey.mdx"
+import SnapContextPost, { post as snapcontextPost } from "@/blog/posts/snapcontext-v013-store-journey.mdx"
 
 type ComponentPostMeta = {
   slug: string
