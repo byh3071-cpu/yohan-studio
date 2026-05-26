@@ -148,7 +148,7 @@ const areaNum: CSSProperties = {
 export function ScanIntro() {
   return (
     <section style={section}>
-      <div style={inner}>
+      <div className="scan-intro-grid" style={inner}>
         <div style={head}>
           <div style={eyebrow}>{"// 04 — 진단"}</div>
           <h2 style={title}>

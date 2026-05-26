@@ -7,6 +7,7 @@ import { ProblemSection } from "@/components/sections/ProblemSection"
 import { ScanIntro } from "@/components/sections/ScanIntro"
 import { ServicesPreview } from "@/components/sections/ServicesPreview"
 import { ShowroomPreview } from "@/components/sections/ShowroomPreview"
+import { StorePreview } from "@/components/sections/StorePreview"
 
 export default function HomePage() {
   return (
@@ -17,6 +18,7 @@ export default function HomePage() {
       <ShowroomPreview />
       <ScanIntro />
       <ServicesPreview />
+      <StorePreview />
       <About />
       <Faq />
       <Contact />

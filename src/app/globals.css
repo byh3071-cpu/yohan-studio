@@ -519,6 +519,16 @@ header {
   }
 }
 
+/* ScanIntro: 2열(본문 + 진단 영역 사이드)이 좁은 화면에서 겹치는 문제 차단.
+   gridTemplateColumns의 minmax(280px, 360px) 사이드가 viewport보다 넓어
+   본문 텍스트를 가리는 버그를 단일 컬럼으로 강제 전환해 해결. */
+@media (max-width: 900px) {
+  .scan-intro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
 @media (max-width: 640px) {
   .post-nav {
     grid-template-columns: 1fr !important;

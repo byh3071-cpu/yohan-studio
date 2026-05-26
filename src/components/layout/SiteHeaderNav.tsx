@@ -107,7 +107,7 @@ export function SiteHeaderNav() {
               ? { ...linkBase, borderLeft: "2px solid var(--accent)" }
               : linkBase
             return (
-              <Link key={e.label} href={e.href} style={link}>
+              <Link key={e.label} href={e.href} style={link} onClick={() => setOpen(false)}>
                 {e.label}
               </Link>
             )
@@ -121,7 +121,7 @@ export function SiteHeaderNav() {
               ? { ...linkBase, borderLeft: "2px solid var(--accent)" }
               : linkBase
             return (
-              <Link key={e.label} href={e.href} style={link}>
+              <Link key={e.label} href={e.href} style={link} onClick={() => setOpen(false)}>
                 {e.label}
               </Link>
             )
