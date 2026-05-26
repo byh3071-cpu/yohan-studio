@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import { ProductCard } from "@/components/store/ProductCard"
 import { supabase } from "@/lib/supabase"
+import type { Database } from "@/types/database"
 
 export const metadata: Metadata = {
   title: "Store — Yohan Studio",
@@ -86,12 +87,25 @@ const errorBox: CSSProperties = {
   borderColor: "var(--accent)",
 }
 
+type ProductRow = Database["public"]["Tables"]["studio_products"]["Row"]
+
+async function fetchActiveProducts(): Promise<{ products: ProductRow[] | null; error: string | null }> {
+  try {
+    const { data, error } = await supabase
+      .from("studio_products")
+      .select("*")
+      .eq("active", true)
+      .order("created_at", { ascending: false })
+    return { products: data, error: error?.message ?? null }
+  } catch (e) {
+    // ISR 프리렌더 단계에서 Supabase env 누락이면 throw 발생.
+    // 빈 상태 렌더로 폴백 → 빌드 통과, revalidate 후 실데이터로 채워짐.
+    return { products: null, error: e instanceof Error ? e.message : "unknown" }
+  }
+}
+
 export default async function StorePage() {
-  const { data: products, error } = await supabase
-    .from("studio_products")
-    .select("*")
-    .eq("active", true)
-    .order("created_at", { ascending: false })
+  const { products, error } = await fetchActiveProducts()
 
   return (
     <section style={section}>
