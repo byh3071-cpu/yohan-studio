@@ -97,7 +97,7 @@ export function Footer() {
             <Link href="/vhk" style={link}>
               VHK
             </Link>
-            <Link href="/#store" style={link}>
+            <Link href="/store" style={link}>
               스토어
             </Link>
           </div>

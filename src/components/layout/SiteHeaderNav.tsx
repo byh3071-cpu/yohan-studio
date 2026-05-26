@@ -40,7 +40,7 @@ const primaryEntries: NavEntry[] = [
   { label: "VHK", href: "/vhk", match: (p) => p === "/vhk" },
   { label: "진단", href: "/diagnosis", match: (p) => p === "/diagnosis" },
   { label: "서비스", href: "/services", match: (p) => p === "/services" },
-  { label: "스토어", href: "/#store", match: () => false },
+  { label: "스토어", href: "/store", match: (p) => p === "/store" || p.startsWith("/store/") },
 ]
 
 const auxiliaryEntries: NavEntry[] = [
