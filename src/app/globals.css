@@ -319,6 +319,45 @@ header {
   }
 }
 
+/* ─── VHK landing — terminal caret + spec-arrow pulse ─────────────────── */
+@keyframes vhk-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.vhk-caret {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--color-accent, #FF5C28);
+  animation: vhk-blink 1s steps(1) infinite;
+}
+
+@keyframes vhk-arrow-slide {
+  0%   { transform: translateX(-4px); opacity: 0.6; }
+  50%  { transform: translateX(4px);  opacity: 1;   }
+  100% { transform: translateX(-4px); opacity: 0.6; }
+}
+.vhk-arrow svg {
+  color: var(--accent);
+  animation: vhk-arrow-slide 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* .vhk/ Spec — desktop: tree | flow side-by-side; flow row: universal → arrow → outputs */
+@media (min-width: 900px) {
+  .vhk-spec-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) !important;
+  }
+  .vhk-spec-flow {
+    grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1.1fr) !important;
+    align-items: center !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vhk-caret { animation: none; opacity: 1; }
+  .vhk-arrow svg { animation: none; transform: none; opacity: 1; }
+}
+
 /* Editorial marquee — duplicate content twice for seamless loop, translate -50%. */
 @keyframes marquee {
   from {
