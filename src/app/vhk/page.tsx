@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { VhkHero } from "@/components/vhk/VhkHero"
 import { VhkPain } from "@/components/vhk/VhkPain"
+import { VhkRoles } from "@/components/vhk/VhkRoles"
 import { VhkFeatures } from "@/components/vhk/VhkFeatures"
 import { VhkSpec } from "@/components/vhk/VhkSpec"
 import { VhkRoadmap } from "@/components/vhk/VhkRoadmap"
@@ -12,18 +13,20 @@ const BASE_URL = getSiteUrl()
 export const metadata: Metadata = {
   title: "VHK — Vibe Harness Kit",
   description:
-    "AI 코딩 컨텍스트, 어디서든. .vhk/ 스펙 하나로 Cursor · Claude · Copilot까지 따라온다. npm i -g @byh3071/vhk",
+    "바이브코딩 CLI — AI 코딩 컨텍스트 하네스. RULES.md · cursorrules · vhk gate로 아이디어 검증 후 init. npm i -g @byh3071/vhk",
   alternates: { canonical: "/vhk" },
   openGraph: {
     title: "VHK — Vibe Harness Kit",
-    description: "Your AI Coding Context, Everywhere.",
+    description:
+      "바이브코딩 CLI — IDE 위 운영·컨텍스트 레이어. Cursor · Claude · Codex.",
     url: "/vhk",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "VHK — Vibe Harness Kit",
-    description: "Your AI Coding Context, Everywhere.",
+    description:
+      "바이브코딩 CLI — IDE 위 운영·컨텍스트 레이어. Cursor · Claude · Codex.",
   },
 }
 
@@ -36,7 +39,7 @@ const SOFTWARE_LD = {
   applicationCategory: "DeveloperApplication",
   operatingSystem: "macOS, Linux, Windows",
   description:
-    "AI 코딩 컨텍스트를 IDE 간 이식 가능하게 만드는 CLI 도구. .vhk/ 스펙으로 Cursor · Claude · Copilot의 규칙을 한 곳에서 관리.",
+    "바이브코딩 풀사이클 CLI. RULES.md 기반으로 Cursor · Claude · Codex 규칙을 동기화하고 .vhk/에 맥락을 저장한다.",
   url: `${BASE_URL}/vhk`,
   downloadUrl: "https://www.npmjs.com/package/@byh3071/vhk",
   author: { "@id": `${BASE_URL}/#person` },
@@ -57,6 +60,7 @@ export default function VhkPage() {
       />
       <VhkHero />
       <VhkPain />
+      <VhkRoles />
       <VhkFeatures />
       <VhkSpec />
       <VhkRoadmap />

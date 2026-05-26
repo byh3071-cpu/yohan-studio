@@ -8,6 +8,7 @@
 - [Home](https://yohan.studio): 자기소개, 메타데이터, 포트폴리오·블로그 진입
 - [Portfolio](https://yohan.studio/portfolio): 제작물 목록 (Yohan Studio 사이트 자체가 첫 작품)
 - [Design System](https://yohan.studio/design): v1→v2 진화, AI 분업, 로드맵 Phase 1~4
+- [VHK — Vibe Harness Kit](https://yohan.studio/vhk): 바이브코딩 풀사이클 CLI (`npm i -g @byh3071/vhk`)
 
 ## Blog
 - [Blog Index](https://yohan.studio/blog): 글 목록 + 태그/검색 필터

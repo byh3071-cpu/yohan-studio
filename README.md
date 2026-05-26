@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3050](http://localhost:3050) with your browser to see the result. (포커스 피드가 `:3000`을 쓰므로 이 프로젝트 dev는 **3050** 고정.)
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

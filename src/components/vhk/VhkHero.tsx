@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
-import { TerminalBlock } from "./TerminalBlock"
-import { VHK_INSTALL_CMD, VHK_LINKS } from "@/data/vhk"
+import { VhkHeroCtas } from "./VhkHeroCtas"
+import { VhkHeroDemo } from "./VhkHeroDemo"
 
 const section: CSSProperties = {
   background: "var(--bg)",
@@ -37,8 +37,10 @@ const eyeMark: CSSProperties = {
 }
 
 const title: CSSProperties = {
+  fontFamily: "var(--font-sans)",
   fontSize: "clamp(40px, 7vw, 88px)",
   fontWeight: 800,
+  fontStyle: "normal",
   lineHeight: 0.96,
   letterSpacing: "-0.04em",
   color: "var(--ink)",
@@ -46,12 +48,6 @@ const title: CSSProperties = {
 }
 
 const accentMark: CSSProperties = { color: "var(--accent)", display: "inline" }
-
-const serifEm: CSSProperties = {
-  fontFamily: "var(--font-serif)",
-  fontStyle: "italic",
-  fontWeight: 600,
-}
 
 const tagline: CSSProperties = {
   fontSize: "18px",
@@ -65,42 +61,32 @@ const sub: CSSProperties = {
   fontSize: "16px",
   lineHeight: 1.65,
   color: "var(--ink-2)",
-  maxWidth: "480px",
-  marginBottom: "36px",
+  maxWidth: "520px",
+  marginBottom: "16px",
   borderLeft: "3px solid var(--line)",
   paddingLeft: "18px",
 }
 
-const ctaRow: CSSProperties = { display: "flex", gap: "12px", flexWrap: "wrap" }
-
-const btnPrimary: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "8px",
-  padding: "14px 22px",
-  fontSize: "14px",
-  fontWeight: 700,
-  background: "var(--accent)",
-  color: "var(--accent-ink)",
-  border: "var(--border-w) solid var(--line)",
-  boxShadow: "var(--shadow)",
-  textDecoration: "none",
-  whiteSpace: "nowrap",
-}
-
-const btnGhost: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "8px",
-  padding: "14px 22px",
-  fontSize: "14px",
-  fontWeight: 700,
-  background: "var(--bg)",
-  color: "var(--ink)",
+const workflow: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "13px",
+  lineHeight: 1.6,
+  color: "var(--ink-2)",
+  maxWidth: "520px",
+  marginBottom: "28px",
+  padding: "12px 14px",
+  background: "var(--surface)",
   border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow-sm)",
-  textDecoration: "none",
-  whiteSpace: "nowrap",
+}
+
+const workflowAccent: CSSProperties = { color: "var(--accent)", fontWeight: 700 }
+
+const cliNote: CSSProperties = {
+  fontSize: "14px",
+  color: "var(--muted)",
+  marginBottom: "20px",
+  maxWidth: "520px",
 }
 
 export function VhkHero() {
@@ -120,52 +106,30 @@ export function VhkHero() {
             <br />
             Your AI Coding
             <br />
-            <span style={serifEm}>Context</span>, Everywhere
+            Context, Everywhere
             <span style={accentMark}>.</span>
           </h1>
-          <p style={tagline}>AI 코딩, 이것만 설치하면 시작.</p>
+          <p style={tagline}>바이브코딩 풀사이클 CLI — IDE 위 운영·컨텍스트 레이어.</p>
           <p style={sub}>
-            Cursor · Claude · Copilot — IDE를 바꿔도 프로젝트의 맥락은
-            <br />
-            그대로 따라온다. 32개 명령어, 하나의 CLI.
+            Cursor · Claude · Codex — IDE를 바꿔도 프로젝트 맥락은 그대로.
+            30개+ 명령어, 하나의 CLI.
           </p>
-          <div style={ctaRow}>
-            <a
-              href={VHK_LINKS.github}
-              target="_blank"
-              rel="noreferrer noopener"
-              style={btnPrimary}
-            >
-              GitHub →
-            </a>
-            <a
-              href={VHK_LINKS.npm}
-              target="_blank"
-              rel="noreferrer noopener"
-              style={btnGhost}
-            >
-              npm
-            </a>
-            <a
-              href={VHK_LINKS.disquiet}
-              target="_blank"
-              rel="noreferrer noopener"
-              style={btnGhost}
-            >
-              디스콰이엇
-            </a>
-          </div>
+          <p style={workflow}>
+            아이디어부터:{" "}
+            <span style={workflowAccent}>vhk gate</span>
+            {" → GO 판정 후 "}
+            <span style={workflowAccent}>vhk init</span>
+          </p>
+          <p style={cliNote}>
+            명령을 외우지 않아도 된다. 설치 후{" "}
+            <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk</code>
+            만 치면 메뉴가 열린다.
+          </p>
+          <VhkHeroCtas />
         </div>
 
         <aside className="hero-meta">
-          <TerminalBlock
-            command={VHK_INSTALL_CMD}
-            successLines={[
-              "",
-              "✓ installed",
-              "→ run `vhk init` to start.",
-            ]}
-          />
+          <VhkHeroDemo />
         </aside>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { VHK_SPEC_TREE_V1 } from "@/data/vhk"
 
 const section: CSSProperties = {
   background: "var(--surface)",
@@ -35,6 +36,20 @@ const title: CSSProperties = {
 
 const accent: CSSProperties = { color: "var(--accent)" }
 
+const badge: CSSProperties = {
+  display: "inline-block",
+  fontFamily: "var(--font-mono)",
+  fontSize: "11px",
+  fontWeight: 700,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase",
+  color: "var(--accent-ink)",
+  background: "var(--accent)",
+  padding: "4px 10px",
+  marginBottom: "12px",
+  border: "var(--border-w) solid var(--line)",
+}
+
 const lead: CSSProperties = {
   fontSize: "16px",
   lineHeight: 1.65,
@@ -50,13 +65,13 @@ const layout: CSSProperties = {
 }
 
 const tree: CSSProperties = {
-  background: "#0A0A0A",
+  background: "var(--ink)",
   border: "1.5px solid var(--line)",
   boxShadow: "var(--shadow)",
   fontFamily: "var(--font-mono)",
   fontSize: "13px",
   lineHeight: 1.8,
-  color: "#F4F1EA",
+  color: "var(--bg)",
   padding: "24px 26px",
   overflowX: "auto",
   whiteSpace: "pre",
@@ -138,43 +153,32 @@ export function VhkSpec() {
     <section style={section}>
       <div style={inner}>
         <div style={head}>
-          <div style={eyebrow}>{"// 04 — .VHK/ SPEC"}</div>
+          <div style={eyebrow}>{"// 04 — PROJECT + .VHK/"}</div>
+          <span style={badge}>v1.0 현재</span>
           <h2 style={title}>
-            .vhk/ — AI 코딩 컨텍스트의{" "}
-            <span style={accent}>새로운 표준</span>.
+            프로젝트 루트 + <span style={accent}>.vhk/</span> 구조.
           </h2>
           <p style={lead}>
-            프로젝트 루트에 .vhk/ 하나면, 어떤 AI 도구를 쓰든 맥락이 따라온다.
-            규칙을 한 번 작성하면, VHK가 IDE별로 변환한다.
+            v1.0.x 기준 실제 산출물. RULES.md를 한 곳에서 쓰고, VHK가 IDE별 규칙 파일로
+            동기화한다. Layer 2~4 비전은 아래 로드맵 섹션.
           </p>
         </div>
 
         <div className="vhk-spec-grid" style={layout}>
           <div>
-            <div style={treeLabel}>{"// 디렉토리 구조"}</div>
-            <pre style={tree}>
-{`.vhk/
-├── rules/
-│   ├── universal.md       ← 마스터 규칙 (한 번 작성)
-│   ├── .cursorrules       ← Cursor용 (자동 생성)
-│   └── CLAUDE.md          ← Claude용 (자동 생성)
-├── context/
-│   └── project.md         ← 프로젝트 정의
-├── memory/
-│   └── decisions.md       ← 결정사항 기록
-└── prompts/               ← 재사용 프롬프트`}
-            </pre>
+            <div style={treeLabel}>{"// 디렉토리 구조 (README 정합)"}</div>
+            <pre style={tree}>{VHK_SPEC_TREE_V1}</pre>
           </div>
 
           <div>
-            <div style={treeLabel}>{"// 변환 흐름"}</div>
+            <div style={treeLabel}>{"// vhk sync 변환 흐름"}</div>
             <div className="vhk-spec-flow" style={tree3Cols}>
               <article style={fileBoxAccent}>
-                <span style={fileName}>universal.md</span>
+                <span style={fileName}>RULES.md</span>
                 <span style={fileNote}>
-                  한 번 작성하는 마스터 규칙.
+                  마스터 규칙 — 프로젝트 톤, 코딩 컨벤션, 회피 항목.
                   <br />
-                  프로젝트 톤, 코딩 컨벤션, 회피 항목.
+                  vhk sync의 단일 소스.
                 </span>
               </article>
 
@@ -206,11 +210,11 @@ export function VhkSpec() {
               <div style={stack}>
                 <article style={fileBox}>
                   <span style={fileName}>.cursorrules</span>
-                  <span style={fileNote}>Cursor 전용 포맷으로 자동 변환.</span>
+                  <span style={fileNote}>Cursor용으로 자동 동기화.</span>
                 </article>
                 <article style={fileBox}>
                   <span style={fileName}>CLAUDE.md</span>
-                  <span style={fileNote}>Claude Code 전용 운영 규칙으로 변환.</span>
+                  <span style={fileNote}>Claude Code 운영 규칙으로 동기화.</span>
                 </article>
                 <article style={fileBox}>
                   <span style={fileName}>AGENTS.md · …</span>
@@ -222,11 +226,19 @@ export function VhkSpec() {
         </div>
 
         <p style={punchline}>
-          코드에 Git이 있듯,
-          <br />
-          <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 700, fontFamily: "var(--font-sans)" }}>
-            AI 코딩 컨텍스트에도 표준이 필요하다.
+          배포는{" "}
+          <span style={{ fontFamily: "var(--font-mono)", fontStyle: "normal", fontWeight: 700, color: "var(--accent)" }}>
+            vhk deploy
           </span>
+          /{" "}
+          <span style={{ fontFamily: "var(--font-mono)", fontStyle: "normal", fontWeight: 700, color: "var(--accent)" }}>
+            publish
+          </span>
+          . 출하 전 점검은{" "}
+          <span style={{ fontFamily: "var(--font-mono)", fontStyle: "normal", fontWeight: 700, color: "var(--accent)" }}>
+            vhk ship
+          </span>
+          .
         </p>
       </div>
     </section>

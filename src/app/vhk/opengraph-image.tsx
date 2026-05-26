@@ -81,8 +81,7 @@ export default function Image() {
               flexDirection: "column",
             }}
           >
-            <span>Your AI Coding Context,</span>
-            <span style={{ fontStyle: "italic" }}>Everywhere.</span>
+            <span>Your AI Coding Context, Everywhere.</span>
           </div>
         </div>
 

@@ -108,7 +108,13 @@ export function VhkCta() {
           지금 <span style={accent}>시작</span>하세요.
         </h2>
         <p style={lead}>
-          npm 한 줄이면 끝. `vhk init`으로 첫 프로젝트를 세팅해보세요.
+          npm 한 줄이면 끝. 설치 후{" "}
+          <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk</code>
+          만 치면 메뉴가 열린다. 아이디어부터{" "}
+          <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk gate</code>
+          , 통과 후{" "}
+          <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk init</code>
+          .
         </p>
 
         <div style={cmdBox}>

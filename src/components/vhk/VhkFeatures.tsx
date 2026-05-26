@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react"
-import { vhkCommands } from "@/data/vhk"
+import { vhkCommands, VHK_LINKS } from "@/data/vhk"
 
 const section: CSSProperties = {
   background: "var(--bg)",
@@ -41,6 +41,13 @@ const lead: CSSProperties = {
   lineHeight: 1.65,
   color: "var(--ink-2)",
   maxWidth: "640px",
+}
+
+const readmeLink: CSSProperties = {
+  color: "var(--accent)",
+  fontWeight: 700,
+  textDecoration: "underline",
+  textUnderlineOffset: "3px",
 }
 
 const grid: CSSProperties = {
@@ -122,7 +129,7 @@ const entryCmd: CSSProperties = {
   fontSize: "13px",
   fontWeight: 700,
   color: "var(--accent)",
-  background: "#0A0A0A",
+  background: "var(--ink)",
   padding: "8px 10px",
   display: "inline-block",
   width: "fit-content",
@@ -135,11 +142,20 @@ export function VhkFeatures() {
         <div style={head}>
           <div style={eyebrow}>{"// 03 — FEATURES"}</div>
           <h2 style={title}>
-            32개 명령어, <span style={accent}>하나의 CLI</span>.
+            30개+ 명령어, <span style={accent}>하나의 CLI</span>.
           </h2>
           <p style={lead}>
-            처음 깔면 `init` 하나로 시작. 이미 쓰고 있다면 `sync`로 IDE 간 규칙 동기화.
-            나머지는 필요할 때 꺼내 쓴다.
+            권장 순서:{" "}
+            <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk gate</code>
+            {" → "}
+            <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk init</code>
+            {" → 개발 → "}
+            <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk sync</code>
+            . 아래는 자주 쓰는 핵심 9개 —{" "}
+            <a href={VHK_LINKS.npm} target="_blank" rel="noreferrer noopener" style={readmeLink}>
+              전체 명령은 README
+            </a>
+            .
           </p>
         </div>
 
@@ -158,12 +174,23 @@ export function VhkFeatures() {
 
         <div style={entryGrid}>
           <article style={entryCard}>
+            <span style={entryLabel}>{"// 아이디어부터"}</span>
+            <h3 style={entryHead}>검증 후 시작</h3>
+            <code style={entryCmd}>vhk gate</code>
+            <p style={desc}>
+              퀵 5문항으로 GO/다듬기 판정. 기획이 끝났다면{" "}
+              <code style={{ fontFamily: "var(--font-mono)" }}>vhk init --skip-gate</code>
+              .
+            </p>
+          </article>
+          <article style={entryCard}>
             <span style={entryLabel}>{"// 처음이라면"}</span>
-            <h3 style={entryHead}>바이브코딩 입문자 — 한 줄로 시작</h3>
+            <h3 style={entryHead}>프로젝트 하네스 생성</h3>
             <code style={entryCmd}>vhk init</code>
             <p style={desc}>
-              프로젝트 루트에 `.vhk/` 디렉토리와 기본 규칙 파일을 생성한다.
-              IDE에 맞춰 자동 적용까지.
+              CLAUDE.md, .cursorrules, docs/ 구조를 만든다. 이후{" "}
+              <code style={{ fontFamily: "var(--font-mono)" }}>vhk sync</code>
+              로 IDE 규칙을 맞춘다.
             </p>
           </article>
           <article style={entryCard}>
@@ -171,7 +198,7 @@ export function VhkFeatures() {
             <h3 style={entryHead}>IDE 간 규칙을 한 곳에서</h3>
             <code style={entryCmd}>vhk sync</code>
             <p style={desc}>
-              universal.md 하나만 관리하면 .cursorrules, CLAUDE.md, AGENTS.md를
+              RULES.md 하나만 관리하면 .cursorrules, CLAUDE.md, AGENTS.md를
               자동으로 동기화한다.
             </p>
           </article>

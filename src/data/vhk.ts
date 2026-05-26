@@ -47,15 +47,79 @@ export type VhkCommand = {
 }
 
 export const vhkCommands: VhkCommand[] = [
+  { name: "gate", symbol: "🚦", desc: "아이디어 검증 (GO/다듬기)" },
   { name: "init", symbol: "🚀", desc: "프로젝트 세팅 원클릭" },
-  { name: "sync", symbol: "🔄", desc: "규칙 파일 동기화" },
-  { name: "recap", symbol: "🧠", desc: "세션 기록 자동 생성" },
-  { name: "check", symbol: "✅", desc: "프로젝트 품질 체크" },
-  { name: "ship", symbol: "📦", desc: "배포 준비 자동화" },
+  { name: "sync", symbol: "🔄", desc: "RULES.md → IDE 규칙 동기화" },
+  { name: "recap", symbol: "🧠", desc: "Git 변경 → docs/log/ 세션 로그" },
+  { name: "check", symbol: "✅", desc: "RULES.md 규칙 린트" },
+  { name: "ship", symbol: "📦", desc: "출하 전 체크 · 회고 · build-log" },
   { name: "secure", symbol: "🔒", desc: "보안 스캔" },
-  { name: "context", symbol: "📋", desc: "프로젝트 맥락 관리" },
-  { name: "memory", symbol: "💾", desc: "결정사항 기록" },
+  { name: "context", symbol: "📋", desc: ".vhk/context.md 생성" },
+  { name: "memory", symbol: "💾", desc: ".vhk/memory.json 결정 기록" },
 ]
+
+export type VhkProductRole = {
+  product: string
+  layer: string
+  role: string
+}
+
+export const vhkProductRoles: VhkProductRole[] = [
+  { product: "SnapContext", layer: "브라우저 확장", role: "웹 컨텍스트 캡처" },
+  { product: "VHK CLI", layer: "프로젝트 CLI", role: "AI 코딩 컨텍스트 하네스" },
+  { product: "Yohan Studio", layer: "사이트/OS", role: "스튜디오 허브 · 블로그" },
+]
+
+/** v1.0.x — Spec 섹션 디렉토리 트리 (README 정합) */
+export type VhkHeroDemoStep = {
+  label: string
+  command: string
+  output: string[]
+}
+
+/** Hero 터미널 데모 시나리오 (gate → init → sync 루프) */
+export const vhkHeroDemoSteps: VhkHeroDemoStep[] = [
+  {
+    label: "install",
+    command: VHK_INSTALL_CMD,
+    output: ["", "added 1 package in 2s", "✓ @byh3071/vhk@1.0.2"],
+  },
+  {
+    label: "gate",
+    command: "vhk gate",
+    output: ["", "🚦 아이디어 검증 · 퀵 5문항", "✓ GO — 지금 만들어도 됩니다"],
+  },
+  {
+    label: "init",
+    command: "vhk init",
+    output: ["", "🚀 프로젝트 초기화", "✓ CLAUDE.md · .cursorrules · docs/"],
+  },
+  {
+    label: "sync",
+    command: "vhk sync",
+    output: [
+      "",
+      "🔄 RULES.md → IDE 규칙",
+      "✓ .cursorrules · CLAUDE.md · AGENTS.md",
+    ],
+  },
+]
+
+export const VHK_SPEC_TREE_V1 = `// v1.0 — 프로젝트 루트
+RULES.md                  ← 마스터 규칙 (vhk sync 소스)
+CLAUDE.md                 ← Claude Code
+.cursorrules               ← Cursor
+docs/
+├── log/                   ← vhk recap 세션 로그
+├── adr/
+└── troubleshooting/
+
+// v1.0 — .vhk/
+.vhk/
+├── context.md             ← vhk context
+├── memory.json            ← vhk memory
+├── brief.md               ← vhk brief
+└── refs.json              ← vhk ref`
 
 export type VhkRoadmapPhase = {
   phase: string
@@ -96,16 +160,3 @@ export const vhkRoadmap: VhkRoadmapPhase[] = [
   },
 ]
 
-export type VhkSpecNode = {
-  path: string
-  desc: string
-}
-
-export const vhkSpecTree: VhkSpecNode[] = [
-  { path: "rules/universal.md", desc: "마스터 규칙 (한 번 작성)" },
-  { path: "rules/.cursorrules", desc: "Cursor용 (자동 생성)" },
-  { path: "rules/CLAUDE.md", desc: "Claude용 (자동 생성)" },
-  { path: "context/project.md", desc: "프로젝트 정의" },
-  { path: "memory/decisions.md", desc: "결정사항 기록" },
-  { path: "prompts/", desc: "재사용 프롬프트" },
-]

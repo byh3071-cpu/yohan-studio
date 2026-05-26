@@ -133,7 +133,9 @@ export function VhkRoadmap() {
             VHK는 <span style={accent}>진화한다</span>.
           </h2>
           <p style={lead}>
-            4단계 로드맵으로 .vhk/ 스펙을 표준까지 끌고 간다.
+            Layer 1은 v1.0 현재. Layer 2~4는{" "}
+            <span style={{ fontWeight: 700, color: "var(--ink)" }}>미래 비전</span>
+            {" "}— 인텔리전스, 플랫폼, 프로토콜 단계로 확장한다.
           </p>
         </div>
 
