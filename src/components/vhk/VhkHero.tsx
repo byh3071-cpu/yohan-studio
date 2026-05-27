@@ -109,10 +109,10 @@ export function VhkHero() {
             Context, Everywhere
             <span style={accentMark}>.</span>
           </h1>
-          <p style={tagline}>바이브코딩 풀사이클 CLI — IDE 위 운영·컨텍스트 레이어.</p>
+          <p style={tagline}>바이브코딩 풀사이클 CLI — 컨텍스트 + 자율 하네스.</p>
           <p style={sub}>
             Cursor · Claude · Codex — IDE를 바꿔도 프로젝트 맥락은 그대로.
-            30개+ 명령어, 하나의 CLI.
+            35개 명령어 · MCP 24 tool · goals 체계로 AI 에이전트가 스스로 목표를 추적한다.
           </p>
           <p style={workflow}>
             아이디어부터:{" "}

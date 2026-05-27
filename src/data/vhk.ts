@@ -56,6 +56,10 @@ export const vhkCommands: VhkCommand[] = [
   { name: "secure", symbol: "🔒", desc: "보안 스캔" },
   { name: "context", symbol: "📋", desc: ".vhk/context.md 생성" },
   { name: "memory", symbol: "💾", desc: ".vhk/memory.json 결정 기록" },
+  { name: "goal", symbol: "🎯", desc: "Goal 단계별 미션 (init/list/next/check/done)" },
+  { name: "blocker", symbol: "🚧", desc: "블로커 기록 + HARD_STOP 트립와이어" },
+  { name: "learn", symbol: "📚", desc: "교훈 기록 (docs/state/learnings.md)" },
+  { name: "resume", symbol: "▶️", desc: "HARD_STOP 해제 (--confirm 필수)" },
 ]
 
 /** v1.0.x — Spec 섹션 디렉토리 트리 (README 정합) */
@@ -93,17 +97,35 @@ export const vhkHeroDemoSteps: VhkHeroDemoStep[] = [
   },
 ]
 
-export const VHK_SPEC_TREE_V1 = `// v1.0 — 프로젝트 루트
+export const VHK_SPEC_TREE_V1 = `// v1.3 — 프로젝트 루트
 RULES.md                  ← 마스터 규칙 (vhk sync 소스)
 CLAUDE.md                 ← Claude Code
+AGENTS.md                 ← Codex / 범용 에이전트
 .cursorrules               ← Cursor
 docs/
 ├── log/                   ← vhk recap 세션 로그
 ├── adr/
-└── troubleshooting/
+├── troubleshooting/
+└── state/
+    ├── next-task.md       ← vhk goal next 산출 (SoT)
+    ├── blockers.md        ← vhk blocker (3건 → HARD_STOP)
+    └── learnings.md       ← vhk learn
 
-// v1.0 — .vhk/
+// v1.3 — goals/ + scripts/ (자율 하네스)
+goals/
+├── _meta.md
+├── 0-mcp-full-coverage.md
+├── 1-goal-command.md
+└── 2-agent-loop.md
+scripts/
+├── check-meta.sh
+├── check-goal-0.sh
+├── check-goal-1.sh
+└── check-goal-2.sh
+
+// v1.3 — .vhk/
 .vhk/
+├── HARD_STOP              ← 트립와이어 (gitignored)
 ├── context.md             ← vhk context
 ├── memory.json            ← vhk memory
 ├── brief.md               ← vhk brief
@@ -121,7 +143,7 @@ export const vhkRoadmap: VhkRoadmapPhase[] = [
   {
     phase: "Layer 1",
     title: "포터빌리티",
-    desc: "컨텍스트를 옮긴다 — 어떤 IDE를 쓰든 .vhk/ 하나로 따라온다.",
+    desc: "컨텍스트를 옮긴다 — 어떤 IDE를 쓰든 .vhk/ 하나로 따라온다. goals 체계 + 자율 루프로 AI 에이전트가 스스로 목표를 추적하고, MCP 24 tool 로 IDE 내에서 직접 호출한다.",
     state: "지금",
     color: "#22C55E",
   },

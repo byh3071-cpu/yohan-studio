@@ -142,7 +142,7 @@ export function VhkFeatures() {
         <div style={head}>
           <div style={eyebrow}>{"// 03 — FEATURES"}</div>
           <h2 style={title}>
-            30개+ 명령어, <span style={accent}>하나의 CLI</span>.
+            35개 명령어, <span style={accent}>하나의 CLI</span>.
           </h2>
           <p style={lead}>
             권장 순서:{" "}
@@ -151,7 +151,8 @@ export function VhkFeatures() {
             <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk init</code>
             {" → 개발 → "}
             <code style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>vhk sync</code>
-            . 아래는 자주 쓰는 핵심 9개 —{" "}
+            . Cursor·Claude Desktop 에서는 MCP 서버로 24개 tool 을 채팅에서 직접 호출.
+            아래는 자주 쓰는 핵심 13개 —{" "}
             <a href={VHK_LINKS.npm} target="_blank" rel="noreferrer noopener" style={readmeLink}>
               전체 명령은 README
             </a>
@@ -200,6 +201,16 @@ export function VhkFeatures() {
             <p style={desc}>
               RULES.md 하나만 관리하면 .cursorrules, CLAUDE.md, AGENTS.md를
               자동으로 동기화한다.
+            </p>
+          </article>
+          <article style={entryCard}>
+            <span style={entryLabel}>{"// Cursor·Claude Desktop"}</span>
+            <h3 style={entryHead}>MCP 서버로 24개 tool 호출</h3>
+            <code style={entryCmd}>vhk mcp-init</code>
+            <p style={desc}>
+              {".cursor/mcp.json 자동 생성 → 재시작 한 번이면 채팅에서 "}
+              <code style={{ fontFamily: "var(--font-mono)" }}>vhk status</code>
+              {" / save / goal / 24개 도구를 자연어로 호출."}
             </p>
           </article>
         </div>
