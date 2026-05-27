@@ -152,7 +152,7 @@ export function ScanIntro() {
         <div style={head}>
           <div style={eyebrow}>{"// 04 — 진단"}</div>
           <h2 style={title}>
-            <span style={accent}>AI&rsquo;m Scan</span>으로 빈 곳을 먼저 찾는다.
+            <span style={accent}>A&rsquo;Im Scan</span>으로 빈 곳을 먼저 찾는다.
           </h2>
           <p style={lead}>
             방향·전략·구조·수익화·프롬프트·디자인·의사결정 — 7개 영역을 21문항으로 진단한다.

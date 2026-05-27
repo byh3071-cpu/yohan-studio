@@ -178,7 +178,7 @@ export function Hero() {
           </p>
           <div style={ctaRow}>
             <a href="/diagnosis" style={btnPrimary}>
-              AI&rsquo;m Scan 진단하기 →
+              A&rsquo;Im Scan 진단하기 →
             </a>
             <a href="/services" style={btnGhost}>
               서비스 보기

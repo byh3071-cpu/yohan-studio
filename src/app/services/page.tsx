@@ -7,7 +7,7 @@ import { getSiteUrl } from "@/lib/siteUrl"
 export const metadata: Metadata = {
   title: "Services — Yohan Studio",
   description:
-    "AI 시대 1인 기업 운영체계를 함께 설계한다. AI'm Scan Report, AI'm OS Template, AI'm OS Build.",
+    "AI 시대 1인 기업 운영체계를 함께 설계한다. A'Im Scan Report, A'Im OS Template, A'Im OS Build.",
 }
 
 const section: CSSProperties = {

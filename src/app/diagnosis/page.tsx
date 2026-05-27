@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { DiagnosisForm } from "@/components/diagnosis/DiagnosisForm"
 
 export const metadata: Metadata = {
-  title: "AI'm Scan — 1인 기업 자가진단 · Yohan Studio",
+  title: "A'Im Scan — 1인 기업 자가진단 · Yohan Studio",
   description:
     "7영역 × 3문항 = 21문항으로 AI 시대 1인 기업의 운영 체계를 진단한다. 방향·전략·구조·수익화·프롬프트·디자인·의사결정.",
 }
@@ -55,7 +55,7 @@ export default function DiagnosisPage() {
     <section style={section}>
       <div style={inner}>
         <div style={head}>
-          <div style={eyebrow}>{"// AI'M SCAN v0.1 — 21문항"}</div>
+          <div style={eyebrow}>{"// A'IM SCAN v0.1 — 21문항"}</div>
           <h1 style={title}>
             1인 기업 자가진단<span style={accentMark}>.</span>
           </h1>

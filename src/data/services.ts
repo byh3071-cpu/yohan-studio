@@ -15,9 +15,9 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "scan-report",
-    name: "AI'm Scan Report",
+    name: "A'Im Scan Report",
     tagline: "21문항 진단 결과를 깊이 분석한 1:1 리포트.",
-    audience: "AI'm Scan을 풀었지만 '뭘 먼저 손대야 할지'가 막힌 1인 기업가.",
+    audience: "A'Im Scan을 풀었지만 '뭘 먼저 손대야 할지'가 막힌 1인 기업가.",
     deliverables: [
       "영역별 진단 결과 분석 PDF (8~12p)",
       "TOP3 약점에 대한 30일 실행 처방",
@@ -32,7 +32,7 @@ export const services: Service[] = [
   },
   {
     slug: "os-template",
-    name: "AI'm OS Template",
+    name: "A'Im OS Template",
     tagline: "1인 기업 운영체계 노션 템플릿 풀 패키지.",
     audience: "처음부터 다시 만들 시간이 없는데 검증된 구조가 필요한 사람.",
     deliverables: [
@@ -50,7 +50,7 @@ export const services: Service[] = [
   },
   {
     slug: "os-build",
-    name: "AI'm OS Build",
+    name: "A'Im OS Build",
     tagline: "1인 기업 OS를 함께 설계·구축하는 코칭 프로그램.",
     audience: "리포트·템플릿만으론 부족하고 직접 같이 만들 파트너가 필요한 사람.",
     deliverables: [
