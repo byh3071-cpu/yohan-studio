@@ -74,7 +74,7 @@ export const vhkHeroDemoSteps: VhkHeroDemoStep[] = [
   {
     label: "install",
     command: VHK_INSTALL_CMD,
-    output: ["", "added 1 package in 2s", "✓ @byh3071/vhk@1.0.2"],
+    output: ["", "added 1 package in 2s", "✓ @byh3071/vhk@1.3.0"],
   },
   {
     label: "gate",
@@ -93,6 +93,15 @@ export const vhkHeroDemoSteps: VhkHeroDemoStep[] = [
       "",
       "🔄 RULES.md → IDE 규칙",
       "✓ .cursorrules · CLAUDE.md · AGENTS.md",
+    ],
+  },
+  {
+    label: "goal next",
+    command: "vhk goal next",
+    output: [
+      "",
+      "➡️  다음 Goal — docs/state/next-task.md 갱신",
+      "✓ Goal 1: 첫 미션 · IN_PROGRESS",
     ],
   },
 ]
