@@ -96,6 +96,7 @@ export const showroomProjects: ShowroomProject[] = [
       "오픈소스 — 복제·포크해서 본인 취향대로 자유롭게 수정",
     ],
     audience: "노션 대시보드를 더 풍성하게 만들고 싶은 사람",
+    featured: true,
     github: "https://github.com/byh3071-cpu/NotionUIUX",
     demo: "https://jealous-quilt-e0c.notion.site/36d540cd1ae18008824ef8c1610a2845",
     image: "/showroom/notion-uiux/cover.png",

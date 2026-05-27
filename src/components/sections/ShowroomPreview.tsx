@@ -112,7 +112,7 @@ const summary: CSSProperties = {
 export function ShowroomPreview() {
   const featured = showroomProjects.filter((p) => p.featured)
   const others = showroomProjects.filter((p) => !p.featured)
-  const preview = [...featured, ...others].slice(0, 3)
+  const preview = [...featured, ...others].slice(0, 6)
 
   return (
     <section style={section}>
