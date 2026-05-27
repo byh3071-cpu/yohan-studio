@@ -1,16 +1,8 @@
 import type { ReactElement } from "react"
 import SnapContextPost, { post as snapcontextPost } from "@/blog/posts/snapcontext-v013-store-journey.mdx"
+import type { BlogPostMeta } from "@/lib/blog"
 
-type ComponentPostMeta = {
-  slug: string
-  title: string
-  description: string
-  date: string
-  tags: string[]
-  category: string
-  thumbnail?: string
-  published: boolean
-}
+type ComponentPostMeta = BlogPostMeta
 
 export const SNAPCONTEXT_SLUG = "snapcontext-v013-store-journey"
 
@@ -25,6 +17,7 @@ function toSnapcontextMeta(): ComponentPostMeta {
     tags: snapcontextPost.tags,
     category: snapcontextPost.category,
     thumbnail: SNAPCONTEXT_THUMBNAIL,
+    relatedProjects: ["notion-uiux", "yohan-studio"],
     published: snapcontextPost.published,
   }
 }

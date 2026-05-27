@@ -1,34 +1,45 @@
 # Yohan Studio
 
-> 백요한의 1인 기업 사이트. 바리스타 출신 바이브코더가 AI와 자동화로 콘텐츠와 제품을 만든다. Phase 1(랜딩 + 포트폴리오) 완료, Phase 2(블로그 + SEO/AEO + 디자인 v2) 완료, Phase 3(스토어 + 결제 + DB) 준비 중.
+> 백요한의 1인 기업 사이트. 바리스타 출신 바이브코더가 AI와 자동화로 콘텐츠와 제품을 만든다. Phase 2(블로그·SEO/AEO·쇼룸) 완료, Phase 3(스토어·Supabase·Stripe) 진행 중.
 
-"바이브코더(vibe coder)"는 코드를 직접 타이핑하기보다 AI 코드 에이전트에게 시키고, 시스템을 설계하고, 결과물을 검증·통합하는 1인 개발 방식이다. 백요한은 카페에서 바리스타로 일하면서 AI 자동화에 빠졌고, 그 흐름이 자연스럽게 1인 기업 시드가 됐다.
+"바이브코더(vibe coder)"는 코드를 직접 타이핑하기보다 AI 코드 에이전트에게 시키고, 시스템을 설계하고, 결과물을 검증·통합하는 1인 개발 방식이다.
 
 ## About
-- [Home](https://yohan.studio): 자기소개, 메타데이터, 포트폴리오·블로그 진입
-- [Portfolio](https://yohan.studio/portfolio): 제작물 목록 (Yohan Studio 사이트 자체가 첫 작품)
-- [Design System](https://yohan.studio/design): v1→v2 진화, AI 분업, 로드맵 Phase 1~4
-- [VHK — Vibe Harness Kit](https://yohan.studio/vhk): 바이브코딩 풀사이클 CLI (`npm i -g @byh3071/vhk`)
+- [Home](https://yohanstudio.co/): 자기소개, 메타데이터, 쇼룸·블로그·스토어 진입
+- [Showroom](https://yohanstudio.co/showroom): 프로젝트 목록 (각 프로젝트는 `/showroom/[slug]` 상세 URL)
+- [Design System](https://yohanstudio.co/design): v1→v2 진화, AI 분업, 로드맵
+- [VHK — Vibe Harness Kit](https://yohanstudio.co/vhk): 바이브코딩 풀사이클 CLI (`npm i -g @byh3071/vhk`)
+- [Store](https://yohanstudio.co/store): 디지털 상품·결제 (Phase 3)
+- [Diagnosis](https://yohanstudio.co/diagnosis): AI'm Scan 자가진단
+- [Services](https://yohanstudio.co/services): 서비스·문의 CTA
+- [Contact](https://yohanstudio.co/contact): 문의 폼
 
 ## Blog
-- [Blog Index](https://yohan.studio/blog): 글 목록 + 태그/검색 필터
-- [바이브코딩 2시간 배포](https://yohan.studio/blog/vibe-coding-2hr-deploy): 0에서 Vercel 배포까지 2시간 사례
-- [Hello World](https://yohan.studio/blog/hello-world): 사이트 첫 글
+- [Blog Index](https://yohanstudio.co/blog): 글 목록 + 태그/검색
+- [바이브코딩 2시간 배포](https://yohanstudio.co/blog/vibe-coding-2hr-deploy)
+- [AI 브랜드 런칭기](https://yohanstudio.co/blog/ai-brand-launch-story)
+- [MDX 블로그 파이프라인](https://yohanstudio.co/blog/hello-world)
+
+## Showroom (project detail pages)
+- [NotionUIUX](https://yohanstudio.co/showroom/notion-uiux): 노션 임베드 위젯 10종
+- [요한 스튜디오](https://yohanstudio.co/showroom/yohan-studio): 이 사이트 빌드로그
+- [요한 OS](https://yohanstudio.co/showroom/yohan-os): Notion 1인 운영체계
+- [포커스 피드](https://yohanstudio.co/showroom/focus-feed): 유튜브 요약 피드
 
 ## Person
 - 이름: 백요한 (Yohan Baek)
 - 역할: 바리스타 + 바이브코더 · 1인 기업가
-- 도구 스택: Claude Code, Codex, Cursor, Next.js, Notion, Vercel, MDX, Tailwind v4
-- 디자인: Editorial × Soft Brutalism (1.5px 보더, 4px hard shadow, 액센트 #FF5C28)
-- 연락: byh3071@gmail.com
+- 도구 스택: Claude Code, Codex, Cursor, Next.js, Notion, Supabase, Stripe, Vercel, MDX, Tailwind v4
+- 연락: byh3071@gmail.com · [문의](https://yohanstudio.co/contact)
 - GitHub: https://github.com/byh3071-cpu
+- npm: https://www.npmjs.com/~byh3071
 
 ## Phases
 - Phase 1 (완료): 랜딩 + 포트폴리오 + Vercel 배포
-- Phase 2 (완료): MDX 블로그 + SEO/AEO + 다크모드 + 디자인 v2 + 디자인 히스토리
-- Phase 3 (준비 중, 2026-05-17 ~ 2026-05-30): Supabase + Stripe 결제 + 스토어 + 뉴스레터
-- Phase 4 (2026-05-31 ~ 2026-06-13): n8n 멀티채널 자동 발행
+- Phase 2 (완료): MDX 블로그 + SEO/AEO + 다크모드 + 쇼룸 상세 URL
+- Phase 3 (진행): Supabase + Stripe + 스토어 + 진단 결과 저장
+- Phase 4: n8n 멀티채널 자동 발행
 
 ## Optional
-- [Sitemap](https://yohan.studio/sitemap.xml)
-- [Robots](https://yohan.studio/robots.txt)
+- [Sitemap](https://yohanstudio.co/sitemap.xml)
+- [Robots](https://yohanstudio.co/robots.txt)

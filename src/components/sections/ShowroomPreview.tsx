@@ -130,14 +130,18 @@ export function ShowroomPreview() {
         </div>
         <div style={grid}>
           {preview.map((p) => (
-            <article key={p.slug} style={card}>
+            <Link
+              key={p.slug}
+              href={`/showroom/${p.slug}`}
+              style={{ ...card, textDecoration: "none", color: "inherit" }}
+            >
               <div style={cardTop}>
                 <span style={cat}>{p.category}</span>
                 <span style={year}>{p.year}</span>
               </div>
               <h3 style={ttl}>{p.title}</h3>
               <p style={summary}>{p.summary}</p>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

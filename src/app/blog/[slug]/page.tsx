@@ -6,7 +6,11 @@ import { notFound } from "next/navigation"
 import { PostNav } from "@/components/blog/PostNav"
 import { TableOfContents } from "@/components/blog/TableOfContents"
 import { ViewCounter } from "@/components/blog/ViewCounter"
+import { ArticleJsonLd } from "@/components/seo/ArticleJsonLd"
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd"
+import { RelatedShowroomProjects } from "@/components/seo/RelatedContent"
 import { compileBlogPost, getAdjacentPosts, getPublishedPosts, getPostMeta } from "@/lib/blog"
+import { getSiteUrl } from "@/lib/siteUrl"
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -20,8 +24,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!meta || !meta.published) {
     return { title: "글을 찾을 수 없음" }
   }
-  const ogImages = meta.thumbnail
-    ? [{ url: meta.thumbnail, alt: meta.title }]
+  const base = getSiteUrl()
+  const thumbUrl = meta.thumbnail
+    ? meta.thumbnail.startsWith("http")
+      ? meta.thumbnail
+      : `${base}${meta.thumbnail}`
+    : undefined
+  const ogImages = thumbUrl
+    ? [{ url: thumbUrl, alt: `${meta.title} 대표 이미지` }]
     : undefined
 
   return {
@@ -40,6 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
+      images: thumbUrl ? [thumbUrl] : undefined,
     },
   }
 }
@@ -131,21 +142,15 @@ export default async function BlogPostPage({ params }: PageProps) {
     overflow: "hidden",
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: meta.title,
-    description: meta.description,
-    datePublished: meta.date,
-    author: { "@type": "Person", name: "요한" },
-    publisher: { "@type": "Organization", name: "요한 스튜디오" },
-  }
-
   return (
     <article style={section}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <ArticleJsonLd meta={meta} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "홈", path: "/" },
+          { name: "블로그", path: "/blog" },
+          { name: meta.title, path: `/blog/${slug}` },
+        ]}
       />
       <div className="post-shell">
         <div style={main}>
@@ -171,7 +176,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <div style={thumbWrap}>
                 <Image
                   src={meta.thumbnail}
-                  alt=""
+                  alt={`${meta.title} 대표 이미지`}
                   fill
                   sizes="(max-width: 800px) 100vw, 680px"
                   style={{ objectFit: "cover" }}
@@ -183,13 +188,16 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {/* eslint-disable-next-line @next/next/no-img-element -- external thumbnail URL */}
                 <img
                   src={meta.thumbnail}
-                  alt=""
+                  alt={`${meta.title} 대표 이미지`}
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>
             ) : null}
           </header>
           <div className="mdx-content">{content}</div>
+          {meta.relatedProjects && meta.relatedProjects.length > 0 && (
+            <RelatedShowroomProjects slugs={meta.relatedProjects} />
+          )}
           <PostNav prev={prev} next={next} />
         </div>
         <TableOfContents />

@@ -76,8 +76,19 @@ const SITE_JSON_LD = {
         "Notion",
         "자동화 워크플로",
         "1인 기업",
+        "Stripe",
+        "Supabase",
+        "MCP",
+        "Claude Code",
+        "Cursor",
+        "SEO",
+        "TypeScript",
       ],
-      sameAs: ["https://github.com/byh3071-cpu"],
+      sameAs: [
+        "https://github.com/byh3071-cpu",
+        "https://www.npmjs.com/~byh3071",
+        `${BASE_URL}/blog`,
+      ],
     },
     {
       "@type": "Organization",
@@ -85,9 +96,16 @@ const SITE_JSON_LD = {
       name: "Yohan Studio",
       alternateName: "요한 스튜디오",
       url: BASE_URL,
+      logo: `${BASE_URL}/file.svg`,
       description:
         "요한의 1인 기업. 바이브코딩 · AI 자동화 · 콘텐츠 · 제품을 한 사람이 직접 설계하고 운영한다.",
       founder: { "@id": `${BASE_URL}/#person` },
+      contactPoint: {
+        "@type": "ContactPoint",
+        url: `${BASE_URL}/contact`,
+        contactType: "customer support",
+        availableLanguage: ["Korean", "English"],
+      },
     },
     {
       "@type": "WebSite",

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next"
+import { showroomProjects } from "@/data/showroomProjects"
 import { getPublishedPosts } from "@/lib/blog"
 import { getSiteUrl } from "@/lib/siteUrl"
 
@@ -11,6 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
     priority: 0.8,
+  }))
+
+  const showroomEntries: MetadataRoute.Sitemap = showroomProjects.map((p) => ({
+    url: `${BASE_URL}/showroom/${p.slug}`,
+    lastModified: new Date(p.dateCreated),
+    changeFrequency: "monthly",
+    priority: 0.85,
   }))
 
   return [
@@ -62,6 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...showroomEntries,
     ...postEntries,
   ]
 }
