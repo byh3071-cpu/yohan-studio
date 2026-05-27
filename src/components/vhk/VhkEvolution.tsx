@@ -327,8 +327,6 @@ export function VhkEvolution() {
           })}
         </div>
 
-        <p style={hint}>↑ 행 클릭하면 세부 내용 펼침 · 접힘. 한 행 ≈ 50px → 8행 ≈ 400px.</p>
-
         <div style={{ ...subhead, marginTop: "48px" }}>
           {"// v2.0+ — 메이저 카드 (minor 가 누적되면 시리즈로 묶는다)"}
         </div>
