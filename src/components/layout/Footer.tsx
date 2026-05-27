@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
 
+import { NewsletterForm } from "@/components/layout/NewsletterForm"
+
 const footer: CSSProperties = {
   background: "var(--footer-bg)",
   color: "var(--footer-text)",
@@ -103,6 +105,9 @@ export function Footer() {
           </div>
           <div>
             <div style={colTitle}>{"// CONNECT"}</div>
+            <Link href="/contact" style={link}>
+              문의하기
+            </Link>
             <a href="mailto:byh3071@gmail.com" style={link}>
               byh3071@gmail.com
             </a>
@@ -119,14 +124,22 @@ export function Footer() {
             </a>
           </div>
           <div>
-            <div style={colTitle}>{"// META"}</div>
-            <div style={{ ...link, color: "var(--footer-muted)" }}>v2.0 · Phase 1</div>
-            <div style={{ ...link, color: "var(--footer-muted)" }}>2026.04</div>
-            <div style={{ ...link, color: "var(--footer-muted)" }}>서울 / KR</div>
+            <div style={colTitle}>{"// NEWSLETTER"}</div>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "var(--footer-muted)",
+                lineHeight: 1.55,
+                marginBottom: "12px",
+              }}
+            >
+              새 글·실험·자료를 메일로 보내드립니다.
+            </p>
+            <NewsletterForm />
           </div>
         </div>
         <div style={bottom}>
-          <div>© 2026 YOHAN STUDIO · 백요한</div>
+          <div>© 2026 YOHAN STUDIO · 요한</div>
           <div style={{ fontFamily: "var(--font-en)", fontWeight: 400 }}>
             BUILT WITH NEXT.JS + CURSOR
           </div>

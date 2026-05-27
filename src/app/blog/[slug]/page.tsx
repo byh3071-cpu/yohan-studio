@@ -5,6 +5,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { PostNav } from "@/components/blog/PostNav"
 import { TableOfContents } from "@/components/blog/TableOfContents"
+import { ViewCounter } from "@/components/blog/ViewCounter"
 import { compileBlogPost, getAdjacentPosts, getPublishedPosts, getPostMeta } from "@/lib/blog"
 
 type PageProps = { params: Promise<{ slug: string }> }
@@ -136,7 +137,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     headline: meta.title,
     description: meta.description,
     datePublished: meta.date,
-    author: { "@type": "Person", name: "백요한" },
+    author: { "@type": "Person", name: "요한" },
     publisher: { "@type": "Organization", name: "요한 스튜디오" },
   }
 
@@ -155,6 +156,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div style={row}>
               <span style={cat}>{meta.category}</span>
               <span style={dateStyle}>{meta.date}</span>
+              <ViewCounter slug={slug} />
             </div>
             <h1 style={h1}>{meta.title}</h1>
             <p style={desc}>{meta.description}</p>
