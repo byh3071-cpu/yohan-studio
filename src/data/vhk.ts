@@ -57,9 +57,9 @@ export const vhkCommands: VhkCommand[] = [
   { name: "context", symbol: "📋", desc: ".vhk/context.md 생성" },
   { name: "memory", symbol: "💾", desc: ".vhk/memory.json 결정 기록" },
   { name: "goal", symbol: "🎯", desc: "Goal 단계별 미션 (init/list/next/check/done)" },
-  { name: "blocker", symbol: "🚧", desc: "블로커 기록 + HARD_STOP 트립와이어" },
-  { name: "learn", symbol: "📚", desc: "교훈 기록 (docs/state/learnings.md)" },
-  { name: "resume", symbol: "▶️", desc: "HARD_STOP 해제 (--confirm 필수)" },
+  { name: "blocker", symbol: "🚧", desc: "블로커 기록 + HARD_STOP\n트립와이어" },
+  { name: "learn", symbol: "📚", desc: "교훈 기록\n(docs/state/learnings.md)" },
+  { name: "resume", symbol: "▶️", desc: "HARD_STOP 해제\n(--confirm 필수)" },
 ]
 
 /** v1.0.x — Spec 섹션 디렉토리 트리 (README 정합) */

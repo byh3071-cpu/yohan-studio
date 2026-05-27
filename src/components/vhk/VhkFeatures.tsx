@@ -90,6 +90,7 @@ const desc: CSSProperties = {
   fontSize: "13px",
   lineHeight: 1.55,
   color: "var(--ink-2)",
+  whiteSpace: "pre-line",
 }
 
 const entryGrid: CSSProperties = {
