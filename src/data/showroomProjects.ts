@@ -17,14 +17,21 @@ export type ShowroomProject = {
   title: string
   category: ShowroomCategory
   summary: string
-  problem: string
-  solution: string
   stack: string[]
-  learned: string
   year: string
+  /** 빌드로그·회고용 (기본 패턴). valueProps가 있으면 무시됨. */
+  problem?: string
+  solution?: string
+  learned?: string
+  /** 제품·서비스용 핵심 가치 bullet 리스트. 있으면 problem/solution/learned 대신 렌더. */
+  valueProps?: string[]
+  /** 누구를 위한 것 (선택, valueProps와 같이 씀). */
+  audience?: string
   featured?: boolean
   github?: string
   demo?: string
+  image?: string
+  imageAlt?: string
 }
 
 export const showroomProjects: ShowroomProject[] = [
@@ -77,16 +84,22 @@ export const showroomProjects: ShowroomProject[] = [
   },
   {
     slug: "notion-custom-dashboard",
-    title: "노션 커스텀 대시보드 — NotionUIUX",
+    title: "NotionUIUX",
     category: "Widget",
-    summary: "Vercel 단일 배포에 위젯 10개 라우트 분리. 노션 페이지에 라이브 임베드.",
-    problem: "Notion 기본 위젯은 한정적이고 외부 임베드는 분산 관리가 번거롭다.",
-    solution: "위젯별 정적 HTML을 한 Vercel 프로젝트에 묶고 임베드 URL 1개로 통일. 본인용·데모용 배포 분리로 환경변수 격리.",
+    summary: "노션에 임베드하는 픽셀·네온 톤 위젯 10종. 노션 대시보드를 본인 취향대로.",
     stack: ["Notion", "Vercel", "HTML", "JS"],
-    learned: "데모와 본인용 배포를 분리하면 환경변수 격리로 데이터 노출 위험 0. 코드 1줄 안 바꾸고 자판기만 2대 두면 끝.",
     year: "2026",
+    valueProps: [
+      "시계·캘린더·투두·메모·가계부·포모도로 등 일상 도구 10종",
+      "픽셀과 네온 톤으로 노션 다크모드에 자연스럽게 어울림",
+      "offline 모드 지원 — 데이터는 본인 브라우저에만 저장",
+      "오픈소스 — 복제·포크해서 본인 취향대로 자유롭게 수정",
+    ],
+    audience: "노션 대시보드를 더 풍성하게 만들고 싶은 사람",
     github: "https://github.com/byh3071-cpu/NotionUIUX",
     demo: "https://jealous-quilt-e0c.notion.site/36d540cd1ae18008824ef8c1610a2845",
+    image: "/showroom/notion-uiux/cover.png",
+    imageAlt: "NotionUIUX 위젯 미리보기",
   },
   {
     slug: "yohan-studio",

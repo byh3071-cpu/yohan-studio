@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-05-27T09:29:11.517Z",
+  "demoBase": "https://notion-uiux-demo.vercel.app",
+  "notionPublicUrl": "https://jealous-quilt-e0c.notion.site/36d540cd1ae18008824ef8c1610a2845",
+  "widgets": [
+    {
+      "slug": "calendar",
+      "label": "캘린더",
+      "png": "/showroom/notion-uiux/calendar.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/calendar?mode=light&offline=1"
+    },
+    {
+      "slug": "clock",
+      "label": "시계",
+      "png": "/showroom/notion-uiux/clock.png",
+      "gif": "/showroom/notion-uiux/clock.gif",
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/clock?mode=light&offline=1"
+    },
+    {
+      "slug": "todo",
+      "label": "투두",
+      "png": "/showroom/notion-uiux/todo.png",
+      "gif": "/showroom/notion-uiux/todo.gif",
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/todo?mode=light&offline=1"
+    },
+    {
+      "slug": "todo2",
+      "label": "투두 v2",
+      "png": "/showroom/notion-uiux/todo2.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/todo2?mode=light&offline=1"
+    },
+    {
+      "slug": "schedule",
+      "label": "스케줄러",
+      "png": "/showroom/notion-uiux/schedule.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/schedule?mode=light&offline=1"
+    },
+    {
+      "slug": "memo",
+      "label": "메모",
+      "png": "/showroom/notion-uiux/memo.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/memo?mode=light&offline=1"
+    },
+    {
+      "slug": "finance",
+      "label": "가계부",
+      "png": "/showroom/notion-uiux/finance.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/finance?mode=light&offline=1"
+    },
+    {
+      "slug": "pomodoro",
+      "label": "포모도로",
+      "png": "/showroom/notion-uiux/pomodoro.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/pomodoro?mode=light&offline=1"
+    },
+    {
+      "slug": "project",
+      "label": "프로젝트 칸반",
+      "png": "/showroom/notion-uiux/project.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/project?mode=light&offline=1"
+    },
+    {
+      "slug": "investment",
+      "label": "투자 대시보드",
+      "png": "/showroom/notion-uiux/investment.png",
+      "gif": null,
+      "embedUrl": "https://notion-uiux-demo.vercel.app/embed/investment?mode=light&offline=1"
+    }
+  ],
+  "notionPagePng": "/showroom/notion-uiux/notion-page.png"
+}

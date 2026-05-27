@@ -44,8 +44,8 @@ export function ProjectGrid() {
         <div style={empty}>이 카테고리엔 아직 프로젝트가 없다.</div>
       ) : (
         <div style={grid}>
-          {filtered.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+          {filtered.map((p, i) => (
+            <ProjectCard key={p.slug} project={p} priority={i < 3} />
           ))}
         </div>
       )}
