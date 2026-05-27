@@ -46,17 +46,6 @@ const lead: CSSProperties = {
   margin: 0,
 }
 
-const subhead: CSSProperties = {
-  fontFamily: "var(--font-mono)",
-  fontSize: "11px",
-  fontWeight: 600,
-  letterSpacing: "0.1em",
-  textTransform: "uppercase",
-  color: "var(--muted)",
-  marginTop: "0",
-  marginBottom: "12px",
-}
-
 const rowsWrap: CSSProperties = {
   border: "var(--border-w) solid var(--line)",
   background: "var(--surface)",
@@ -145,19 +134,11 @@ const detailList: CSSProperties = {
   paddingLeft: "18px",
 }
 
-const hint: CSSProperties = {
-  fontFamily: "var(--font-mono)",
-  fontSize: "11px",
-  color: "var(--muted)",
-  marginTop: "8px",
-  letterSpacing: "0.04em",
-}
-
 const seriesGrid: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   gap: "16px",
-  marginTop: "16px",
+  marginTop: "48px",
 }
 
 const seriesCard: CSSProperties = {
@@ -263,8 +244,6 @@ export function VhkEvolution() {
           </p>
         </div>
 
-        <div style={subhead}>{"// v0.4 ~ v1.3 — minor 타임라인 (클릭하면 펼침)"}</div>
-
         <div style={rowsWrap}>
           {vhkEvolution.map((v, i) => {
             const isOpen = openIndex === i
@@ -327,10 +306,6 @@ export function VhkEvolution() {
           })}
         </div>
 
-        <div style={{ ...subhead, marginTop: "48px" }}>
-          {"// v2.0+ — 메이저 카드 (minor 가 누적되면 시리즈로 묶는다)"}
-        </div>
-
         <div style={seriesGrid}>
           {vhkSeries.map((s) => (
             <article
@@ -345,10 +320,6 @@ export function VhkEvolution() {
             </article>
           ))}
         </div>
-
-        <p style={hint}>
-          v2.0 이후엔 minor 행이 시리즈 카드 1개로 압축 — 페이지 길이는 미래에도 동일.
-        </p>
 
         <p style={note}>
           처음엔 한 줄, 누적되면 카드.
