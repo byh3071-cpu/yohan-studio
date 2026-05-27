@@ -18,7 +18,6 @@
 ## Person
 - 이름: 백요한 (Yohan Baek)
 - 역할: 바리스타 + 바이브코더 · 1인 기업가
-- 위치: 서울 관악
 - 도구 스택: Claude Code, Codex, Cursor, Next.js, Notion, Vercel, MDX, Tailwind v4
 - 디자인: Editorial × Soft Brutalism (1.5px 보더, 4px hard shadow, 액센트 #FF5C28)
 - 연락: byh3071@gmail.com

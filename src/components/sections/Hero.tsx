@@ -202,12 +202,8 @@ export function Hero() {
             <span style={metaVal}>바리스타 + 코더</span>
           </div>
           <div style={metaRow}>
-            <span style={metaKey}>위치</span>
-            <span style={metaVal}>서울 관악</span>
-          </div>
-          <div style={metaRow}>
             <span style={metaKey}>스택</span>
-            <span style={metaVal}>Cursor · Notion</span>
+            <span style={metaVal}>Claude · Codex · Cursor</span>
           </div>
           <div style={{ ...metaRow, borderBottom: "none", paddingBottom: 0 }}>
             <span style={metaKey}>상태</span>
