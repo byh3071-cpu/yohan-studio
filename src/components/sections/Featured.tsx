@@ -186,12 +186,9 @@ export function Featured() {
                 스토어<span style={accentMark}>.</span>
               </h2>
             </div>
-            <span
-              style={{ ...more, color: "var(--muted)", cursor: "default" }}
-              aria-label="스토어는 Phase 3 오픈 예정"
-            >
-              Phase 3 오픈 예정
-            </span>
+            <Link href="/store" style={more}>
+              스토어 보기 →
+            </Link>
           </div>
           <div style={grid}>
             {featuredProducts.map((p, i) => (

@@ -16,21 +16,6 @@ const linkBase: CSSProperties = {
 
 // Layout (display/flex/gap) lives in globals.css so breakpoints can switch
 // primary links and the hamburger panel without inline-style specificity issues.
-const hamburgerBtn: CSSProperties = {
-  background: "transparent",
-  border: "var(--border-w) solid var(--line)",
-  width: "36px",
-  height: "36px",
-  padding: 0,
-  marginRight: "4px",
-}
-
-const hamburgerBar: CSSProperties = {
-  display: "block",
-  width: "16px",
-  height: "1.5px",
-  background: "var(--ink)",
-}
 
 type NavEntry = { label: string; href: string; match: (p: string) => boolean }
 
@@ -85,23 +70,22 @@ export function SiteHeaderNav() {
       </nav>
       <button
         type="button"
-        className="nav-hamburger"
+        className="site-header-icon-btn nav-hamburger"
         aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
         aria-expanded={open}
         aria-controls="site-header-menu"
         onClick={() => setOpen((v) => !v)}
-        style={hamburgerBtn}
       >
-        <span style={hamburgerBar} />
-        <span style={hamburgerBar} />
-        <span style={hamburgerBar} />
+        <span className="nav-hamburger-bar" />
+        <span className="nav-hamburger-bar" />
+        <span className="nav-hamburger-bar" />
       </button>
       <nav
         id="site-header-menu"
         className={`site-header-menu${open ? " is-open" : ""}`}
         aria-label="전체 메뉴"
       >
-        <div className="site-header-menu-group">
+        <div className="site-header-menu-group site-header-menu-group--primary">
           {primaryEntries.map((e) => {
             const active = e.match(pathname)
             const link: CSSProperties = active

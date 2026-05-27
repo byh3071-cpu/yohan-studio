@@ -264,13 +264,42 @@ header {
   flex-wrap: nowrap;
   justify-content: flex-end;
 }
-.nav-hamburger {
+/* Header icon controls — hamburger + theme toggle 동일 칸(36×36) */
+.site-header-icon-btn {
+  box-sizing: border-box;
   display: inline-flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
   flex-shrink: 0;
+  background: var(--bg);
+  color: var(--ink);
+  border: var(--border-w) solid var(--line);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.nav-hamburger {
+  display: inline-grid;
+  grid-template-rows: repeat(3, 2px);
+  row-gap: 5px;
+  align-content: center;
+  justify-items: center;
+  line-height: 0;
+  font-size: 0;
+}
+
+.nav-hamburger-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: currentColor;
 }
 .site-header-menu {
   display: none;
@@ -298,12 +327,20 @@ header {
 .site-header-menu-divider {
   border-top: 1px solid var(--line);
 }
-/* md(768px) 이하: 링크 5개+햄버거 동시 노출 시 우측 클립 → 햄버거만 */
-@media (min-width: 769px) {
+/* 1024px 이상: 주요 링크 인라인 + 햄버거(디자인 등 보조 메뉴) */
+@media (min-width: 1024px) {
   .site-header-primary {
     display: inline-flex;
   }
-  .nav-hamburger {
+  /* 인라인 nav가 보일 때 드로어에는 보조 링크만 (중복 제거) */
+  .site-header-menu .site-header-menu-group--primary,
+  .site-header-menu .site-header-menu-divider {
+    display: none;
+  }
+}
+/* 1024px 미만: 인라인 nav 숨김 → 햄버거 드로어에 전체 메뉴 */
+@media (max-width: 1023px) {
+  .site-header-primary {
     display: none;
   }
 }
