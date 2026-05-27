@@ -128,7 +128,7 @@ export function VhkRoadmap() {
     <section style={section}>
       <div style={inner}>
         <div style={head}>
-          <div style={eyebrow}>{"// 05 — ROADMAP"}</div>
+          <div style={eyebrow}>{"// 06 — ROADMAP"}</div>
           <h2 style={title}>
             VHK는 <span style={accent}>진화한다</span>.
           </h2>
