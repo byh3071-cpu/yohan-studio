@@ -27,6 +27,7 @@ export type BlogFrontmatter = {
   tags: string[]
   category: string
   thumbnail?: string
+  relatedProjects?: string[]
   published: boolean
 }
 
@@ -62,6 +63,7 @@ export function parseBlogFrontmatter(
 
   const thumbRaw = typeof data.thumbnail === "string" ? data.thumbnail.trim() : ""
   const thumbnail = thumbRaw.length > 0 ? thumbRaw : undefined
+  const relatedProjects = toStringArray(data.relatedProjects)
 
   return {
     slug,
@@ -71,6 +73,7 @@ export function parseBlogFrontmatter(
     tags: toStringArray(data.tags),
     category,
     thumbnail,
+    relatedProjects: relatedProjects.length > 0 ? relatedProjects : undefined,
     published: toPublished(data.published),
   }
 }

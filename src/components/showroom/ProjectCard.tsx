@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import type { ShowroomProject } from "@/data/showroomProjects"
 
 const card: CSSProperties = {
@@ -155,6 +156,12 @@ const link: CSSProperties = {
   textDecoration: "none",
 }
 
+const detailLink: CSSProperties = {
+  ...link,
+  marginTop: "4px",
+  display: "inline-block",
+}
+
 export function ProjectCard({
   project,
   priority = false,
@@ -162,6 +169,8 @@ export function ProjectCard({
   project: ShowroomProject
   priority?: boolean
 }) {
+  const href = `/showroom/${project.slug}`
+
   return (
     <article style={card} data-category={project.category}>
       {project.image && (
@@ -180,7 +189,19 @@ export function ProjectCard({
         <span style={cat}>{project.category}</span>
         <span style={year}>{project.year}</span>
       </div>
-      <h3 style={title}>{project.title}</h3>
+      <h3 style={title}>
+        <Link
+          href={href}
+          style={{
+            color: "inherit",
+            textDecoration: "underline",
+            textDecorationColor: "var(--accent)",
+            textUnderlineOffset: "4px",
+          }}
+        >
+          {project.title}
+        </Link>
+      </h3>
       <p style={summary}>{project.summary}</p>
       {project.valueProps && project.valueProps.length > 0 ? (
         <>
@@ -240,6 +261,9 @@ export function ProjectCard({
           )}
         </div>
       )}
+      <Link href={href} style={detailLink}>
+        프로젝트 상세 →
+      </Link>
     </article>
   )
 }

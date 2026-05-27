@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/showroom/notion-custom-dashboard",
+        destination: "/showroom/notion-uiux",
+        permanent: true,
+      },
+    ]
+  },
 }
 
 const withMDX = createMDX({})

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import Link from "next/link"
 import { showroomProjects } from "@/data/showroomProjects"
 
 const wrap: CSSProperties = {
@@ -64,8 +65,27 @@ export function FeaturedBanner() {
         <article key={p.slug} style={banner}>
           <div>
             <div style={eyebrow}>★ FEATURED · {p.category}</div>
-            <h3 style={title}>{p.title}</h3>
+            <h3 style={title}>
+              <Link href={`/showroom/${p.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
+                {p.title}
+              </Link>
+            </h3>
             <p style={summary}>{p.summary}</p>
+            <Link
+              href={`/showroom/${p.slug}`}
+              style={{
+                display: "inline-block",
+                marginTop: "16px",
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "var(--accent)",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
+            >
+              프로젝트 상세 →
+            </Link>
           </div>
           <div style={meta}>{p.year}</div>
         </article>
