@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import type { CSSProperties } from "react"
 import {
   AREAS,
@@ -11,6 +11,54 @@ import {
 } from "@/data/aimScanQuestions"
 import { calculateScores, isAllAnswered, MAX_PER_QUESTION, type Answers } from "@/lib/aimScan"
 import { ResultPanel } from "./ResultPanel"
+
+const DRAFT_KEY = "aimscan-draft-v1"
+const DRAFT_MAX_AGE_DAYS = 7
+
+type Draft = { answers: Answers; savedAt: number }
+
+function loadDraft(): Answers | null {
+  if (typeof window === "undefined") return null
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as Draft
+    if (!parsed || typeof parsed !== "object") return null
+    const ageMs = Date.now() - (parsed.savedAt ?? 0)
+    if (ageMs > DRAFT_MAX_AGE_DAYS * 24 * 60 * 60 * 1000) {
+      window.localStorage.removeItem(DRAFT_KEY)
+      return null
+    }
+    // 키가 SCAN_QUESTIONS 안에 있는 것만 살림 + number 값만
+    const valid: Answers = {}
+    for (const q of SCAN_QUESTIONS) {
+      const v = parsed.answers?.[q.id]
+      if (typeof v === "number" && Number.isFinite(v)) valid[q.id] = v
+    }
+    return Object.keys(valid).length > 0 ? valid : null
+  } catch {
+    return null
+  }
+}
+
+function saveDraft(answers: Answers) {
+  if (typeof window === "undefined") return
+  try {
+    const draft: Draft = { answers, savedAt: Date.now() }
+    window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft))
+  } catch {
+    // localStorage full 등 — 무음
+  }
+}
+
+function clearDraft() {
+  if (typeof window === "undefined") return
+  try {
+    window.localStorage.removeItem(DRAFT_KEY)
+  } catch {
+    // noop
+  }
+}
 
 const form: CSSProperties = {
   display: "flex",
@@ -170,6 +218,44 @@ const btnGhost: CSSProperties = {
   cursor: "pointer",
 }
 
+const restoredBanner: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "12px",
+  padding: "12px 16px",
+  background: "var(--surface)",
+  border: "1.5px solid var(--line)",
+  boxShadow: "var(--shadow-sm)",
+  fontFamily: "var(--font-mono)",
+  fontSize: "12px",
+  fontWeight: 600,
+  letterSpacing: "0.04em",
+  color: "var(--ink)",
+}
+
+const restoredActions: CSSProperties = { display: "inline-flex", gap: "8px" }
+
+const bannerBtnGhost: CSSProperties = {
+  padding: "6px 12px",
+  fontFamily: "var(--font-mono)",
+  fontSize: "11px",
+  fontWeight: 700,
+  letterSpacing: "0.06em",
+  textTransform: "uppercase",
+  background: "var(--bg)",
+  color: "var(--ink)",
+  border: "1.5px solid var(--line)",
+  cursor: "pointer",
+}
+
+const bannerBtnAccent: CSSProperties = {
+  ...bannerBtnGhost,
+  background: "var(--accent)",
+  color: "var(--accent-ink)",
+}
+
 function QuestionRow({
   qid,
   text,
@@ -206,6 +292,27 @@ function QuestionRow({
 export function DiagnosisForm() {
   const [answers, setAnswers] = useState<Answers>({})
   const [submitted, setSubmitted] = useState(false)
+  const [restored, setRestored] = useState(false)
+  const hydratedRef = useRef(false)
+
+  // 마운트 시 1회만 draft 복원
+  useEffect(() => {
+    if (hydratedRef.current) return
+    hydratedRef.current = true
+    const draft = loadDraft()
+    if (draft && Object.keys(draft).length > 0) {
+      setAnswers(draft)
+      setRestored(true)
+    }
+  }, [])
+
+  // answers 변경 시 draft 저장 (submitted 후엔 저장 안 함)
+  useEffect(() => {
+    if (!hydratedRef.current) return
+    if (submitted) return
+    if (Object.keys(answers).length === 0) return
+    saveDraft(answers)
+  }, [answers, submitted])
 
   const ready = isAllAnswered(answers)
   const result = useMemo(() => (submitted ? calculateScores(answers) : null), [submitted, answers])
@@ -220,7 +327,24 @@ export function DiagnosisForm() {
   const reset = () => {
     setAnswers({})
     setSubmitted(false)
+    setRestored(false)
+    clearDraft()
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const handleSubmit = () => {
+    setSubmitted(true)
+    clearDraft()
+  }
+
+  const dismissRestoredBanner = () => {
+    setRestored(false)
+  }
+
+  const startOver = () => {
+    setAnswers({})
+    setRestored(false)
+    clearDraft()
   }
 
   if (result) {
@@ -241,9 +365,23 @@ export function DiagnosisForm() {
       style={form}
       onSubmit={(e) => {
         e.preventDefault()
-        if (ready) setSubmitted(true)
+        if (ready) handleSubmit()
       }}
     >
+      {restored && (
+        <div style={restoredBanner} role="status">
+          <span>이전에 입력하던 답을 불러왔습니다 ({answeredCount}/{total}).</span>
+          <span style={restoredActions}>
+            <button type="button" onClick={dismissRestoredBanner} style={bannerBtnGhost}>
+              계속 풀기
+            </button>
+            <button type="button" onClick={startOver} style={bannerBtnAccent}>
+              처음부터
+            </button>
+          </span>
+        </div>
+      )}
+
       <div style={progressWrap}>
         <span>{answeredCount}/{total}</span>
         <div style={progressBar} aria-hidden>
