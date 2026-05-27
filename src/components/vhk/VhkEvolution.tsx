@@ -68,13 +68,17 @@ const rowBase: CSSProperties = {
   gap: "16px",
   alignItems: "center",
   padding: "14px 20px",
-  borderBottom: "1px solid var(--line-soft)",
   fontSize: "14px",
   lineHeight: 1.5,
   cursor: "pointer",
   transition: "background 0.1s",
   background: "transparent",
-  border: "none",
+  borderTopWidth: 0,
+  borderRightWidth: 0,
+  borderLeftWidth: 0,
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderBottomColor: "var(--line-soft)",
   borderRadius: 0,
   width: "100%",
   textAlign: "left",
@@ -84,7 +88,9 @@ const rowBase: CSSProperties = {
 
 const rowCurrentExtra: CSSProperties = {
   background: "var(--bg)",
-  borderLeft: "4px solid var(--accent)",
+  borderLeftWidth: "4px",
+  borderLeftStyle: "solid",
+  borderLeftColor: "var(--accent)",
   paddingLeft: "16px",
 }
 
@@ -129,7 +135,9 @@ const detail: CSSProperties = {
   fontSize: "13px",
   lineHeight: 1.6,
   color: "var(--ink-2)",
-  borderBottom: "1px solid var(--line-soft)",
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderBottomColor: "var(--line-soft)",
 }
 
 const detailList: CSSProperties = {
@@ -264,7 +272,7 @@ export function VhkEvolution() {
             const rowStyle: CSSProperties = {
               ...rowBase,
               ...(v.current ? rowCurrentExtra : {}),
-              ...(isLast && !isOpen ? { borderBottom: 0 } : {}),
+              ...(isLast && !isOpen ? { borderBottomWidth: 0 } : {}),
             }
             return (
               <div key={v.version}>
@@ -302,7 +310,7 @@ export function VhkEvolution() {
                     id={`vhk-evo-${v.version}`}
                     style={{
                       ...detail,
-                      ...(isLast ? { borderBottom: 0 } : {}),
+                      ...(isLast ? { borderBottomWidth: 0 } : {}),
                     }}
                   >
                     <ul style={detailList}>
