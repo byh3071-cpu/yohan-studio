@@ -64,7 +64,7 @@ function buildServiceJsonLd(contactUrl: string) {
       description: s.tagline,
       provider: {
         "@type": "Person",
-        name: "백요한",
+        name: "요한",
         url: SITE_ORIGIN,
       },
       areaServed: "KR",

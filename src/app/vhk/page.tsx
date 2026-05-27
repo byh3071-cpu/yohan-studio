@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { VhkHero } from "@/components/vhk/VhkHero"
 import { VhkPain } from "@/components/vhk/VhkPain"
-import { VhkRoles } from "@/components/vhk/VhkRoles"
 import { VhkFeatures } from "@/components/vhk/VhkFeatures"
 import { VhkSpec } from "@/components/vhk/VhkSpec"
 import { VhkRoadmap } from "@/components/vhk/VhkRoadmap"
@@ -60,7 +59,6 @@ export default function VhkPage() {
       />
       <VhkHero />
       <VhkPain />
-      <VhkRoles />
       <VhkFeatures />
       <VhkSpec />
       <VhkRoadmap />

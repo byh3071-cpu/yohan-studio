@@ -142,7 +142,8 @@ export function ServiceCard({
 }) {
   const ctaHref = contactUrl
     ? `${contactUrl}${contactUrl.includes("?") ? "&" : "?"}service=${service.slug}`
-    : "#"
+    : `/contact?service=${service.slug}`
+  const isExternal = Boolean(contactUrl)
 
   return (
     <article style={service.featured ? cardFeatured : card} data-service={service.slug}>
@@ -178,8 +179,7 @@ export function ServiceCard({
       <div style={ctaRow}>
         <a
           href={ctaHref}
-          target="_blank"
-          rel="noreferrer noopener"
+          {...(isExternal ? { target: "_blank", rel: "noreferrer noopener" } : {})}
           style={cta}
           aria-label={`${service.name} ${service.ctaLabel}`}
         >

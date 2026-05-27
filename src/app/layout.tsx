@@ -61,7 +61,7 @@ const SITE_JSON_LD = {
     {
       "@type": "Person",
       "@id": `${BASE_URL}/#person`,
-      name: "백요한",
+      name: "요한",
       alternateName: "Yohan Baek",
       jobTitle: "바이브코더 · 1인 기업가",
       description:
@@ -86,7 +86,7 @@ const SITE_JSON_LD = {
       alternateName: "요한 스튜디오",
       url: BASE_URL,
       description:
-        "백요한의 1인 기업. 바이브코딩 · AI 자동화 · 콘텐츠 · 제품을 한 사람이 직접 설계하고 운영한다.",
+        "요한의 1인 기업. 바이브코딩 · AI 자동화 · 콘텐츠 · 제품을 한 사람이 직접 설계하고 운영한다.",
       founder: { "@id": `${BASE_URL}/#person` },
     },
     {
@@ -106,7 +106,7 @@ export const metadata: Metadata = {
     default: "요한 스튜디오 | Yohan Studio",
     template: "%s | 요한 스튜디오",
   },
-  description: "백요한 — 바이브코더 · AI 기반 1인 기업",
+  description: "요한 — 바이브코더 · AI 기반 1인 기업",
   openGraph: {
     siteName: "요한 스튜디오",
     locale: "ko_KR",

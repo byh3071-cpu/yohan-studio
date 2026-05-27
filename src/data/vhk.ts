@@ -58,18 +58,6 @@ export const vhkCommands: VhkCommand[] = [
   { name: "memory", symbol: "💾", desc: ".vhk/memory.json 결정 기록" },
 ]
 
-export type VhkProductRole = {
-  product: string
-  layer: string
-  role: string
-}
-
-export const vhkProductRoles: VhkProductRole[] = [
-  { product: "SnapContext", layer: "브라우저 확장", role: "웹 컨텍스트 캡처" },
-  { product: "VHK CLI", layer: "프로젝트 CLI", role: "AI 코딩 컨텍스트 하네스" },
-  { product: "Yohan Studio", layer: "사이트/OS", role: "스튜디오 허브 · 블로그" },
-]
-
 /** v1.0.x — Spec 섹션 디렉토리 트리 (README 정합) */
 export type VhkHeroDemoStep = {
   label: string

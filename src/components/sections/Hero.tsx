@@ -42,14 +42,6 @@ const title: CSSProperties = {
 
 const accentMark: CSSProperties = { color: "var(--accent)", display: "inline" }
 
-// Editorial serif italic emphasis for a single headline word.
-// Same size as surrounding sans, differs only in style — italic synthesizes for Korean glyphs.
-const serifEm: CSSProperties = {
-  fontFamily: "var(--font-serif)",
-  fontStyle: "italic",
-  fontWeight: 600,
-}
-
 const sub: CSSProperties = {
   fontSize: "17px",
   lineHeight: 1.65,
@@ -178,8 +170,7 @@ export function Hero() {
             <br />
             1인 기업
             <br />
-            <span style={serifEm}>운영체계</span>
-            <span style={accentMark}>.</span>
+            운영체계<span style={accentMark}>.</span>
           </h1>
           <p style={sub}>
             좋은 시스템은 나를 복제한다. 좋은 AI는 나를 확장한다.
@@ -204,7 +195,7 @@ export function Hero() {
           <div style={metaTitle}>{"// 메타데이터"}</div>
           <div style={{ ...metaRow, paddingTop: 0 }}>
             <span style={metaKey}>이름</span>
-            <span style={metaVal}>백요한</span>
+            <span style={metaVal}>요한</span>
           </div>
           <div style={metaRow}>
             <span style={metaKey}>역할</span>

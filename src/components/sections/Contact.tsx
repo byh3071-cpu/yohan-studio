@@ -156,7 +156,7 @@ export function Contact() {
                 id="contact-name"
                 style={inputBase("name")}
                 type="text"
-                placeholder="백요한"
+                placeholder="요한"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 onFocus={() => setFocus("name")}
