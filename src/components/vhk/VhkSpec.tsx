@@ -156,13 +156,14 @@ export function VhkSpec() {
       <div style={inner}>
         <div style={head}>
           <div style={eyebrow}>{"// 04 — PROJECT + .VHK/"}</div>
-          <span style={badge}>v1.0 현재</span>
+          <span style={badge}>v1.3 현재</span>
           <h2 style={title}>
-            프로젝트 루트 + <span style={accent}>.vhk/</span> 구조.
+            프로젝트 루트 + <span style={accent}>.vhk/</span> + goals 하네스.
           </h2>
           <p style={lead}>
-            v1.0.x 기준 실제 산출물. RULES.md를 한 곳에서 쓰고, VHK가 IDE별 규칙 파일로
-            동기화한다. Layer 2~4 비전은 아래 로드맵 섹션.
+            v1.3.x 기준 실제 산출물. RULES.md 동기화 + goals/ 단계별 미션 +
+            docs/state/ SoT + .vhk/HARD_STOP 트립와이어로 AI 에이전트가 스스로
+            목표를 추적하고 막힐 때 자동으로 멈춘다. Layer 2~4 비전은 아래 로드맵 섹션.
           </p>
         </div>
 

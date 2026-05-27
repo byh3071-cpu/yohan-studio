@@ -103,7 +103,7 @@ export function VhkCta() {
   return (
     <section style={section}>
       <div style={inner}>
-        <div style={eyebrow}>{"// 06 — INSTALL"}</div>
+        <div style={eyebrow}>{"// 07 — INSTALL"}</div>
         <h2 style={title}>
           지금 <span style={accent}>시작</span>하세요.
         </h2>

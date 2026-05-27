@@ -3,6 +3,7 @@ import { VhkHero } from "@/components/vhk/VhkHero"
 import { VhkPain } from "@/components/vhk/VhkPain"
 import { VhkFeatures } from "@/components/vhk/VhkFeatures"
 import { VhkSpec } from "@/components/vhk/VhkSpec"
+import { VhkEvolution } from "@/components/vhk/VhkEvolution"
 import { VhkRoadmap } from "@/components/vhk/VhkRoadmap"
 import { VhkCta } from "@/components/vhk/VhkCta"
 import { getSiteUrl } from "@/lib/siteUrl"
@@ -61,6 +62,7 @@ export default function VhkPage() {
       <VhkPain />
       <VhkFeatures />
       <VhkSpec />
+      <VhkEvolution />
       <VhkRoadmap />
       <VhkCta />
     </>
