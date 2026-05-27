@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yohan Studio — Supabase 통합 데모 (이해용)</title>
+    <style>
+      :root {
+        --bg: #f4f1ea;
+        --surface: #eeeae0;
+        --ink: #0a0a0a;
+        --muted: #6b6357;
+        --accent: #ff5c28;
+        --border: 1.5px solid var(--ink);
+        --shadow: 4px 4px 0 var(--ink);
+      }
+      * { box-sizing: border-box; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: ui-sans-serif, system-ui, -apple-system, 'Pretendard', sans-serif;
+        margin: 0;
+        padding: 48px 24px 96px;
+        line-height: 1.5;
+      }
+      .wrap { max-width: 980px; margin: 0 auto; }
+      header { margin-bottom: 48px; border-bottom: var(--border); padding-bottom: 24px; }
+      h1 { font-size: 36px; margin: 0 0 8px; letter-spacing: -0.02em; }
+      h2 { font-size: 24px; margin: 0 0 16px; letter-spacing: -0.01em; }
+      h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 16px 0 8px; }
+      p { margin: 0 0 12px; }
+      .lead { color: var(--muted); font-size: 16px; }
+      .pattern {
+        background: var(--surface);
+        border: var(--border);
+        box-shadow: var(--shadow);
+        padding: 32px;
+        margin-bottom: 48px;
+      }
+      .pattern__tag {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 12px;
+        padding: 4px 10px;
+        border: var(--border);
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 16px;
+      }
+      @media (max-width: 720px) { .flow { grid-template-columns: 1fr; } }
+      .col {
+        background: var(--bg);
+        border: var(--border);
+        padding: 16px;
+      }
+      .col h4 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
+      code, pre {
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+        font-size: 13px;
+      }
+      pre {
+        background: var(--ink);
+        color: #f4f1ea;
+        padding: 16px;
+        overflow-x: auto;
+        margin: 0;
+        border: var(--border);
+      }
+      pre .kw { color: #ff9b6b; }
+      pre .str { color: #c5e478; }
+      pre .com { color: #968d7e; font-style: italic; }
+      .live {
+        background: var(--bg);
+        border: var(--border);
+        padding: 16px;
+        margin-top: 16px;
+      }
+      .live h4 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
+      .btn {
+        background: var(--accent);
+        color: var(--ink);
+        border: var(--border);
+        box-shadow: var(--shadow);
+        padding: 10px 18px;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+      input, textarea {
+        width: 100%;
+        background: #fff;
+        border: var(--border);
+        padding: 10px;
+        font: inherit;
+        margin-bottom: 8px;
+      }
+      .counter {
+        font-size: 32px;
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .badge {
+        display: inline-block;
+        background: var(--ink);
+        color: var(--bg);
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .arrow { color: var(--accent); font-weight: 700; }
+      ul { padding-left: 20px; }
+      li { margin-bottom: 4px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+      th, td { border: var(--border); padding: 8px; text-align: left; font-size: 13px; }
+      th { background: var(--ink); color: var(--bg); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <span class="badge">Phase 3 · Supabase 통합 이해용</span>
+        <h1>3가지 통합 패턴</h1>
+        <p class="lead">
+          데모는 정적 mock(가짜) — 실제 Supabase 호출은 Next.js 앱에서 동작. 이 페이지는 코드와 흐름을 한눈에 보기 위한 학습용.
+        </p>
+        <table>
+          <tr><th>패턴</th><th>클라이언트</th><th>대상 테이블</th><th>RLS</th></tr>
+          <tr><td>① 블로그 조회수</td><td><code>supabase</code> (anon)</td><td><code>studio_blog_views</code></td><td>RPC (security definer)</td></tr>
+          <tr><td>② 문의 폼</td><td><code>supabase</code> (anon)</td><td><code>studio_contacts</code></td><td>anon INSERT only</td></tr>
+          <tr><td>③ 뉴스레터</td><td><code>supabase</code> (anon)</td><td><code>studio_subscribers</code></td><td>anon INSERT only</td></tr>
+        </table>
+      </header>
+
+      <!-- ===================== 1. 블로그 조회수 ===================== -->
+      <section class="pattern">
+        <span class="pattern__tag">패턴 ①</span>
+        <h2>블로그 조회수 카운터</h2>
+        <p>
+          블로그 글이 열릴 때 <code>studio_increment_blog_view(p_slug)</code> RPC 호출.
+          DB 함수가 원자적으로 +1 → 동시 호출에서도 race condition 없음.
+        </p>
+
+        <div class="flow">
+          <div class="col">
+            <h4>흐름</h4>
+            <ol>
+              <li>유저가 <code>/blog/[slug]</code> 열기</li>
+              <li><code>useEffect</code>에서 <code>supabase.rpc(...)</code> 호출</li>
+              <li>DB가 <code>view_count + 1</code> 반환</li>
+              <li>UI에 카운트 표시</li>
+            </ol>
+          </div>
+          <div class="col">
+            <h4>코드</h4>
+<pre><span class="com">// src/components/blog/ViewCounter.tsx</span>
+<span class="kw">'use client'</span>;
+<span class="kw">import</span> { useEffect, useState } <span class="kw">from</span> <span class="str">'react'</span>;
+<span class="kw">import</span> { supabase } <span class="kw">from</span> <span class="str">'@/lib/supabase'</span>;
+
+<span class="kw">export function</span> ViewCounter({ slug }: { slug: <span class="kw">string</span> }) {
+  <span class="kw">const</span> [count, setCount] = useState&lt;<span class="kw">number</span> | <span class="kw">null</span>&gt;(<span class="kw">null</span>);
+  useEffect(() =&gt; {
+    supabase.rpc(<span class="str">'studio_increment_blog_view'</span>, { p_slug: slug })
+      .then(({ data }) =&gt; setCount(data <span class="kw">as number</span>));
+  }, [slug]);
+  <span class="kw">return</span> &lt;span&gt;{count ?? <span class="str">'...'</span>} views&lt;/span&gt;;
+}</pre>
+          </div>
+        </div>
+
+        <div class="live">
+          <h4>라이브 데모 (mock)</h4>
+          <p>버튼 누르면 카운트 증가 <span class="arrow">→</span> 실제 코드는 <code>supabase.rpc</code>가 같은 역할.</p>
+          <div class="counter" id="viewCount">42</div>
+          <button class="btn" onclick="document.getElementById('viewCount').textContent = (+document.getElementById('viewCount').textContent + 1)">조회수 +1</button>
+        </div>
+      </section>
+
+      <!-- ===================== 2. 문의 폼 ===================== -->
+      <section class="pattern">
+        <span class="pattern__tag">패턴 ②</span>
+        <h2>/contact 폼 → studio_contacts INSERT</h2>
+        <p>
+          누구나 문의 가능. RLS WITH CHECK가 <code>status='new'</code>, 이메일 길이, 메시지 길이를 강제 → 클라이언트 검증 누락돼도 DB가 막음.
+        </p>
+
+        <div class="flow">
+          <div class="col">
+            <h4>흐름</h4>
+            <ol>
+              <li>유저가 폼 작성 후 submit</li>
+              <li><code>supabase.from('studio_contacts').insert({...})</code></li>
+              <li>RLS 정책 통과 시 row 생성</li>
+              <li>관리자는 service_role로 조회/답변</li>
+            </ol>
+          </div>
+          <div class="col">
+            <h4>코드</h4>
+<pre><span class="com">// src/components/contact/ContactForm.tsx</span>
+<span class="kw">'use client'</span>;
+<span class="kw">import</span> { supabase } <span class="kw">from</span> <span class="str">'@/lib/supabase'</span>;
+
+<span class="kw">async function</span> onSubmit(form: FormData) {
+  <span class="kw">const</span> { error } = <span class="kw">await</span> supabase
+    .from(<span class="str">'studio_contacts'</span>)
+    .insert({
+      name: form.get(<span class="str">'name'</span>) <span class="kw">as string</span>,
+      email: form.get(<span class="str">'email'</span>) <span class="kw">as string</span>,
+      message: form.get(<span class="str">'message'</span>) <span class="kw">as string</span>,
+      source: <span class="str">'website'</span>,
+    });
+  <span class="kw">if</span> (error) <span class="kw">throw</span> error;
+}</pre>
+          </div>
+        </div>
+
+        <div class="live">
+          <h4>라이브 데모 (mock)</h4>
+          <form onsubmit="event.preventDefault(); document.getElementById('contactOut').textContent = JSON.stringify(Object.fromEntries(new FormData(this)), null, 2)">
+            <input name="name" placeholder="이름" required />
+            <input name="email" type="email" placeholder="이메일" required />
+            <textarea name="message" rows="3" placeholder="문의 내용" required></textarea>
+            <button class="btn" type="submit">보내기</button>
+          </form>
+          <h4 style="margin-top:16px;">INSERT 페이로드</h4>
+          <pre id="contactOut">{ /* submit 누르면 표시 */ }</pre>
+        </div>
+      </section>
+
+      <!-- ===================== 3. 뉴스레터 ===================== -->
+      <section class="pattern">
+        <span class="pattern__tag">패턴 ③</span>
+        <h2>뉴스레터 폼 → studio_subscribers INSERT</h2>
+        <p>
+          이메일 unique. 같은 이메일 재구독 시 <code>duplicate key</code> 에러 → UX에서 "이미 구독 중" 처리.
+        </p>
+
+        <div class="flow">
+          <div class="col">
+            <h4>흐름</h4>
+            <ol>
+              <li>이메일 입력 → submit</li>
+              <li><code>insert({ email, source })</code></li>
+              <li>중복 → error.code <code>'23505'</code> 처리</li>
+              <li>성공 → "구독 완료" 토스트</li>
+            </ol>
+            <h4>중복 처리</h4>
+<pre><span class="kw">if</span> (error?.code === <span class="str">'23505'</span>) {
+  alert(<span class="str">'이미 구독 중입니다'</span>);
+} <span class="kw">else if</span> (error) {
+  alert(<span class="str">'구독 실패'</span>);
+} <span class="kw">else</span> {
+  alert(<span class="str">'구독 완료!'</span>);
+}</pre>
+          </div>
+          <div class="col">
+            <h4>코드</h4>
+<pre><span class="com">// src/components/newsletter/SubscribeForm.tsx</span>
+<span class="kw">'use client'</span>;
+<span class="kw">import</span> { supabase } <span class="kw">from</span> <span class="str">'@/lib/supabase'</span>;
+
+<span class="kw">async function</span> subscribe(email: <span class="kw">string</span>) {
+  <span class="kw">const</span> { error } = <span class="kw">await</span> supabase
+    .from(<span class="str">'studio_subscribers'</span>)
+    .insert({ email, source: <span class="str">'footer'</span> });
+  <span class="kw">return</span> error;
+}</pre>
+          </div>
+        </div>
+
+        <div class="live">
+          <h4>라이브 데모 (mock)</h4>
+          <form onsubmit="event.preventDefault(); const e = this.email.value; const list = window._subs ||= new Set(); if (list.has(e)) { document.getElementById('newsOut').textContent = '이미 구독 중: ' + e; } else { list.add(e); document.getElementById('newsOut').textContent = '구독 완료: ' + e; }">
+            <input name="email" type="email" placeholder="email@example.com" required />
+            <button class="btn" type="submit">구독</button>
+          </form>
+          <p id="newsOut" style="margin-top:8px; font-family: 'JetBrains Mono', monospace; font-size: 13px;">(아직 구독 없음)</p>
+        </div>
+      </section>
+
+      <footer style="border-top: var(--border); padding-top: 24px; color: var(--muted); font-size: 13px;">
+        <p>
+          이 페이지는 <strong>이해용 mock</strong>. 실제 데이터는 <code>src/lib/supabase.ts</code>의 <code>supabase</code> 인스턴스가 Focus Feed Supabase로 전송.
+          <br>
+          관리자(service_role) 작업은 <code>src/lib/supabase-server.ts</code> + API Route에서만.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

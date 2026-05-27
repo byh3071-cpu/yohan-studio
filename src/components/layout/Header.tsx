@@ -53,7 +53,10 @@ export function Header() {
           <span style={dot} />
           <span style={{ marginLeft: 8 }}>STUDIO</span>
         </Link>
-        <div className="site-header-actions" style={{ display: "inline-flex", alignItems: "center" }}>
+        <div
+          className="site-header-actions"
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px", minWidth: 0 }}
+        >
           <SiteHeaderNav />
           <ThemeToggle />
         </div>

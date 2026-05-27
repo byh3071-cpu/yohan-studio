@@ -59,9 +59,10 @@ const lead: CSSProperties = {
 
 const layout: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "1fr",
+  gridTemplateColumns: "minmax(0, 1fr)",
   gap: "40px",
   alignItems: "start",
+  minWidth: 0,
 }
 
 const tree: CSSProperties = {
@@ -143,9 +144,10 @@ const punchline: CSSProperties = {
 
 const tree3Cols: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "1fr",
+  gridTemplateColumns: "minmax(0, 1fr)",
   gap: "16px",
   alignItems: "stretch",
+  minWidth: 0,
 }
 
 export function VhkSpec() {

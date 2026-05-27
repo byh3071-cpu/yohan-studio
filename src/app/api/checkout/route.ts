@@ -1,0 +1,85 @@
+import { NextResponse, type NextRequest } from 'next/server'
+
+import { getSiteUrl } from '@/lib/siteUrl'
+import { getStripe } from '@/lib/stripe'
+import { getSupabaseServer } from '@/lib/supabase-server'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
+type Body = { productId?: string }
+
+export async function POST(req: NextRequest) {
+  let body: Body
+  try {
+    body = (await req.json()) as Body
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const productId = body.productId?.trim()
+  if (!productId) {
+    return NextResponse.json({ error: 'productId 필요' }, { status: 400 })
+  }
+
+  const supabase = getSupabaseServer()
+  const { data: product, error } = await supabase
+    .from('studio_products')
+    .select('id, name, description, price_cents, currency, image_url, stripe_price_id, active')
+    .eq('id', productId)
+    .maybeSingle()
+
+  if (error) {
+    console.error('[/api/checkout] supabase error:', error.message)
+    return NextResponse.json({ error: 'DB 조회 실패' }, { status: 500 })
+  }
+  if (!product) {
+    return NextResponse.json({ error: '상품을 찾을 수 없습니다' }, { status: 404 })
+  }
+  if (!product.active) {
+    return NextResponse.json({ error: '비활성 상품' }, { status: 409 })
+  }
+
+  const stripe = getStripe()
+  const origin = req.headers.get('origin') ?? getSiteUrl()
+
+  // stripe_price_id가 진짜 Price ID(`price_...`)일 때만 사용.
+  // Product ID(`prod_...`)나 빈 값이면 inline price_data로 폴백.
+  const hasUsablePriceId =
+    typeof product.stripe_price_id === 'string' &&
+    product.stripe_price_id.startsWith('price_')
+
+  const lineItem = hasUsablePriceId
+    ? { price: product.stripe_price_id!, quantity: 1 }
+    : {
+        quantity: 1,
+        price_data: {
+          currency: product.currency.toLowerCase(),
+          unit_amount: product.price_cents,
+          product_data: {
+            name: product.name,
+            description: product.description ?? undefined,
+            images: product.image_url ? [product.image_url] : undefined,
+          },
+        },
+      }
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      payment_method_types: ['card'],
+      line_items: [lineItem],
+      success_url: `${origin}/store/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/store/${productId}`,
+      metadata: { studio_product_id: product.id },
+      payment_intent_data: {
+        metadata: { studio_product_id: product.id },
+      },
+    })
+
+    return NextResponse.json({ url: session.url, sessionId: session.id })
+  } catch (err) {
+    console.error('[/api/checkout] stripe error:', err)
+    return NextResponse.json({ error: 'Stripe 세션 생성 실패' }, { status: 502 })
+  }
+}

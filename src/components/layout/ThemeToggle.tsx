@@ -3,20 +3,9 @@
 import type { CSSProperties } from "react"
 import { useTheme } from "@/components/layout/ThemeProvider"
 
-const base: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "36px",
-  height: "36px",
-  marginLeft: "8px",
+const glyph: CSSProperties = {
   fontSize: "16px",
   lineHeight: 1,
-  background: "var(--bg)",
-  color: "var(--ink)",
-  border: "var(--border-w) solid var(--line)",
-  cursor: "pointer",
-  borderRadius: 0,
 }
 
 export function ThemeToggle() {
@@ -26,8 +15,16 @@ export function ThemeToggle() {
   // from <html data-theme>, so no hydration mismatch is possible.
   if (!hydrated) {
     return (
-      <button type="button" aria-hidden tabIndex={-1} style={{ ...base, cursor: "default" }}>
-        <span aria-hidden>·</span>
+      <button
+        type="button"
+        className="site-header-icon-btn"
+        aria-hidden
+        tabIndex={-1}
+        style={{ cursor: "default" }}
+      >
+        <span aria-hidden style={glyph}>
+          ·
+        </span>
       </button>
     )
   }
@@ -36,12 +33,14 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
+      className="site-header-icon-btn"
       onClick={toggle}
       aria-label={label}
       title={label}
-      style={base}
     >
-      <span aria-hidden>{isDark ? "☀" : "☾"}</span>
+      <span aria-hidden style={glyph}>
+        {isDark ? "☀" : "☾"}
+      </span>
     </button>
   )
 }

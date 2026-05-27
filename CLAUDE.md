@@ -31,7 +31,7 @@
 
 ---
 
-## 현재 Phase: 2 (블로그 + SEO + AI'm OS 확장)
+## 현재 Phase: 3 (Supabase + Stripe + 스토어 + 진단 결과 저장)
 Phase 1 완료 (4/25): 랜딩 + 포트폴리오 Vercel 배포 완료.
 
 ### Phase 2 작업 큐
@@ -130,11 +130,18 @@ Phase 1 완료 (4/25): 랜딩 + 포트폴리오 Vercel 배포 완료.
 - 정적 데이터: `src/data/` (projects.ts, diagnosisQuestions.ts, services.ts)
 - MDX 콘텐츠: `src/content/blog/*.mdx`
 
-## Phase 2 허용
-✅ MDX 블로그 | next-sitemap, robots.txt | @vercel/og | JSON-LD (Article/FAQ/HowTo) | GA gtag, GSC | 다크모드 | 블로그 클라이언트 카운터 | 정적 데이터 (src/data/) | 클라이언트 사이드 진단 로직 | 외부 폼 URL (env var)
+## Phase 3 허용
+✅ MDX 블로그 | next-sitemap, robots.txt | @vercel/og | JSON-LD (Article/FAQ/HowTo) | GA gtag, GSC | 다크모드 | 블로그 클라이언트 카운터 | 정적 데이터 (src/data/) | 클라이언트 사이드 진단 로직 | 외부 폼 URL (env var) | Supabase/DB 연결 | Stripe/결제 | API Routes | 진단 결과 서버 저장 | 스토어/예약/결제 기능
 
-## Phase 2 금지
-❌ Supabase/DB 연결 | Stripe/결제 | API Routes (OG route 제외) | n8n 웹훅 | 진단 결과 서버 저장 | 예약/결제 기능 | RAG/Qdrant
+## Phase 3 금지
+❌ n8n 웹훅 | RAG/Qdrant
+
+## Phase 3 DB 규약 (Supabase 공유)
+- 기존 **Focus Feed** Supabase 프로젝트를 공유 사용 (신규 프로젝트 생성 금지).
+- 모든 Yohan Studio 테이블은 `studio_` prefix 필수. 예: `studio_diagnosis_results`, `studio_orders`, `studio_subscriptions`.
+- RLS 정책도 `studio_` 테이블 단위로 격리. Focus Feed 테이블 접근 금지.
+- env var: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` 등 Focus Feed와 동일 값 사용.
+- 마이그레이션 파일은 `supabase/migrations/`에 prefix 포함한 이름으로 작성.
 
 ---
 
