@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { SearchTriggerButton } from "@/components/search/SearchTriggerButton"
+
 const linkBase: CSSProperties = {
   padding: "8px 14px",
   fontSize: "14px",
@@ -69,6 +71,7 @@ export function SiteHeaderNav() {
             </Link>
           )
         })}
+        <SearchTriggerButton />
       </nav>
       <button
         type="button"
@@ -99,6 +102,7 @@ export function SiteHeaderNav() {
               </Link>
             )
           })}
+          <SearchTriggerButton />
         </div>
         <div className="site-header-menu-divider" role="separator" />
         <div className="site-header-menu-group">

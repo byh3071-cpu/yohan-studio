@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 
 import { StoreTabs } from "@/components/store/StoreTabs"
-import { KbdHint } from "@/components/search/KbdHint"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/database"
 
@@ -23,10 +22,6 @@ const section: CSSProperties = {
 const inner: CSSProperties = { maxWidth: "var(--max-w)", margin: "0 auto" }
 
 const head: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "1fr auto",
-  alignItems: "end",
-  gap: "20px",
   paddingBottom: "32px",
   marginBottom: "40px",
   borderBottom: "var(--border-w) solid var(--line)",
@@ -141,13 +136,10 @@ export default async function StorePage() {
     <section style={section}>
       <div style={inner}>
         <div style={head}>
-          <div>
-            <div style={eyebrow}>{"// STORE — 템플릿·도구·강의"}</div>
-            <h1 style={title}>
-              스토어<span style={accentMark}>.</span>
-            </h1>
-          </div>
-          <KbdHint />
+          <div style={eyebrow}>{"// STORE — 템플릿·도구·강의"}</div>
+          <h1 style={title}>
+            스토어<span style={accentMark}>.</span>
+          </h1>
         </div>
 
         {error ? (
