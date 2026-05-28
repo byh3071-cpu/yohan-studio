@@ -18,6 +18,7 @@ export type OpenSourceItem = {
   npm?: string
   demo?: string
   download?: string
+  notion?: string
 }
 
 export const opensourceItems: OpenSourceItem[] = [
@@ -78,6 +79,21 @@ export const opensourceItems: OpenSourceItem[] = [
     year: "2026",
     dateCreated: "2026-05-15",
     keywords: ["Notion", "Template", "1인 기업", "회고", "오픈소스"],
-    download: "https://yohan-studio.vercel.app/open-source",
+    notion: "https://hyper-mallow-5b2.notion.site/Today-OS-32b9740ab07280e7b9acce76046e4075?source=copy_link",
+    download: "/downloads/today-os.pdf",
   },
 ]
+
+import type { SearchDocument } from "@/lib/search"
+
+export function opensourceSearchDocs(): SearchDocument[] {
+  return opensourceItems.map((item) => ({
+    id: `opensource:${item.slug}`,
+    kind: "opensource",
+    title: item.title,
+    description: item.summary,
+    url: `/open-source#${item.slug}`,
+    tags: [item.category, ...item.stack, ...item.keywords],
+    badge: "오픈소스",
+  }))
+}

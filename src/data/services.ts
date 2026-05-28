@@ -66,3 +66,17 @@ export const services: Service[] = [
     ctaLabel: "프로그램 문의",
   },
 ]
+
+import type { SearchDocument } from "@/lib/search"
+
+export function servicesSearchDocs(): SearchDocument[] {
+  return services.map((service) => ({
+    id: `service:${service.slug}`,
+    kind: "service",
+    title: service.name,
+    description: service.tagline,
+    url: `/services#${service.slug}`,
+    tags: [service.audience, service.priceRange],
+    badge: "서비스",
+  }))
+}

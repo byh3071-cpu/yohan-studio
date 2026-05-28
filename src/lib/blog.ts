@@ -11,6 +11,7 @@ import {
   getComponentPostSlugs,
   getPublishedComponentPosts,
 } from "@/lib/blog-component-posts"
+import type { SearchDocument } from "@/lib/search"
 
 const mdxComponents = {
   pre: CodeBlock,
@@ -160,4 +161,16 @@ export async function compileBlogPost(slug: string): Promise<{
   if (!meta) return null
 
   return { meta, content }
+}
+
+export function blogSearchDocs(): SearchDocument[] {
+  return getPublishedPosts().map((post) => ({
+    id: `blog:${post.slug}`,
+    kind: "blog",
+    title: post.title,
+    description: post.description,
+    url: `/blog/${post.slug}`,
+    tags: [...(post.tags ?? []), post.category].filter(Boolean),
+    badge: "블로그",
+  }))
 }

@@ -204,3 +204,18 @@ export const showroomProjects: ShowroomProject[] = [
     ],
   },
 ]
+
+// SearchDocument는 type-only import — fuse.js 의존이 데이터 모듈에 새지 않음.
+import type { SearchDocument } from "@/lib/search"
+
+export function showroomSearchDocs(): SearchDocument[] {
+  return showroomProjects.map((project) => ({
+    id: `showroom:${project.slug}`,
+    kind: "showroom",
+    title: project.title,
+    description: project.summary,
+    url: `/showroom/${project.slug}`,
+    tags: [project.category, ...project.stack, ...project.keywords],
+    badge: "쇼룸",
+  }))
+}

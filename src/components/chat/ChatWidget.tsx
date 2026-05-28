@@ -5,8 +5,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react"
 
 import { ChatMessage } from "./ChatMessage"
 
-export function ChatWidget() {
-  const [open, setOpen] = useState(false)
+export function ChatWidget({ defaultOpen = false }: { defaultOpen?: boolean } = {}) {
+  const [open, setOpen] = useState(defaultOpen)
   const [input, setInput] = useState("")
   const panelRef = useRef<HTMLDivElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)

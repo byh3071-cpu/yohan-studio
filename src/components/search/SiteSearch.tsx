@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 
 import { SearchResult } from "@/components/search/SearchResult"
 import { createSearchIndex, type SearchDocument } from "@/lib/search"
-import { SITE_SEARCH_OPEN_EVENT } from "@/lib/siteSearchEvents"
 
 const MAX_RESULTS = 12
 
@@ -98,29 +97,56 @@ const footer: CSSProperties = {
   color: "var(--muted)",
 }
 
-export function SiteSearch({ docs = [] }: { docs?: SearchDocument[] }) {
+// Controlled: 부모(SiteSearchMount)가 open + close 를 소유.
+// docs 는 첫 마운트 시 /api/search-docs 에서 페치 — 초기 HTML/번들에 직렬화하지 않음.
+type SiteSearchProps = {
+  open: boolean
+  onClose: () => void
+}
+
+export function SiteSearch({ open, onClose }: SiteSearchProps) {
   const router = useRouter()
-  const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
+  const [docs, setDocs] = useState<SearchDocument[] | null>(null)
+  const [loadError, setLoadError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const fuse = useMemo(() => createSearchIndex(docs), [docs])
+  // 첫 마운트 시 1회 페치. Fuse 인덱스 빌드도 docs 확보 후 지연.
+  useEffect(() => {
+    let cancelled = false
+    fetch("/api/search-docs", { cache: "force-cache" })
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json() as Promise<{ docs: SearchDocument[] }>
+      })
+      .then((payload) => {
+        if (!cancelled) setDocs(payload.docs)
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setLoadError(err instanceof Error ? err.message : "load failed")
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const fuse = useMemo(() => (docs ? createSearchIndex(docs) : null), [docs])
 
   const results = useMemo(() => {
+    if (!docs) return []
     const q = query.trim()
-    if (q.length < 2) return docs.slice(0, MAX_RESULTS)
-    return fuse
-      .search(q)
-      .slice(0, MAX_RESULTS)
-      .map((r) => r.item)
+    if (q.length < 2 || !fuse) return docs.slice(0, MAX_RESULTS)
+    return fuse.search(q).slice(0, MAX_RESULTS).map((r) => r.item)
   }, [fuse, query, docs])
 
   const close = useCallback(() => {
-    setOpen(false)
     setQuery("")
     setActive(0)
-  }, [])
+    onClose()
+  }, [onClose])
 
   const select = useCallback(
     (doc: SearchDocument) => {
@@ -130,26 +156,17 @@ export function SiteSearch({ docs = [] }: { docs?: SearchDocument[] }) {
     [router, close],
   )
 
-  // Global shortcut: Cmd+K (mac) / Ctrl+K (win/linux) toggle modal
-  // 외부 트리거(SearchTriggerButton) 는 SITE_SEARCH_OPEN_EVENT 로 의도 표현.
+  // Escape close (Cmd+K 토글은 SiteSearchMount 에서 처리).
   useEffect(() => {
+    if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      const isToggle = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"
-      if (isToggle) {
-        e.preventDefault()
-        setOpen((v) => !v)
-      } else if (e.key === "Escape" && open) {
+      if (e.key === "Escape") {
         e.preventDefault()
         close()
       }
     }
-    const onOpenRequest = () => setOpen(true)
     window.addEventListener("keydown", onKey)
-    window.addEventListener(SITE_SEARCH_OPEN_EVENT, onOpenRequest)
-    return () => {
-      window.removeEventListener("keydown", onKey)
-      window.removeEventListener(SITE_SEARCH_OPEN_EVENT, onOpenRequest)
-    }
+    return () => window.removeEventListener("keydown", onKey)
   }, [open, close])
 
   // Focus input + lock body scroll when open
@@ -225,7 +242,11 @@ export function SiteSearch({ docs = [] }: { docs?: SearchDocument[] }) {
         </div>
 
         <div style={list}>
-          {results.length === 0 ? (
+          {docs === null && loadError === null ? (
+            <div style={emptyMsg}>검색 인덱스 불러오는 중…</div>
+          ) : loadError !== null ? (
+            <div style={emptyMsg}>검색 데이터 로드 실패: {loadError}</div>
+          ) : results.length === 0 ? (
             <div style={emptyMsg}>검색 결과가 없습니다.</div>
           ) : (
             results.map((doc, i) => (
