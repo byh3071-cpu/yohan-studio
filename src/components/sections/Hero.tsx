@@ -174,6 +174,7 @@ export function Hero() {
           </h1>
           <p style={sub}>
             좋은 시스템은 나를 복제한다. 좋은 AI는 나를 확장한다.
+            <br />
             진단으로 빈 곳을 찾고, 템플릿으로 메우고, 같이 짓는다.
           </p>
           <div style={ctaRow}>

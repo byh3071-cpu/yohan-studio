@@ -76,28 +76,46 @@ async function readBoundedBody(req: Request): Promise<string | null> {
   return body
 }
 
-function isValidMessage(m: unknown): m is UIMessage {
-  if (!m || typeof m !== "object") return false
-  const obj = m as Record<string, unknown>
-  if (typeof obj.id !== "string") return false
-  if (obj.role !== "user" && obj.role !== "assistant") return false
-  if (!Array.isArray(obj.parts) || obj.parts.length === 0) return false
-  let totalLen = 0
-  for (const p of obj.parts) {
-    if (!p || typeof p !== "object") return false
-    const part = p as Record<string, unknown>
-    if (part.type !== "text" || typeof part.text !== "string") return false
-    if (part.text.trim().length === 0) return false
-    totalLen += part.text.length
-    if (totalLen > MAX_MESSAGE_CHARS) return false
+function extractMessageText(obj: Record<string, unknown>): string | null {
+  if (Array.isArray(obj.parts)) {
+    return obj.parts
+      .map((part) => {
+        if (!part || typeof part !== "object") return ""
+        const p = part as Record<string, unknown>
+        return p.type === "text" && typeof p.text === "string" ? p.text : ""
+      })
+      .join("")
   }
-  return true
+
+  return typeof obj.content === "string" ? obj.content : null
 }
 
-function isValidMessages(arr: unknown): arr is UIMessage[] {
-  if (!Array.isArray(arr)) return false
-  if (arr.length === 0 || arr.length > MAX_MESSAGES) return false
-  return arr.every(isValidMessage)
+function sanitizeMessages(arr: unknown): UIMessage[] | null {
+  if (!Array.isArray(arr)) return null
+  if (arr.length === 0 || arr.length > MAX_MESSAGES) return null
+
+  const messages: UIMessage[] = []
+
+  for (const [index, item] of arr.entries()) {
+    if (!item || typeof item !== "object") return null
+
+    const obj = item as Record<string, unknown>
+    if (obj.role !== "user" && obj.role !== "assistant") return null
+
+    const text = extractMessageText(obj)
+    if (text === null) return null
+    if (text.length > MAX_MESSAGE_CHARS) return null
+    if (obj.role === "user" && text.trim().length === 0) return null
+    if (text.trim().length === 0) continue
+
+    messages.push({
+      id: typeof obj.id === "string" ? obj.id : `message-${index}`,
+      role: obj.role,
+      parts: [{ type: "text", text }],
+    })
+  }
+
+  return messages.some((message) => message.role === "user") ? messages : null
 }
 
 export async function POST(req: Request) {
@@ -125,12 +143,13 @@ export async function POST(req: Request) {
     return jsonError(400, "Invalid body")
   }
   const { messages } = parsed as { messages: unknown }
-  if (!isValidMessages(messages)) {
+  const safeMessages = sanitizeMessages(messages)
+  if (!safeMessages) {
     return jsonError(400, "Invalid messages")
   }
 
   try {
-    const modelMessages = await convertToModelMessages(messages)
+    const modelMessages = await convertToModelMessages(safeMessages)
     const result = streamText({
       model: google("gemini-2.5-flash"),
       system: CHAT_SYSTEM_PROMPT,

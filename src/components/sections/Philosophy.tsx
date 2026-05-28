@@ -20,7 +20,6 @@ const eyebrow: CSSProperties = {
 
 const quote: CSSProperties = {
   fontFamily: "var(--font-serif)",
-  fontStyle: "italic",
   fontSize: "clamp(28px, 4.5vw, 48px)",
   fontWeight: 500,
   lineHeight: 1.2,

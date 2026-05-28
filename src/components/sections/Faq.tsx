@@ -151,7 +151,9 @@ export function Faq() {
         </div>
         <h2 style={heading}>물어볼 만한 것들.</h2>
         <p style={lede}>
-          답변 엔진(ChatGPT · Perplexity · Gemini)이 인용해도 그대로 쓸 수 있도록, 한 문장 핵심 + 한 단락 부연 구조로 정리했다.
+          답변 엔진(ChatGPT · Perplexity · Gemini)이 인용해도 그대로 쓸 수 있도록,
+          <br />
+          한 문장 핵심 + 한 단락 부연 구조로 정리했다.
         </p>
         <ul style={list} className="faq-list">
           {faqs.map(({ q, a }, i) => (
