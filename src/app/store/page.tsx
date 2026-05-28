@@ -2,8 +2,7 @@ import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 
 import { StoreTabs } from "@/components/store/StoreTabs"
-import { SiteSearch } from "@/components/search/SiteSearch"
-import { getSearchDocuments } from "@/lib/searchData"
+import { KbdHint } from "@/components/search/KbdHint"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/database"
 
@@ -53,18 +52,6 @@ const title: CSSProperties = {
 }
 
 const accentMark: CSSProperties = { color: "var(--accent)" }
-
-const searchHint: CSSProperties = {
-  fontFamily: "var(--font-mono)",
-  fontSize: "12px",
-  color: "var(--ink)",
-  border: "1.5px solid var(--line)",
-  padding: "8px 12px",
-  background: "var(--bg)",
-  letterSpacing: "0.04em",
-  boxShadow: "var(--shadow-sm)",
-  whiteSpace: "nowrap",
-}
 
 const errorBox: CSSProperties = {
   border: "var(--border-w) solid var(--accent)",
@@ -149,7 +136,6 @@ async function fetchActiveProducts(): Promise<{ products: ProductRow[] | null; e
 export default async function StorePage() {
   const { products, error } = await fetchActiveProducts()
   const list: ProductRow[] = products && products.length > 0 ? products : placeholderProducts
-  const searchDocs = getSearchDocuments()
 
   return (
     <section style={section}>
@@ -161,7 +147,7 @@ export default async function StorePage() {
               스토어<span style={accentMark}>.</span>
             </h1>
           </div>
-          <div style={searchHint}>⌘ + K · 사이트 검색</div>
+          <KbdHint />
         </div>
 
         {error ? (
@@ -170,7 +156,6 @@ export default async function StorePage() {
           <StoreTabs products={list} />
         )}
       </div>
-      <SiteSearch docs={searchDocs} />
     </section>
   )
 }

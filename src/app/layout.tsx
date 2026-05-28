@@ -7,6 +7,8 @@ import { ChatWidget } from "@/components/chat/ChatWidget"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
+import { SiteSearch } from "@/components/search/SiteSearch"
+import { getSearchDocuments } from "@/lib/searchData"
 import { getSiteUrl } from "@/lib/siteUrl"
 import "./globals.css"
 
@@ -146,6 +148,7 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
+  const searchDocs = getSearchDocuments()
   return (
     <html
       lang="ko"
@@ -171,6 +174,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         ) : null}
+        <SiteSearch docs={searchDocs} />
         <ChatWidget />
       </body>
     </html>

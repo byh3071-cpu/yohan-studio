@@ -1,6 +1,7 @@
 import "server-only"
 
 import { getPublishedPosts } from "@/lib/blog"
+import { opensourceItems } from "@/data/opensourceItems"
 import { services } from "@/data/services"
 import { showroomProjects } from "@/data/showroomProjects"
 
@@ -37,5 +38,15 @@ export function getSearchDocuments(): SearchDocument[] {
     badge: "서비스",
   }))
 
-  return [...blogDocs, ...showroomDocs, ...serviceDocs]
+  const opensourceDocs: SearchDocument[] = opensourceItems.map((item) => ({
+    id: `opensource:${item.slug}`,
+    kind: "opensource",
+    title: item.title,
+    description: item.summary,
+    url: `/open-source#${item.slug}`,
+    tags: [item.category, ...item.stack, ...item.keywords],
+    badge: "오픈소스",
+  }))
+
+  return [...blogDocs, ...showroomDocs, ...serviceDocs, ...opensourceDocs]
 }
