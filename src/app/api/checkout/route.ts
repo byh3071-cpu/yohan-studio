@@ -41,7 +41,8 @@ export async function POST(req: NextRequest) {
   }
 
   const stripe = getStripe()
-  const origin = req.headers.get('origin') ?? getSiteUrl()
+  // 항상 정식 사이트 origin 사용. Origin 헤더 신뢰 시 결제 후 외부 도메인 리다이렉트 위험.
+  const origin = getSiteUrl()
 
   // stripe_price_id가 진짜 Price ID(`price_...`)일 때만 사용.
   // Product ID(`prod_...`)나 빈 값이면 inline price_data로 폴백.

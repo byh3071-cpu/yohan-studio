@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 
 import { SearchResult } from "@/components/search/SearchResult"
 import { createSearchIndex, type SearchDocument } from "@/lib/search"
+import { SITE_SEARCH_OPEN_EVENT } from "@/lib/siteSearchEvents"
 
 const MAX_RESULTS = 12
 
@@ -130,6 +131,7 @@ export function SiteSearch({ docs = [] }: { docs?: SearchDocument[] }) {
   )
 
   // Global shortcut: Cmd+K (mac) / Ctrl+K (win/linux) toggle modal
+  // 외부 트리거(SearchTriggerButton) 는 SITE_SEARCH_OPEN_EVENT 로 의도 표현.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const isToggle = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"
@@ -141,8 +143,13 @@ export function SiteSearch({ docs = [] }: { docs?: SearchDocument[] }) {
         close()
       }
     }
+    const onOpenRequest = () => setOpen(true)
     window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
+    window.addEventListener(SITE_SEARCH_OPEN_EVENT, onOpenRequest)
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      window.removeEventListener(SITE_SEARCH_OPEN_EVENT, onOpenRequest)
+    }
   }, [open, close])
 
   // Focus input + lock body scroll when open

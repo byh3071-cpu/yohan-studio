@@ -1,7 +1,9 @@
 "use client"
 
 import type { CSSProperties } from "react"
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
+
+import { SITE_SEARCH_OPEN_EVENT } from "@/lib/siteSearchEvents"
 
 const button: CSSProperties = {
   display: "inline-flex",
@@ -40,20 +42,15 @@ function detectMac(): boolean {
   return /mac|iphone|ipad|ipod/i.test(haystack)
 }
 
-export function SearchTriggerButton({ compact = false }: { compact?: boolean }) {
-  // SSR-safe default — assume non-mac until detection runs.
-  const [isMac, setIsMac] = useState(false)
+const noopSubscribe = () => () => {}
 
-  useEffect(() => {
-    setIsMac(detectMac())
-  }, [])
+export function SearchTriggerButton({ compact = false }: { compact?: boolean }) {
+  // SSR + 첫 클라이언트 렌더는 false → hydration mismatch 없음.
+  // post-hydration commit에서 실제 플랫폼 값으로 재렌더.
+  const isMac = useSyncExternalStore(noopSubscribe, detectMac, () => false)
 
   function trigger() {
-    // SiteSearch listens for Cmd+K / Ctrl+K on window; dispatch a synthetic event
-    // so we don't need to expose its internal state.
-    window.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }),
-    )
+    window.dispatchEvent(new CustomEvent(SITE_SEARCH_OPEN_EVENT))
   }
 
   const label = isMac ? "⌘ K" : "Ctrl K"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import type { CSSProperties } from "react"
 import {
   AREAS,
@@ -290,25 +290,16 @@ function QuestionRow({
 }
 
 export function DiagnosisForm() {
-  const [answers, setAnswers] = useState<Answers>({})
+  // lazy initializer 로 draft 복원. useEffect+setState 패턴(react-hooks/set-state-in-effect) 회피.
+  // SSR 에서는 typeof window === "undefined" 가드로 빈 객체.
+  const [answers, setAnswers] = useState<Answers>(() => loadDraft() ?? {})
   const [submitted, setSubmitted] = useState(false)
-  const [restored, setRestored] = useState(false)
-  const hydratedRef = useRef(false)
-
-  // 마운트 시 1회만 draft 복원
-  useEffect(() => {
-    if (hydratedRef.current) return
-    hydratedRef.current = true
-    const draft = loadDraft()
-    if (draft && Object.keys(draft).length > 0) {
-      setAnswers(draft)
-      setRestored(true)
-    }
-  }, [])
+  const [restored, setRestored] = useState<boolean>(
+    () => Object.keys(loadDraft() ?? {}).length > 0,
+  )
 
   // answers 변경 시 draft 저장 (submitted 후엔 저장 안 함)
   useEffect(() => {
-    if (!hydratedRef.current) return
     if (submitted) return
     if (Object.keys(answers).length === 0) return
     saveDraft(answers)

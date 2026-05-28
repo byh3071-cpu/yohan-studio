@@ -89,8 +89,6 @@ const layout: CSSProperties = {
   alignItems: "start",
 }
 
-const layoutMobile = "@media (max-width: 880px)" // not used directly; fallback below
-
 const cover: CSSProperties = {
   background: "var(--surface-2, #e5e0d2)",
   border: "var(--border-w) solid var(--line)",
@@ -224,7 +222,6 @@ export default async function StoreDetailPage({ params }: PageProps) {
               </div>
               <CheckoutButton
                 productId={product.id}
-                productName={product.name}
                 active={product.active}
               />
             </div>

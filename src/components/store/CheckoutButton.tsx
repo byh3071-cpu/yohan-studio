@@ -48,11 +48,9 @@ const errorText: CSSProperties = {
 
 export function CheckoutButton({
   productId,
-  productName,
   active,
 }: {
   productId: string
-  productName: string
   active: boolean
 }) {
   const [loading, setLoading] = useState(false)

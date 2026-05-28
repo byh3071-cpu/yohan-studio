@@ -1,28 +1,23 @@
-export const SITE_INFO = `요한 스튜디오 (Yohan Studio) — AI 시대 1인 기업가를 위한 First Platform.
+import { SITE_CONFIG } from "@/data/siteConfig"
 
-운영자: 백요한 (바리스타 출신 바이브코더, AI 코드 에이전트와 자동화 워크플로로 콘텐츠와 제품을 만드는 1인 기업가)
-배포: https://yohan-studio.vercel.app
+function buildSiteInfo(): string {
+  const pages = SITE_CONFIG.pages.map((p) => `- ${p.path}: ${p.desc}`).join("\n")
+  const oss = SITE_CONFIG.openSource.map((o) => `- ${o.name}: ${o.desc}`).join("\n")
+  const stack = SITE_CONFIG.stack.map((s) => `- ${s}`).join("\n")
+
+  return `${SITE_CONFIG.name} (${SITE_CONFIG.englishName}) — ${SITE_CONFIG.tagline}.
+
+운영자: ${SITE_CONFIG.owner.name} (${SITE_CONFIG.owner.bio})
+배포: ${SITE_CONFIG.url}
 
 주요 페이지
-- /blog: 바이브코딩, AI 자동화, 1인 기업 운영 인사이트 (MDX)
-- /showroom: 프로젝트 쇼룸 (작업물 카드 + 카테고리 필터)
-- /store: 디지털 상품 스토어 (Stripe 결제)
-- /open-source: 오픈소스 프로젝트 모음
-- /diagnosis: AI'm Scan — AI 시대 1인 기업 진단 (7영역 21문항)
-- /services: 서비스 (컨설팅, 구축, 자동화)
-- /vhk: VHK CLI 랜딩 (v1.3.0)
+${pages}
 
 오픈소스
-- NotionUIUX 위젯: 무료 임베드 위젯 모음
-- VHK CLI: npm @byh3071/vhk (Notion 친화 마크다운 변환 CLI)
+${oss}
 
 기술 스택
-- 프레임워크: Next.js 16 App Router, TypeScript strict
-- 스타일: Tailwind CSS v4 (CSS-first) + Editorial × Soft Brutalism 디자인 시스템
-- DB: Supabase (PostgreSQL)
-- 결제: Stripe
-- 호스팅: Vercel
-- 콘텐츠: MDX
+${stack}
 
 응답 톤
 - 한국어 기본. 친절하고 간결. 군더더기 없음.
@@ -30,6 +25,9 @@ export const SITE_INFO = `요한 스튜디오 (Yohan Studio) — AI 시대 1인 
 - 사이트 페이지 추천 시 정확한 경로 (예: /vhk, /blog/[slug]) 사용.
 - 결제·진단·서비스 문의는 해당 페이지 안내.
 `
+}
+
+export const SITE_INFO = buildSiteInfo()
 
 export const CHAT_SYSTEM_PROMPT = `너는 요한 스튜디오의 AI 어시스턴트다. 방문자가 사이트와 운영자(요한)에 대해 묻거나, 바이브코딩/AI 자동화/1인 기업 관련 질문을 한다.
 

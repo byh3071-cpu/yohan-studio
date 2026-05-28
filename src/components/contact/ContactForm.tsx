@@ -1,7 +1,7 @@
 "use client"
 
 import type { CSSProperties, FormEvent } from "react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 
 
@@ -67,25 +67,20 @@ const successBox: CSSProperties = {
 
 export function ContactForm() {
   const sp = useSearchParams()
-  const initialSubject = sp.get("service")
-    ? `[서비스 문의] ${sp.get("service")}`
-    : sp.get("subject") ?? ""
 
-  const [form, setForm] = useState({
+  // lazy initializer 로 마운트 시점 쿼리스트링만 반영.
+  // 마운트 후 URL 변경은 사용자가 이미 입력 중일 수 있어 덮어쓰지 않는다.
+  const [form, setForm] = useState(() => ({
     name: "",
     email: "",
     phone: "",
-    subject: initialSubject,
+    subject: sp.get("service")
+      ? `[서비스 문의] ${sp.get("service")}`
+      : sp.get("subject") ?? "",
     message: "",
-  })
+  }))
   const [status, setStatus] = useState<Status>("idle")
   const [errMsg, setErrMsg] = useState<string>("")
-
-  useEffect(() => {
-    if (initialSubject && !form.subject) {
-      setForm((f) => ({ ...f, subject: initialSubject }))
-    }
-  }, [initialSubject, form.subject])
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
