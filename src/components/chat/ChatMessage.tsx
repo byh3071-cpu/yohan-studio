@@ -94,7 +94,7 @@ export function ChatMessage({ message }: Props) {
       className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className="max-w-[85%] whitespace-pre-wrap break-words border-[1.5px] px-3 py-2 text-sm leading-relaxed"
+        className="max-w-[85%] whitespace-pre-wrap wrap-break-word border-[1.5px] px-3 py-2 text-sm leading-relaxed"
         style={{
           background: isUser ? "var(--accent)" : "var(--surface-2)",
           color: isUser ? "var(--accent-ink)" : "var(--ink)",
