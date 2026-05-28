@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { Inter, JetBrains_Mono, Source_Serif_4 } from "next/font/google"
 import Script from "next/script"
 import { GoogleAnalytics } from "@next/third-parties/google"
+import { ChatWidget } from "@/components/chat/ChatWidget"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
@@ -170,6 +171,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         ) : null}
+        <ChatWidget />
       </body>
     </html>
   )
