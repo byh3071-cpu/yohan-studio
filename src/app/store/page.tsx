@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 
-import { ProductCard } from "@/components/store/ProductCard"
+import { StoreTabs } from "@/components/store/StoreTabs"
+import { SiteSearch } from "@/components/search/SiteSearch"
+import { getSearchDocuments } from "@/lib/searchData"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/database"
 
@@ -52,28 +54,23 @@ const title: CSSProperties = {
 
 const accentMark: CSSProperties = { color: "var(--accent)" }
 
-const count: CSSProperties = {
-  fontFamily: "var(--font-en)",
-  fontSize: "13px",
-  fontWeight: 500,
+const searchHint: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "12px",
   color: "var(--ink)",
   border: "1.5px solid var(--line)",
-  padding: "8px 14px",
+  padding: "8px 12px",
   background: "var(--bg)",
   letterSpacing: "0.04em",
+  boxShadow: "var(--shadow-sm)",
+  whiteSpace: "nowrap",
 }
 
-const grid: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-  gap: "24px",
-}
-
-const empty: CSSProperties = {
-  border: "var(--border-w) solid var(--line)",
+const errorBox: CSSProperties = {
+  border: "var(--border-w) solid var(--accent)",
   padding: "48px 24px",
   textAlign: "center",
-  color: "var(--muted)",
+  color: "var(--accent)",
   fontFamily: "var(--font-mono)",
   fontSize: "13px",
   letterSpacing: "0.04em",
@@ -81,13 +78,60 @@ const empty: CSSProperties = {
   background: "var(--bg)",
 }
 
-const errorBox: CSSProperties = {
-  ...empty,
-  color: "var(--accent)",
-  borderColor: "var(--accent)",
-}
-
 type ProductRow = Database["public"]["Tables"]["studio_products"]["Row"]
+
+// Placeholder shown only when Supabase returns no rows (env missing or empty table)
+// so the Free/Paid tabs have something to demo against during local/preview builds.
+const placeholderProducts: ProductRow[] = [
+  {
+    id: "placeholder-free-1",
+    slug: "starter-notion-os",
+    name: "Starter Notion OS",
+    description: "1인 기업가를 위한 기본 노션 OS 템플릿. Decision · Resource · Review DB 한 세트.",
+    price_cents: 0,
+    currency: "KRW",
+    product_type: "template",
+    image_url: null,
+    download_url: null,
+    stripe_price_id: null,
+    active: true,
+    metadata: {},
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "placeholder-free-2",
+    slug: "vibe-coding-checklist",
+    name: "Vibe Coding Checklist",
+    description: "Cursor·Claude Code 세팅부터 첫 배포까지 — 30분 안에 끝내는 체크리스트.",
+    price_cents: 0,
+    currency: "KRW",
+    product_type: "ebook",
+    image_url: null,
+    download_url: null,
+    stripe_price_id: null,
+    active: true,
+    metadata: {},
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: "placeholder-paid-1",
+    slug: "aim-scan-report-sample",
+    name: "A'Im Scan Report (샘플)",
+    description: "21문항 진단 리포트의 실제 PDF 샘플. 강·약점 분석 + 30일 처방 구조 미리보기.",
+    price_cents: 49000,
+    currency: "KRW",
+    product_type: "ebook",
+    image_url: null,
+    download_url: null,
+    stripe_price_id: null,
+    active: true,
+    metadata: {},
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+]
 
 async function fetchActiveProducts(): Promise<{ products: ProductRow[] | null; error: string | null }> {
   try {
@@ -98,14 +142,14 @@ async function fetchActiveProducts(): Promise<{ products: ProductRow[] | null; e
       .order("created_at", { ascending: false })
     return { products: data, error: error?.message ?? null }
   } catch (e) {
-    // ISR 프리렌더 단계에서 Supabase env 누락이면 throw 발생.
-    // 빈 상태 렌더로 폴백 → 빌드 통과, revalidate 후 실데이터로 채워짐.
     return { products: null, error: e instanceof Error ? e.message : "unknown" }
   }
 }
 
 export default async function StorePage() {
   const { products, error } = await fetchActiveProducts()
+  const list: ProductRow[] = products && products.length > 0 ? products : placeholderProducts
+  const searchDocs = getSearchDocuments()
 
   return (
     <section style={section}>
@@ -117,21 +161,16 @@ export default async function StorePage() {
               스토어<span style={accentMark}>.</span>
             </h1>
           </div>
-          <div style={count}>{products?.length ?? 0} ITEMS</div>
+          <div style={searchHint}>⌘ + K · 사이트 검색</div>
         </div>
 
         {error ? (
           <div style={errorBox}>상품 목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>
-        ) : !products || products.length === 0 ? (
-          <div style={empty}>곧 첫 상품이 등록됩니다. 조금만 기다려주세요.</div>
         ) : (
-          <div style={grid}>
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          <StoreTabs products={list} />
         )}
       </div>
+      <SiteSearch docs={searchDocs} />
     </section>
   )
 }
