@@ -44,12 +44,18 @@ function detectMac(): boolean {
 
 const noopSubscribe = () => () => {}
 
-export function SearchTriggerButton({ compact = false }: { compact?: boolean }) {
+type SearchTriggerButtonProps = {
+  compact?: boolean
+  onOpen?: () => void
+}
+
+export function SearchTriggerButton({ compact = false, onOpen }: SearchTriggerButtonProps) {
   // SSR + 첫 클라이언트 렌더는 false → hydration mismatch 없음.
   // post-hydration commit에서 실제 플랫폼 값으로 재렌더.
   const isMac = useSyncExternalStore(noopSubscribe, detectMac, () => false)
 
   function trigger() {
+    onOpen?.()
     window.dispatchEvent(new CustomEvent(SITE_SEARCH_OPEN_EVENT))
   }
 

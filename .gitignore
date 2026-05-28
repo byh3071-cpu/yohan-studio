@@ -62,5 +62,6 @@ public/qa-artifacts/
 # scratch / verification dumps
 tmp-*.html
 vhk-verify-*.png
+scripts/.verify/
 /.tmp-cover.html
 /.tmp-gif

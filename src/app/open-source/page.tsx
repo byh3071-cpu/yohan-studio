@@ -110,7 +110,7 @@ function CollectionJsonLd() {
           "@type": "CreativeWork",
           name: item.title,
           description: item.summary,
-          url: item.github ?? item.npm ?? item.demo ?? item.download ?? url,
+          url: item.github ?? item.npm ?? item.demo ?? item.notion ?? item.download ?? url,
           keywords: item.keywords,
           dateCreated: item.dateCreated,
           ...(item.github ? { codeRepository: item.github } : {}),

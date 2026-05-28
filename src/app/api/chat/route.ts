@@ -46,21 +46,50 @@ function jsonError(status: number, error: string, extraHeaders?: Record<string, 
   })
 }
 
+async function readBoundedBody(req: Request): Promise<string | null> {
+  const contentLength = Number(req.headers.get("content-length") ?? "0")
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return null
+  }
+
+  if (!req.body) return ""
+
+  const reader = req.body.getReader()
+  const decoder = new TextDecoder()
+  let received = 0
+  let body = ""
+
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    if (!value) continue
+
+    received += value.byteLength
+    if (received > MAX_BODY_BYTES) {
+      await reader.cancel().catch(() => undefined)
+      return null
+    }
+    body += decoder.decode(value, { stream: true })
+  }
+
+  body += decoder.decode()
+  return body
+}
+
 function isValidMessage(m: unknown): m is UIMessage {
   if (!m || typeof m !== "object") return false
   const obj = m as Record<string, unknown>
   if (typeof obj.id !== "string") return false
-  if (obj.role !== "user" && obj.role !== "assistant" && obj.role !== "system") return false
-  if (!Array.isArray(obj.parts)) return false
+  if (obj.role !== "user" && obj.role !== "assistant") return false
+  if (!Array.isArray(obj.parts) || obj.parts.length === 0) return false
   let totalLen = 0
   for (const p of obj.parts) {
-    if (p && typeof p === "object" && "text" in p) {
-      const text = (p as { text: unknown }).text
-      if (typeof text === "string") {
-        totalLen += text.length
-        if (totalLen > MAX_MESSAGE_CHARS) return false
-      }
-    }
+    if (!p || typeof p !== "object") return false
+    const part = p as Record<string, unknown>
+    if (part.type !== "text" || typeof part.text !== "string") return false
+    if (part.text.trim().length === 0) return false
+    totalLen += part.text.length
+    if (totalLen > MAX_MESSAGE_CHARS) return false
   }
   return true
 }
@@ -81,14 +110,13 @@ export async function POST(req: Request) {
     return jsonError(429, "Too many requests", { "retry-after": "60" })
   }
 
-  const contentLength = Number(req.headers.get("content-length") ?? "0")
-  if (contentLength > MAX_BODY_BYTES) {
-    return jsonError(413, "Payload too large")
-  }
-
   let parsed: unknown
   try {
-    parsed = await req.json()
+    const body = await readBoundedBody(req)
+    if (body === null) {
+      return jsonError(413, "Payload too large")
+    }
+    parsed = JSON.parse(body)
   } catch {
     return jsonError(400, "Invalid JSON")
   }

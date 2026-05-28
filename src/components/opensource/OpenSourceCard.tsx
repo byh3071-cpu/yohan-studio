@@ -229,14 +229,25 @@ export function OpenSourceCard({ item }: { item: OpenSourceItem }) {
             Live →
           </a>
         )}
-        {item.download && (
+        {item.notion && (
           <a
-            href={item.download}
+            href={item.notion}
             target="_blank"
             rel="noreferrer noopener"
             style={linkStyle}
+            aria-label={`${item.title} Notion 복제본 열기`}
           >
-            Download →
+            Notion 복제 →
+          </a>
+        )}
+        {item.download && (
+          <a
+            href={item.download}
+            download
+            style={linkStyle}
+            aria-label={`${item.title} PDF 다운로드`}
+          >
+            PDF →
           </a>
         )}
       </div>

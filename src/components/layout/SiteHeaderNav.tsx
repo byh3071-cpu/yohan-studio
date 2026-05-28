@@ -71,7 +71,7 @@ export function SiteHeaderNav() {
             </Link>
           )
         })}
-        <SearchTriggerButton />
+        <SearchTriggerButton onOpen={() => setOpen(false)} />
       </nav>
       <button
         type="button"
@@ -102,7 +102,7 @@ export function SiteHeaderNav() {
               </Link>
             )
           })}
-          <SearchTriggerButton />
+          <SearchTriggerButton onOpen={() => setOpen(false)} />
         </div>
         <div className="site-header-menu-divider" role="separator" />
         <div className="site-header-menu-group">
