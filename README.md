@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yohan Studio
 
-## Getting Started
+AI 시대 1인 기업가를 위한 First Platform — 바이브코딩으로 구축하는 AI 운영체계 웹 플랫폼.
 
-First, run the development server:
+- **배포**: [https://yohan-studio.vercel.app](https://yohan-studio.vercel.app)
+- **스택**: Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind v4 · MDX · Supabase · Stripe
+
+## 라우트
+
+| 경로 | 설명 |
+| --- | --- |
+| `/` | Home — Hero, 퍼널 프리뷰(Showroom/Diagnosis/Services) |
+| `/blog`, `/blog/[slug]` | MDX 블로그 |
+| `/showroom`, `/showroom/[slug]` | 프로젝트 쇼룸 |
+| `/diagnosis` | A'Im Scan 자가진단 (21문항) |
+| `/services` | 서비스 3종 + 문의 CTA |
+| `/store`, `/store/[id]` | Supabase 상품 + Stripe Checkout |
+| `/open-source` | 오픈소스·무료 리소스 |
+| `/vhk` | VHK CLI 랜딩 |
+| `/design` | 디자인 시스템 히스토리 |
+| `/contact` | 문의 폼 (Resend) |
+
+## 시작하기
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # 값 채우기 — docs/state/vercel-env-keys.md 참고
+npm run dev                  # http://localhost:3050
 ```
 
-Open [http://localhost:3050](http://localhost:3050) with your browser to see the result. (포커스 피드가 `:3000`을 쓰므로 이 프로젝트 dev는 **3050** 고정.)
+## 스크립트
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| 명령 | 용도 |
+| --- | --- |
+| `npm run dev` | 개발 서버 (포트 3050) |
+| `npm run build` | 프로덕션 빌드 |
+| `npm run lint` | ESLint |
+| `npm run qa:install` | Playwright Chromium 설치 |
+| `npm run qa:test` | E2E 스모크 (Goal 4+) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 환경변수
 
-## Learn More
+`.env.example` 및 `docs/state/vercel-env-keys.md` 참고. 시크릿은 코드에 넣지 않는다.
 
-To learn more about Next.js, take a look at the following resources:
+## Goal 워크플로 (VHK)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+vhk goal list
+vhk goal next
+vhk goal check
+vhk goal done
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+상세: `.cursor/skills/goal/SKILL.md` · Notion 핸드오프 `goals/_meta.md`
 
-## Deploy on Vercel
+## 문서
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `CLAUDE.md` — 운영 규칙 + 현재 상태
+- `docs/state/` — next-task, audit, E2E 리포트
+- `goals/` — Phase 3 마감 작업 큐 (T0~T7)

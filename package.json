@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start -p 3050",
     "lint": "eslint",
-    "qa:install": "playwright install chromium"
+    "qa:install": "playwright install chromium",
+    "qa:test": "playwright test"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.80",
@@ -32,6 +33,7 @@
     "stripe": "^22.1.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/mcp": "^0.0.75",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
