@@ -1,6 +1,7 @@
 import { About } from "@/components/sections/About"
 import { Contact } from "@/components/sections/Contact"
 import { Faq } from "@/components/sections/Faq"
+import { Featured } from "@/components/sections/Featured"
 import { Hero } from "@/components/sections/Hero"
 import { Philosophy } from "@/components/sections/Philosophy"
 import { ProblemSection } from "@/components/sections/ProblemSection"
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Philosophy />
       <ProblemSection />
       <ShowroomPreview />
+      <Featured />
       <ScanIntro />
       <ServicesPreview />
       <About />

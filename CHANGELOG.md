@@ -12,9 +12,28 @@ All notable changes to Yohan Studio. Format based on [Keep a Changelog](https://
 
 ### Added
 
+- VHK Goal 워크플로 (`goals/`, `.cursor/skills/goal/`, `vhk goal *`)
+- Playwright E2E 하네스 (`playwright.config.ts`, `tests/qa.spec.ts`, `npm run qa:test`)
+- `@axe-core/playwright` a11y 스모크 (serious/critical, color-contrast 제외)
+- `docs/state/t0-audit.md`, `t5-e2e-report.md`, `vercel-env-keys.md`
+
 ### Changed
 
+- `CLAUDE.md` / `README.md` — Phase 3 실제 상태 동기화
+- `.env.example` — 키별 `Used by:` 주석
+- Home: `Featured` 섹션 배치 (⑰)
+- `/portfolio` → `/showroom` 301 redirect; 레거시 portfolio 라우트·데이터 제거
+- Footer: 포트폴리오 → 쇼룸 링크
+
 ### Fixed
+
+- Goal 3 후 `.next` stale 타입 캐시로 build 실패 — clean rebuild로 해소
+
+### Removed
+
+- `src/data/portfolioProjects.ts`, `src/data/projects.ts` (deprecated stub)
+- `src/components/portfolio/`, `src/app/portfolio/`
+- `featuredBlogs` 정적 배열 (실제 `getPublishedPosts()` 사용)
 
 ---
 

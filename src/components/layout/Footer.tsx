@@ -93,8 +93,8 @@ export function Footer() {
             <Link href="/blog" style={link}>
               블로그
             </Link>
-            <Link href="/portfolio" style={link}>
-              포트폴리오
+            <Link href="/showroom" style={link}>
+              쇼룸
             </Link>
             <Link href="/vhk" style={link}>
               VHK

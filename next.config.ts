@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/portfolio",
+        destination: "/showroom",
+        permanent: true,
+      },
+      {
+        source: "/portfolio/:path*",
+        destination: "/showroom/:path*",
+        permanent: true,
+      },
+      {
         source: "/showroom/notion-custom-dashboard",
         destination: "/showroom/notion-uiux",
         permanent: true,
