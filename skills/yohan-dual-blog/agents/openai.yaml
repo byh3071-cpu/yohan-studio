@@ -1,0 +1,4 @@
+interface:
+  display_name: "Yohan Dual Blog"
+  short_description: "웹 MDX와 네이버 평문을 함께 작성하고 검수"
+  default_prompt: "$yohan-dual-blog 스킬로 같은 글의 웹 MDX와 네이버 블로그 평문을 함께 작성하고 검수해줘."
