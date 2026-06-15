@@ -5,6 +5,12 @@ import { getSiteUrl } from "@/lib/siteUrl"
 
 const BASE_URL = getSiteUrl()
 
+// Stable last-modified for static content pages. Bumping `new Date()` on every
+// build makes lastmod untrustworthy (every page looks edited each deploy), so
+// these carry a real "content last changed" date instead. Index pages that grow
+// with new posts/projects keep build-time freshness below.
+const STATIC_LAST_MOD = new Date("2026-06-15")
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getPublishedPosts()
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
@@ -36,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/design`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.7,
     },
@@ -48,25 +54,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/diagnosis`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/services`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/vhk`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/open-source`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: "monthly",
       priority: 0.8,
     },
