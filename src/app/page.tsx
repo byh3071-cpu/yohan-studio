@@ -22,13 +22,19 @@ export const metadata: Metadata = {
   },
   description: HOME_DESCRIPTION,
   alternates: { canonical: "/" },
+  // Next.js shallow-replaces openGraph/twitter from the layout (no deep merge),
+  // so siteName/locale and the large-image twitter card must be repeated here or
+  // they are dropped on the home page.
   openGraph: {
     title: "요한 스튜디오 — AI 1인 기업 운영체계",
     description: HOME_DESCRIPTION,
     url: "/",
     type: "website",
+    siteName: "요한 스튜디오",
+    locale: "ko_KR",
   },
   twitter: {
+    card: "summary_large_image",
     title: "요한 스튜디오 — AI 1인 기업 운영체계",
     description: HOME_DESCRIPTION,
   },
