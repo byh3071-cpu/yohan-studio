@@ -1,10 +1,13 @@
 import { ImageResponse } from "next/og"
+import { getSiteUrl } from "@/lib/siteUrl"
 
 // Per-page OG card for /diagnosis — overrides the site-wide default so social
 // previews surface the self-assessment hook (7 areas × 21 questions).
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 export const alt = "A'Im Scan — 1인 기업 자가진단 · 7영역 21문항"
+
+const DISPLAY_URL = `${getSiteUrl().replace(/^https?:\/\//, "")}/diagnosis`
 
 export default function Image() {
   return new ImageResponse(
@@ -99,7 +102,7 @@ export default function Image() {
           }}
         >
           <span style={{ color: "#FF5C28" }}>→</span>
-          <span>yohan-studio.vercel.app/diagnosis</span>
+          <span>{DISPLAY_URL}</span>
         </div>
       </div>
     ),

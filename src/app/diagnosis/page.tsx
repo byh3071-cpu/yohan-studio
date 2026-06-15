@@ -4,9 +4,11 @@ import { DiagnosisForm } from "@/components/diagnosis/DiagnosisForm"
 import { PageFaq, type FaqItem } from "@/components/seo/PageFaq"
 
 export const metadata: Metadata = {
-  title: "A'Im Scan — 1인 기업 자가진단 · Yohan Studio",
+  // Layout template appends "| 요한 스튜디오", so the brand isn't repeated here.
+  title: "A'Im Scan — 1인 기업 자가진단",
   description:
     "7영역 × 3문항 = 21문항으로 AI 시대 1인 기업의 운영 체계를 진단한다. 방향·전략·구조·수익화·프롬프트·디자인·의사결정.",
+  alternates: { canonical: "/diagnosis" },
 }
 
 const section: CSSProperties = {

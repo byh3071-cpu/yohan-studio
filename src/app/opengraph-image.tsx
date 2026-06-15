@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og"
+import { getSiteUrl } from "@/lib/siteUrl"
 
 // Site-wide default OG image. Inherited by every route that does not define
 // its own opengraph-image (home, /blog, /showroom, /services, /diagnosis,
@@ -7,6 +8,10 @@ import { ImageResponse } from "next/og"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 export const alt = "요한 스튜디오 — 바이브코더 · AI 기반 1인 기업"
+
+// Derive the display URL from the canonical origin so the badge never drifts
+// from the domain used in canonical/OG meta tags.
+const DISPLAY_URL = getSiteUrl().replace(/^https?:\/\//, "")
 
 export default function Image() {
   return new ImageResponse(
@@ -104,7 +109,7 @@ export default function Image() {
           }}
         >
           <span style={{ color: "#FF5C28" }}>→</span>
-          <span>yohan-studio.vercel.app</span>
+          <span>{DISPLAY_URL}</span>
         </div>
       </div>
     ),

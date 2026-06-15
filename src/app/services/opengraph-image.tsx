@@ -1,10 +1,13 @@
 import { ImageResponse } from "next/og"
+import { getSiteUrl } from "@/lib/siteUrl"
 
 // Per-page OG card for /services — overrides the site-wide default so social
 // previews show the offer ladder instead of the generic brand card.
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 export const alt = "요한 스튜디오 서비스 — 리포트 · 템플릿 · 빌드"
+
+const DISPLAY_URL = `${getSiteUrl().replace(/^https?:\/\//, "")}/services`
 
 export default function Image() {
   return new ImageResponse(
@@ -99,7 +102,7 @@ export default function Image() {
           }}
         >
           <span style={{ color: "#FF5C28" }}>→</span>
-          <span>yohan-studio.vercel.app/services</span>
+          <span>{DISPLAY_URL}</span>
         </div>
       </div>
     ),

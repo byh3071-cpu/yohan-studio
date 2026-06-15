@@ -6,9 +6,11 @@ import { PageFaq, type FaqItem } from "@/components/seo/PageFaq"
 import { getSiteUrl } from "@/lib/siteUrl"
 
 export const metadata: Metadata = {
-  title: "Services — Yohan Studio",
+  // Layout template appends "| 요한 스튜디오", so the brand isn't repeated here.
+  title: "서비스 — AI 1인 기업 운영체계 설계",
   description:
     "AI 시대 1인 기업 운영체계를 함께 설계한다. A'Im Scan Report, A'Im OS Template, A'Im OS Build.",
+  alternates: { canonical: "/services" },
 }
 
 const section: CSSProperties = {
