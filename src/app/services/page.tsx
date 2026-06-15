@@ -2,6 +2,7 @@ import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { services } from "@/data/services"
 import { PricingSection } from "@/components/services/PricingSection"
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd"
 import { PageFaq, type FaqItem } from "@/components/seo/PageFaq"
 import { getSiteUrl } from "@/lib/siteUrl"
 
@@ -109,6 +110,12 @@ export default function ServicesPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "홈", path: "/" },
+          { name: "서비스", path: "/services" },
+        ]}
+      />
       <section style={section}>
         <div style={inner}>
           <div style={head}>

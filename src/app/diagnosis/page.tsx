@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { DiagnosisForm } from "@/components/diagnosis/DiagnosisForm"
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd"
 import { PageFaq, type FaqItem } from "@/components/seo/PageFaq"
 
 export const metadata: Metadata = {
@@ -75,6 +76,12 @@ const faqs: FaqItem[] = [
 export default function DiagnosisPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "홈", path: "/" },
+          { name: "진단", path: "/diagnosis" },
+        ]}
+      />
       <section style={section}>
         <div style={inner}>
           <div style={head}>

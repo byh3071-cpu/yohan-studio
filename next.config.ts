@@ -10,6 +10,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Canonical host enforcement: the studio runs on yohanstudio.co, but the
+      // legacy *.vercel.app alias is still reachable and would split SEO signals
+      // (duplicate content across two domains). 301 every path on the old alias
+      // to the canonical domain. Preview deploys use distinct hostnames, so only
+      // the production alias is matched.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "yohan-studio.vercel.app" }],
+        destination: "https://yohanstudio.co/:path*",
+        permanent: true,
+      },
       {
         source: "/portfolio",
         destination: "/showroom",
