@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import * as Sentry from '@sentry/nextjs';
 
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { getResend, NOTIFY_TO, RESEND_FROM } from '@/lib/resend';
@@ -94,6 +95,7 @@ export async function POST(req: Request) {
 
   if (dbError) {
     console.error('[contact] supabase insert failed', dbError);
+    Sentry.captureException(dbError);
     return NextResponse.json(
       { ok: false, error: '문의 저장에 실패했습니다. 잠시 후 다시 시도해주세요.' },
       { status: 500 },
@@ -152,9 +154,11 @@ export async function POST(req: Request) {
     });
     if (sendError) {
       console.error('[contact] resend send failed', sendError);
+      Sentry.captureException(sendError);
     }
   } catch (err) {
     console.error('[contact] resend threw', err);
+    Sentry.captureException(err);
   }
 
   return NextResponse.json({ ok: true, id: inserted?.id }, { status: 201 });

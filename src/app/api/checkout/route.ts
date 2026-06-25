@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import * as Sentry from '@sentry/nextjs'
 
 import { getSiteUrl } from '@/lib/siteUrl'
 import { getStripe } from '@/lib/stripe'
@@ -81,6 +82,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url, sessionId: session.id })
   } catch (err) {
     console.error('[/api/checkout] stripe error:', err)
+    Sentry.captureException(err)
     return NextResponse.json({ error: 'Stripe 세션 생성 실패' }, { status: 502 })
   }
 }

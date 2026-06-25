@@ -1,4 +1,5 @@
 import { google } from "@ai-sdk/google"
+import * as Sentry from "@sentry/nextjs"
 import {
   convertToModelMessages,
   streamText,
@@ -157,11 +158,13 @@ export async function POST(req: Request) {
       abortSignal: req.signal,
       onError: ({ error }) => {
         console.error("[/api/chat] stream error:", error)
+        Sentry.captureException(error)
       },
     })
     return result.toUIMessageStreamResponse()
   } catch (err) {
     console.error("[/api/chat] error:", err)
+    Sentry.captureException(err)
     return jsonError(502, "AI 응답 생성 실패")
   }
 }
