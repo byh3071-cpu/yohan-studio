@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import { FeaturedBanner } from "@/components/showroom/FeaturedBanner"
 import { ProjectGrid } from "@/components/showroom/ProjectGrid"
-import { showroomProjects } from "@/data/showroomProjects"
+import { getAllShowroomProjects } from "@/lib/showroom"
 
 export const metadata: Metadata = {
   title: "Showroom — Yohan Studio",
@@ -61,6 +61,8 @@ const count: CSSProperties = {
 }
 
 export default function ShowroomPage() {
+  const projects = getAllShowroomProjects()
+
   return (
     <section style={section}>
       <div style={inner}>
@@ -71,11 +73,11 @@ export default function ShowroomPage() {
               쇼룸<span style={accentMark}>.</span>
             </h1>
           </div>
-          <div style={count}>{showroomProjects.length} PROJECTS</div>
+          <div style={count}>{projects.length} PROJECTS</div>
         </div>
-        <FeaturedBanner />
+        <FeaturedBanner projects={projects} />
         <Suspense fallback={null}>
-          <ProjectGrid />
+          <ProjectGrid projects={projects} />
         </Suspense>
       </div>
     </section>

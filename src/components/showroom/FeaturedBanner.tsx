@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
-import { showroomProjects } from "@/data/showroomProjects"
+import type { ShowroomProject } from "@/data/showroomProjects"
 
 const wrap: CSSProperties = {
   display: "grid",
@@ -55,8 +55,8 @@ const meta: CSSProperties = {
   whiteSpace: "nowrap",
 }
 
-export function FeaturedBanner() {
-  const featured = showroomProjects.filter((p) => p.featured)
+export function FeaturedBanner({ projects }: { projects: ShowroomProject[] }) {
+  const featured = projects.filter((p) => p.featured)
   if (featured.length === 0) return null
 
   return (

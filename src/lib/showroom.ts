@@ -1,15 +1,177 @@
+import fs from "fs"
+import path from "path"
+import matter from "gray-matter"
+import { compileMDX } from "next-mdx-remote/rsc"
+import type { ReactElement } from "react"
 import {
-  showroomProjects,
+  SHOWROOM_CATEGORIES,
+  type ShowroomCategory,
+  type ShowroomFaqItem,
   type ShowroomProject,
 } from "@/data/showroomProjects"
+import type { SearchDocument } from "@/lib/search"
 import { getSiteUrl } from "@/lib/siteUrl"
 
+const CONTENT_DIR = path.join(process.cwd(), "src", "content", "showroom")
+
+function toStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) return value.map(String)
+  if (typeof value === "string") {
+    return value
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+  }
+  return []
+}
+
+function toOptionalString(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined
+  const trimmed = value.trim()
+  return trimmed.length > 0 ? trimmed : undefined
+}
+
+function toFaq(value: unknown): ShowroomFaqItem[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const items = value
+    .map((entry): ShowroomFaqItem | null => {
+      if (!entry || typeof entry !== "object") return null
+      const record = entry as Record<string, unknown>
+      const question = toOptionalString(record.question)
+      const answer = toOptionalString(record.answer)
+      if (!question || !answer) return null
+      return { question, answer }
+    })
+    .filter((item): item is ShowroomFaqItem => item !== null)
+  return items.length > 0 ? items : undefined
+}
+
+function isShowroomCategory(value: unknown): value is ShowroomCategory {
+  return (
+    typeof value === "string" &&
+    (SHOWROOM_CATEGORIES as readonly string[]).includes(value)
+  )
+}
+
+export function parseShowroomFrontmatter(
+  slug: string,
+  data: Record<string, unknown>,
+): ShowroomProject | null {
+  const title = toOptionalString(data.title)
+  const summary = toOptionalString(data.summary)
+  const year = toOptionalString(data.year)
+  const dateCreated = toOptionalString(data.dateCreated)
+  const stack = toStringArray(data.stack)
+  const keywords = toStringArray(data.keywords)
+
+  if (!isShowroomCategory(data.category)) return null
+  if (
+    !title ||
+    !summary ||
+    !year ||
+    !dateCreated ||
+    stack.length === 0 ||
+    keywords.length === 0
+  ) {
+    return null
+  }
+
+  const valueProps = toStringArray(data.valueProps)
+  const relatedPosts = toStringArray(data.relatedPosts)
+
+  const project: ShowroomProject = {
+    slug,
+    title,
+    category: data.category,
+    summary,
+    stack,
+    year,
+    dateCreated,
+    keywords,
+    problem: toOptionalString(data.problem),
+    solution: toOptionalString(data.solution),
+    result: toOptionalString(data.result),
+    learned: toOptionalString(data.learned),
+    valueProps: valueProps.length > 0 ? valueProps : undefined,
+    audience: toOptionalString(data.audience),
+    featured: data.featured === true || data.featured === "true",
+    github: toOptionalString(data.github),
+    demo: toOptionalString(data.demo),
+    image: toOptionalString(data.image),
+    imageAlt: toOptionalString(data.imageAlt),
+    faq: toFaq(data.faq),
+    relatedPosts: relatedPosts.length > 0 ? relatedPosts : undefined,
+  }
+
+  return project
+}
+
+function readFileRaw(slug: string): string | null {
+  const filePath = path.join(CONTENT_DIR, `${slug}.mdx`)
+  if (!fs.existsSync(filePath)) return null
+  return fs.readFileSync(filePath, "utf8")
+}
+
 export function getAllShowroomSlugs(): string[] {
-  return showroomProjects.map((p) => p.slug)
+  if (!fs.existsSync(CONTENT_DIR)) return []
+  return fs
+    .readdirSync(CONTENT_DIR)
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => f.replace(/\.mdx$/, ""))
 }
 
 export function getShowroomProject(slug: string): ShowroomProject | undefined {
-  return showroomProjects.find((p) => p.slug === slug)
+  const raw = readFileRaw(slug)
+  if (!raw) return undefined
+  const { data } = matter(raw)
+  return (
+    parseShowroomFrontmatter(slug, data as Record<string, unknown>) ?? undefined
+  )
+}
+
+export function getAllShowroomProjects(): ShowroomProject[] {
+  return getAllShowroomSlugs()
+    .map((slug) => getShowroomProject(slug))
+    .filter((p): p is ShowroomProject => p !== undefined)
+    .sort((a, b) => (a.dateCreated < b.dateCreated ? 1 : -1))
+}
+
+export async function compileShowroomProject(slug: string): Promise<{
+  meta: ShowroomProject
+  content: ReactElement
+  hasBody: boolean
+} | null> {
+  const raw = readFileRaw(slug)
+  if (!raw) return null
+
+  // 프론트매터를 제외한 본문이 실제로 있는지 먼저 확인한다.
+  // 본문이 비면 상세 페이지가 정형 섹션만 렌더하도록 hasBody=false.
+  const hasBody = matter(raw).content.trim().length > 0
+
+  const { content, frontmatter } = await compileMDX({
+    source: raw,
+    options: { parseFrontmatter: true },
+  })
+
+  const meta = parseShowroomFrontmatter(
+    slug,
+    frontmatter as Record<string, unknown>,
+  )
+  if (!meta) return null
+
+  return { meta, content, hasBody }
+}
+
+export function showroomSearchDocs(): SearchDocument[] {
+  return getAllShowroomProjects().map((project) => ({
+    id: `showroom:${project.slug}`,
+    kind: "showroom",
+    title: project.title,
+    description: project.summary,
+    url: `/showroom/${project.slug}`,
+    tags: [project.category, ...project.stack, ...project.keywords],
+    badge: "쇼룸",
+  }))
 }
 
 export function resolveShowroomImageUrl(

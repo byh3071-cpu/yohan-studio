@@ -5,6 +5,7 @@ import { RelatedBlogPosts } from "@/components/seo/RelatedContent"
 import { ShowroomJsonLd } from "@/components/seo/ShowroomJsonLd"
 import { ShowroomProjectDetail } from "@/components/showroom/ShowroomProjectDetail"
 import {
+  compileShowroomProject,
   getAllShowroomSlugs,
   getShowroomCanonicalPath,
   getShowroomProject,
@@ -51,8 +52,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ShowroomProjectPage({ params }: PageProps) {
   const { slug } = await params
-  const project = getShowroomProject(slug)
-  if (!project) notFound()
+  const compiled = await compileShowroomProject(slug)
+  if (!compiled) notFound()
+
+  const { meta: project, content, hasBody } = compiled
 
   return (
     <>
@@ -64,7 +67,10 @@ export default async function ShowroomProjectPage({ params }: PageProps) {
           { name: project.title, path: getShowroomCanonicalPath(slug) },
         ]}
       />
-      <ShowroomProjectDetail project={project} />
+      <ShowroomProjectDetail
+        project={project}
+        content={hasBody ? content : undefined}
+      />
       {project.relatedPosts && project.relatedPosts.length > 0 && (
         <div
           style={{

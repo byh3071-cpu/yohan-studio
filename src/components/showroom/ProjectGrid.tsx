@@ -3,7 +3,11 @@
 import { useMemo } from "react"
 import type { CSSProperties } from "react"
 import { useSearchParams } from "next/navigation"
-import { showroomProjects, SHOWROOM_CATEGORIES, type ShowroomCategory } from "@/data/showroomProjects"
+import {
+  SHOWROOM_CATEGORIES,
+  type ShowroomCategory,
+  type ShowroomProject,
+} from "@/data/showroomProjects"
 import { ProjectCard } from "./ProjectCard"
 import { CategoryFilter, ALL, type FilterValue } from "./CategoryFilter"
 
@@ -28,14 +32,14 @@ function parseCat(raw: string | null): FilterValue {
     : ALL
 }
 
-export function ProjectGrid() {
+export function ProjectGrid({ projects }: { projects: ShowroomProject[] }) {
   const params = useSearchParams()
   const active = parseCat(params?.get("cat") ?? null)
 
   const filtered = useMemo(() => {
-    if (active === ALL) return showroomProjects
-    return showroomProjects.filter((p) => p.category === active)
-  }, [active])
+    if (active === ALL) return projects
+    return projects.filter((p) => p.category === active)
+  }, [active, projects])
 
   return (
     <>

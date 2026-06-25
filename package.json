@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "session:context": "node scripts/done-context.mjs",
+    "new:project": "node scripts/new-project.mjs",
+    "new:post": "node scripts/new-post.mjs",
     "blog:naver": "node skills/yohan-dual-blog/scripts/mdx-to-naver.mjs",
     "dev": "next dev -p 3050",
     "dev:clean": "node scripts/dev-clean.mjs",
