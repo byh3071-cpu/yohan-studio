@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Store — Yohan Studio",
   description:
     "AI 시대 1인 기업가를 위한 템플릿·도구·강의 스토어. 바이브코딩 결과물을 바로 사용 가능한 형태로 제공합니다.",
+  alternates: { canonical: "/store" },
 }
 
 export const revalidate = 60
