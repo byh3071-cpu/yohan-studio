@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs"
+
 import { generateSpeech, TTSError } from "@/lib/tts"
 
 export const runtime = "nodejs"
@@ -77,6 +79,7 @@ export async function POST(req: Request) {
     })
   } catch (err) {
     console.error("[/api/tts] error:", err)
+    Sentry.captureException(err)
     const status = err instanceof TTSError ? err.status : 503
     return jsonError(
       status === 500 ? 503 : status,
