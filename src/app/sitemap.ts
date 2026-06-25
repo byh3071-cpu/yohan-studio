@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
-import { showroomProjects } from "@/data/showroomProjects"
 import { getPublishedPosts } from "@/lib/blog"
+import { getAllShowroomProjects } from "@/lib/showroom"
 import { getSiteUrl } from "@/lib/siteUrl"
 
 const BASE_URL = getSiteUrl()
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  const showroomEntries: MetadataRoute.Sitemap = showroomProjects.map((p) => ({
+  const showroomEntries: MetadataRoute.Sitemap = getAllShowroomProjects().map((p) => ({
     url: `${BASE_URL}/showroom/${p.slug}`,
     lastModified: new Date(p.dateCreated),
     changeFrequency: "monthly",

@@ -3,7 +3,7 @@ import "server-only"
 import { blogSearchDocs } from "@/lib/blog"
 import { opensourceSearchDocs } from "@/data/opensourceItems"
 import { servicesSearchDocs } from "@/data/services"
-import { showroomSearchDocs } from "@/data/showroomProjects"
+import { showroomSearchDocs } from "@/lib/showroom"
 
 import type { SearchDocument } from "@/lib/search"
 

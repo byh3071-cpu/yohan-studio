@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
-import { showroomProjects } from "@/data/showroomProjects"
+import { getAllShowroomProjects } from "@/lib/showroom"
 
 const section: CSSProperties = {
   background: "var(--surface)",
@@ -110,8 +110,9 @@ const summary: CSSProperties = {
 }
 
 export function ShowroomPreview() {
-  const featured = showroomProjects.filter((p) => p.featured)
-  const others = showroomProjects.filter((p) => !p.featured)
+  const projects = getAllShowroomProjects()
+  const featured = projects.filter((p) => p.featured)
+  const others = projects.filter((p) => !p.featured)
   const preview = [...featured, ...others].slice(0, 6)
 
   return (

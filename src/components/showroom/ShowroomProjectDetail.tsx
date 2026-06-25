@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+import type { CSSProperties, ReactElement } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { ShowroomFaqItem, ShowroomProject } from "@/data/showroomProjects"
@@ -80,6 +80,13 @@ const h2: CSSProperties = {
 }
 
 const body: CSSProperties = {
+  fontSize: "16px",
+  lineHeight: 1.7,
+  color: "var(--ink-2)",
+  maxWidth: "720px",
+}
+
+const prose: CSSProperties = {
   fontSize: "16px",
   lineHeight: 1.7,
   color: "var(--ink-2)",
@@ -197,7 +204,13 @@ function defaultFaq(project: ShowroomProject): ShowroomFaqItem[] {
   ]
 }
 
-export function ShowroomProjectDetail({ project }: { project: ShowroomProject }) {
+export function ShowroomProjectDetail({
+  project,
+  content,
+}: {
+  project: ShowroomProject
+  content?: ReactElement
+}) {
   const sections = getDetailSections(project)
   const faq = project.faq?.length ? project.faq : defaultFaq(project)
 
@@ -258,6 +271,13 @@ export function ShowroomProjectDetail({ project }: { project: ShowroomProject })
           <section style={block}>
             <h2 style={h2}>결과</h2>
             <p style={body}>{sections.result}</p>
+          </section>
+        )}
+
+        {content && (
+          <section style={block}>
+            <h2 style={h2}>빌드로그</h2>
+            <div style={prose}>{content}</div>
           </section>
         )}
 
