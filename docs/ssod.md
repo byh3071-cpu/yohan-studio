@@ -51,24 +51,18 @@ tags: [ssot, yohan-studio, phase-2]
 ## 4단계 로드맵
 
 1. Phase 1 (4/25~5/2): 랜딩 + 포트폴리오 → v1 배포 ✅
-2. Phase 2 (5/3~5/16): 블로그 + SEO (진행 중)
-3. Phase 3 (5/17~5/30): 스토어 + 결제 + DB
-4. Phase 4 (5/31~6/13): 자동화 + 콘텐츠
+2. Phase 2 (5/3~5/16): 블로그 + SEO + 쇼룸·진단·서비스 ✅
+3. Phase 3 (5/17~): 스토어 + 결제 + DB + 챗봇/TTS + 검색 (진행 중)
+4. Phase 4: 자동화 + 멀티채널 콘텐츠
 
-## 현재 Phase: 2
+## 현재 Phase: 3
 
-범위: `/blog`(목록·태그 필터·검색) + `/blog/[slug]`(MDX 렌더링·TOC), SEO 파이프라인(`sitemap.xml`, `robots.txt`, JSON-LD, OG 이미지 `@vercel/og`), GA + Search Console, 다크모드 토글, v2 Editorial × Soft Brutalism 디자인.
+범위: 스토어(Supabase `studio_products` + Stripe Checkout) · 진단 결과 저장 · AI 챗봇/TTS · Fuse 검색. Phase 2(블로그·SEO/AEO·쇼룸·진단·서비스)는 완료.
 
-허용:
+허용/금지는 `CLAUDE.md`의 "Phase 3 허용/금지"를 단일 기준으로 따른다.
+요약 — 허용: Supabase·Stripe·API Routes·진단 서버 저장·외부 폼 URL. 금지: n8n 웹훅·RAG/Qdrant.
 
-- MDX 콘텐츠 파이프라인 (`src/content/blog/*.mdx`, `next-mdx-remote/rsc`)
-- 정적 SEO 자산 — `next-sitemap`, `robots.txt`, JSON-LD, `@vercel/og`
-- GA `gtag` + GSC 메타태그
-- 다크모드 토글 (`ThemeProvider` + `ThemeToggle`)
-- 블로그 클라이언트 카운터(localStorage 등 사용자 로컬 한정)
-
-금지: Supabase/DB 연결, Stripe·결제, API Routes(블로그 OG 외), n8n 웹훅, 외부 API 호출(GA/GSC 스크립트 제외)  
-연락처: `mailto:` 기반 제출(클라이언트 폼 → 메일 클라이언트)
+> 2026-06-25: SEO·발행(쇼룸 MDX화)·계측(GA)·관측성(Sentry)·문서 5트랙 작업과 함께 Phase 3 현실로 갱신.
 
 ## 결제 수단 참고
 
@@ -81,3 +75,5 @@ tags: [ssot, yohan-studio, phase-2]
 - 2026-04-24: 초기 설계서 작성, Phase 1 시작
 - 2026-04-25: Claude Design v2 반영 — Editorial/Brutalist 토큰, `src/app`+섹션 TSX 구조
 - 2026-05-13: Phase 2 진입 — MDX 블로그·SEO·GA·다크모드 도입, `tokens.css` → `globals.css @theme` 통합
+- 2026-05-26: Phase 3 — Supabase 스토어·Stripe 결제·AI 챗봇/TTS·Fuse 검색 도입
+- 2026-06-25: SEO·발행 워크플로(쇼룸 MDX화+스캐폴드)·GA 전환계측·Sentry 관측성·문서 동기화 5트랙 (PR #14~#18)

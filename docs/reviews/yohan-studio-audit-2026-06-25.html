@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>요한 스튜디오 종합 진단 보고서 · 2026-06-25</title>
+<style>
+  :root{
+    --bg:#F4F1EA; --surface:#EEEAE0; --surface2:#E5E0D2;
+    --ink:#0A0A0A; --ink2:#2B2723; --muted:#6B6357; --muted2:#968D7E;
+    --accent:#FF5C28; --line:#0A0A0A;
+    --red:#C0392B; --amber:#B7791F; --green:#2E7D32; --blue:#2C5282;
+    --shadow:4px 4px 0 var(--ink); --shadow-sm:2px 2px 0 var(--ink);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.65; font-size:15px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:48px 28px 120px}
+  code,.mono{font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace; font-size:.86em}
+  code{background:var(--surface2); padding:1px 6px; border:1px solid var(--line); border-radius:0}
+  a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--accent); text-decoration-thickness:2px}
+
+  /* header */
+  .hero{border:1.5px solid var(--line); background:#fff; box-shadow:var(--shadow); padding:34px 34px 30px; margin-bottom:42px}
+  .hero .kicker{font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:700}
+  .hero h1{font-size:34px; line-height:1.15; margin:12px 0 8px; letter-spacing:-.02em}
+  .hero .sub{color:var(--ink2); font-size:16px; margin:0}
+  .hero .meta{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:18px; font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--muted)}
+  .hero .meta b{color:var(--ink)}
+
+  /* score grid */
+  .scores{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:28px 0 8px}
+  .score{border:1.5px solid var(--line); background:var(--surface); padding:14px 16px; box-shadow:var(--shadow-sm)}
+  .score .lbl{font-size:12.5px; color:var(--muted); font-weight:600; min-height:32px}
+  .score .val{font-size:28px; font-weight:800; line-height:1; margin-top:6px; font-family:"JetBrains Mono",monospace}
+  .score .bar{height:7px; background:var(--surface2); border:1px solid var(--line); margin-top:9px; position:relative; overflow:hidden}
+  .score .bar i{position:absolute; left:0; top:0; bottom:0; background:var(--accent)}
+  .score.total{background:var(--ink); color:var(--bg)}
+  .score.total .lbl{color:var(--muted2)} .score.total .val{color:#fff}
+  .score.total .bar{background:#333; border-color:var(--muted2)}
+
+  h2{font-size:23px; letter-spacing:-.01em; margin:54px 0 4px; padding-top:14px; border-top:3px solid var(--line)}
+  h2 .num{font-family:"JetBrains Mono",monospace; color:var(--accent); font-size:18px; margin-right:10px}
+  h3{font-size:17px; margin:30px 0 10px; display:flex; align-items:center; gap:9px}
+  .lead{color:var(--ink2); font-size:15.5px; margin:10px 0 18px}
+
+  /* badges */
+  .badge{display:inline-block; font-family:"JetBrains Mono",monospace; font-size:10.5px; font-weight:700; letter-spacing:.04em; padding:3px 9px; border:1.5px solid var(--line); text-transform:uppercase; vertical-align:middle; white-space:nowrap}
+  .b-p0{background:var(--red); color:#fff} .b-p1{background:var(--amber); color:#fff}
+  .b-p2{background:var(--surface2); color:var(--ink)} .b-ok{background:var(--green); color:#fff}
+  .b-human{background:#fff; color:var(--ink); border-style:dashed}
+  .b-ai{background:var(--blue); color:#fff}
+
+  /* callouts */
+  .call{border:1.5px solid var(--line); padding:16px 18px; margin:18px 0; box-shadow:var(--shadow-sm); background:#fff}
+  .call .h{font-weight:800; font-size:14.5px; margin-bottom:6px; display:flex; align-items:center; gap:8px}
+  .call.red{border-left:7px solid var(--red)} .call.amber{border-left:7px solid var(--amber)}
+  .call.green{border-left:7px solid var(--green)} .call.blue{border-left:7px solid var(--blue)}
+  .call p{margin:6px 0}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px; background:#fff; border:1.5px solid var(--line)}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--surface2); vertical-align:top}
+  th{background:var(--ink); color:var(--bg); font-size:12px; letter-spacing:.03em; text-transform:uppercase; font-weight:700}
+  tr:last-child td{border-bottom:none}
+  td.c{text-align:center; white-space:nowrap}
+  .ok{color:var(--green); font-weight:700} .warn{color:var(--amber); font-weight:700} .bad{color:var(--red); font-weight:700}
+
+  ul.tight{margin:8px 0; padding-left:20px} ul.tight li{margin:5px 0}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr} .hero h1{font-size:26px}}
+
+  .loop{border:1.5px solid var(--line); background:#fff; padding:20px; margin:16px 0; box-shadow:var(--shadow-sm); font-family:"JetBrains Mono",monospace; font-size:13px; line-height:1.9}
+  .loop .node{display:inline-block; border:1.5px solid var(--line); padding:4px 10px; background:var(--surface); margin:3px 0}
+  .loop .arrow{color:var(--accent); font-weight:800; margin:0 6px}
+  .loop .broken{border-color:var(--red); border-style:dashed; color:var(--red)}
+
+  .toc{columns:2; column-gap:30px; font-size:13.5px; margin:6px 0 0}
+  @media(max-width:720px){.toc{columns:1}}
+  .toc a{display:block; padding:3px 0; text-decoration:none; color:var(--ink2)}
+  .toc a:hover{color:var(--accent)}
+
+  .foot{margin-top:80px; padding-top:18px; border-top:3px solid var(--line); font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--muted)}
+  .tag{display:inline-block; font-family:"JetBrains Mono",monospace; font-size:11px; background:var(--surface2); border:1px solid var(--line); padding:1px 7px; margin:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ════ HERO ════ -->
+  <div class="hero">
+    <div class="kicker">Audit Report · Yohan Studio</div>
+    <h1>요한 스튜디오 종합 진단 보고서</h1>
+    <p class="sub">포트폴리오 웹 구조 · 시스템 안정성 · SEO/AEO/GEO · 선순환 · AI 친화 구조 · 발행 워크플로 — 6대 축 전수 검토</p>
+    <div class="meta">
+      <span><b>작성일</b> 2026-06-25</span>
+      <span><b>브랜치</b> feat/core-rules-inheritance</span>
+      <span><b>Phase</b> 3 (코드완료 · 라이브 블로커)</span>
+      <span><b>검증</b> 코드 + 라이브 프로덕션 실측</span>
+      <span><b>배포</b> yohan-studio.vercel.app</span>
+    </div>
+  </div>
+
+  <!-- ════ TL;DR ════ -->
+  <div class="call red">
+    <div class="h">🎯 한눈 결론 (TL;DR)</div>
+    <p>코드 품질·SEO 인프라·디자인 시스템은 <b>1인 기업 사이트로는 상위권</b>(타입체크·린트 통과, JSON-LD 10종, 동적 sitemap/OG 완비). 그러나 <b>"코드는 완료, 라이브는 미완"</b> 상태가 핵심 병목이다.</p>
+    <ul class="tight">
+      <li><b class="bad">🔴 스토어가 프로덕션에서 죽어있다</b> — <code>/store</code>가 "상품 목록을 불러오지 못했습니다" 표시. Phase 3 핵심 전환 퍼널이 dead end. (Supabase env·마이그레이션 미실행 — <b>사람만 해결 가능</b>)</li>
+      <li><b class="warn">🟠 정규 도메인이 분열돼 있다</b> — <code>yohanstudio.co</code>와 <code>vercel.app</code>이 동일 콘텐츠를 서빙하는데, sitemap/canonical은 vercel.app, llms.txt는 yohanstudio.co를 가리킨다. SEO 색인 분산 + AEO 채널 도메인 불일치.</li>
+      <li><b class="warn">🟠 문서 SSOT가 시점마다 어긋난다</b> — AI가 일하기 좋은 구조의 토대인데, <code>ssod.md</code>(Phase 2) · <code>CLAUDE.md</code>(Phase 3) · <code>next-task.md</code>(Goal 2, stale)가 서로 다른 현실을 가리킨다.</li>
+      <li><b class="ok">🟢 좋은 소식</b> — <code>/portfolio → /showroom</code> 301은 이제 정상 배포됨(6/8 리포트의 FAIL 해소). 챗봇·진단·쇼룸·블로그는 라이브 정상.</li>
+    </ul>
+  </div>
+
+  <!-- ════ SCORES ════ -->
+  <div class="scores">
+    <div class="score"><div class="lbl">포트폴리오 웹 구조</div><div class="val">8.0</div><div class="bar"><i style="width:80%"></i></div></div>
+    <div class="score"><div class="lbl">시스템 안정성</div><div class="val">6.5</div><div class="bar"><i style="width:65%"></i></div></div>
+    <div class="score"><div class="lbl">SEO / AEO / GEO</div><div class="val">8.0</div><div class="bar"><i style="width:80%"></i></div></div>
+    <div class="score"><div class="lbl">선순환(유입→전환)</div><div class="val">5.0</div><div class="bar"><i style="width:50%"></i></div></div>
+    <div class="score"><div class="lbl">AI 친화 구조</div><div class="val">7.5</div><div class="bar"><i style="width:75%"></i></div></div>
+    <div class="score"><div class="lbl">발행 워크플로</div><div class="val">5.0</div><div class="bar"><i style="width:50%"></i></div></div>
+    <div class="score total"><div class="lbl">종합 성숙도</div><div class="val">6.7</div><div class="bar"><i style="width:67%"></i></div></div>
+  </div>
+  <p style="font-size:12.5px;color:var(--muted);margin-top:4px">※ 점수는 "1인 기업 포트폴리오 + 콘텐츠 퍼널" 기준 상대 평가. 인프라는 높고, <b>라이브 마감(last mile)과 운영 워크플로</b>에서 점수가 깎였다.</p>
+
+  <!-- ════ TOC ════ -->
+  <h2><span class="num">00</span>목차</h2>
+  <div class="toc">
+    <a href="#s1">01 · 현재 할 일 전수 브리핑 (Phase·Goal·블로커)</a>
+    <a href="#s2">02 · 코드 ↔ 라이브 프로덕션 격차 (실측)</a>
+    <a href="#s3">03 · 문제점 — 우선순위별 (Critical→Low)</a>
+    <a href="#s4">04 · 축 A — 포트폴리오 웹 구조</a>
+    <a href="#s5">05 · 축 B — 시스템 안정성</a>
+    <a href="#s6">06 · 축 C — SEO / AEO / GEO + 검색 유입</a>
+    <a href="#s7">07 · 축 D — 선순환 설계</a>
+    <a href="#s8">08 · 축 E — AI가 일하기 좋은 구조</a>
+    <a href="#s9">09 · 축 F — 빠른 발행 워크플로</a>
+    <a href="#s10">10 · 실행 로드맵 (사람 vs AI)</a>
+    <a href="#s11">11 · 강점 요약 (유지할 것)</a>
+  </div>
+
+  <!-- ════ 01 할일 브리핑 ════ -->
+  <h2 id="s1"><span class="num">01</span>현재 할 일 전수 브리핑</h2>
+  <p class="lead">"무엇이 끝났고, 무엇이 남았나"를 Phase·Goal·블로커 3층위로 정리한다.</p>
+
+  <h3>① Phase 진행 상태</h3>
+  <table>
+    <tr><th>Phase</th><th>범위</th><th>코드</th><th>라이브</th></tr>
+    <tr><td><b>1</b> 랜딩+포트폴리오</td><td>Hero·About·배포</td><td class="c ok">✅</td><td class="c ok">✅</td></tr>
+    <tr><td><b>2</b> 블로그+SEO</td><td>MDX·sitemap·OG·JSON-LD·다크모드·쇼룸·진단·서비스</td><td class="c ok">✅</td><td class="c ok">✅</td></tr>
+    <tr><td><b>3</b> 스토어+결제+DB</td><td>Supabase·Stripe·스토어·챗봇·TTS·검색</td><td class="c ok">✅ 완료</td><td class="c bad">🔴 블로커</td></tr>
+    <tr><td><b>4</b> 자동화</td><td>n8n 멀티채널 발행</td><td class="c">—</td><td class="c">—</td></tr>
+  </table>
+  <p>핵심: <b>Phase 3은 "코드완료, 라이브 블로커"</b>. 코드는 다 짜여 있는데 환경변수·DB 마이그레이션이라는 <b>사람 손 작업</b>에서 멈춰 프로덕션 스토어가 작동하지 않는다.</p>
+
+  <h3>② VHK Goal 워크플로 (T0~T8)</h3>
+  <table>
+    <tr><th>Goal</th><th>내용</th><th>상태</th></tr>
+    <tr><td>T0~T7</td><td>audit · env.example · 문서동기화 · portfolio 301 · Playwright QA · E2E · Home · cleanup</td><td class="c ok">✅ DONE (6/8)</td></tr>
+    <tr><td>T8</td><td><code>.agents/CORE-RULES.md</code> 코어 규칙 마커블록 상속 (YS1)</td><td class="c ok">✅ DONE (6/16)</td></tr>
+  </table>
+  <div class="call amber">
+    <div class="h">⚠️ Goal 트래커가 stale</div>
+    <p><code>docs/state/next-task.md</code>는 아직 <b>"Goal 2 — 문서 동기화 NOT_STARTED"</b>를 가리키지만, 로그상 T0~T8이 모두 DONE이다. <code>vhk goal next</code>가 6/8 이후 재실행되지 않아 트래커가 과거에 멈춰 있다. → AI/사람 모두 "다음 할 일"을 잘못 읽게 된다.</p>
+  </div>
+
+  <h3>③ 라이브 배포를 막는 블로커 (마감 작업)</h3>
+  <table>
+    <tr><th>#</th><th>블로커</th><th>담당</th><th>영향</th></tr>
+    <tr><td>1</td><td>Vercel에 Supabase env(<code>NEXT_PUBLIC_SUPABASE_URL</code> 등) 등록</td><td class="c"><span class="badge b-human">사람</span></td><td>스토어·진단저장 복구</td></tr>
+    <tr><td>2</td><td>Supabase 대시보드에서 <code>001/002 마이그레이션</code> 실행 + <code>seed.ts</code></td><td class="c"><span class="badge b-human">사람</span></td><td><code>studio_products</code> 테이블 생성</td></tr>
+    <tr><td>3</td><td>정규 도메인 결정 (yohanstudio.co ↔ vercel.app)</td><td class="c"><span class="badge b-human">사람</span></td><td>SEO 색인 통일 전제</td></tr>
+    <tr><td>4</td><td>재배포 후 <code>/store</code>·진단저장 E2E 손검증</td><td class="c"><span class="badge b-human">사람</span> <span class="badge b-ai">AI보조</span></td><td>"부분성공→성공" 승격</td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--muted)">※ 블로커 1·2·3은 <b>코드로 풀 수 없는 사람 전용</b> 작업이다. 이 3개가 Phase 3 라이브의 임계 경로(critical path)다.</p>
+
+  <!-- ════ 02 격차 ════ -->
+  <h2 id="s2"><span class="num">02</span>코드 ↔ 라이브 프로덕션 격차 <span class="badge b-ok" style="vertical-align:super">실측</span></h2>
+  <p class="lead">로컬 코드만 보면 "다 됐다"고 착각하기 쉽다. 이번엔 실제 배포 URL을 직접 호출해 격차를 측정했다.</p>
+  <table>
+    <tr><th>검증 항목</th><th>실측 결과</th><th>판정</th></tr>
+    <tr><td><code>vercel.app/store</code></td><td>"상품 목록을 불러오지 못했습니다" — 상품 0개</td><td class="c bad">🔴 FAIL</td></tr>
+    <tr><td><code>vercel.app/portfolio</code></td><td><code>/showroom</code>으로 정상 진입 (6 프로젝트 노출)</td><td class="c ok">✅ PASS</td></tr>
+    <tr><td><code>yohanstudio.co</code> (커스텀)</td><td>살아있음 · vercel.app과 <b>동일 콘텐츠</b> 서빙</td><td class="c warn">🟠 중복</td></tr>
+    <tr><td><code>robots.txt</code>의 sitemap</td><td><code>https://yohan-studio.vercel.app/sitemap.xml</code></td><td class="c warn">🟠 도메인</td></tr>
+    <tr><td><code>public/llms.txt</code>의 URL</td><td>전부 <code>https://yohanstudio.co/...</code> (하드코딩)</td><td class="c warn">🟠 불일치</td></tr>
+    <tr><td>챗봇 <code>/api/chat</code></td><td>200 OK · 한국어 응답 + TTS (Gemini 키 설정됨)</td><td class="c ok">✅ PASS</td></tr>
+  </table>
+  <div class="call red">
+    <div class="h">🔴 핵심 격차 #1 — 스토어 라이브 장애</div>
+    <p>로컬에선 <code>placeholderProducts</code> 폴백이 있어 화면이 뜨지만, 프로덕션은 Supabase fetch 실패 → <b>에러 분기로 빠져 빈 화면</b>. 결제 퍼널의 종착지가 막혀 Phase 3 수익화가 0이다. 코드 수정으로 풀 수 없고, env 등록 + 마이그레이션(사람)이 유일한 해법.</p>
+  </div>
+  <div class="call amber">
+    <div class="h">🟠 핵심 격차 #2 — 정규 도메인 분열</div>
+    <p>같은 사이트가 두 도메인에서 동시에 색인 가능한데, 신호가 갈린다:</p>
+    <ul class="tight">
+      <li>sitemap · canonical · JSON-LD <span class="arrow">→</span> <code>vercel.app</code> (env <code>NEXT_PUBLIC_SITE_URL</code>로 설정됨)</li>
+      <li>llms.txt (AEO/GEO 채널) <span class="arrow">→</span> <code>yohanstudio.co</code> (코드 하드코딩)</li>
+      <li><code>siteConfig.ts</code> · <code>showroomProjects.ts</code> <span class="arrow">→</span> <code>vercel.app</code> (하드코딩)</li>
+    </ul>
+    <p>구글은 vercel.app을 정규로 보는데 ChatGPT/Perplexity는 llms.txt 따라 yohanstudio.co를 인용 → <b>도메인 권위(authority)가 둘로 쪼개진다.</b> 브랜딩상 <code>yohanstudio.co</code>를 정규로 통일하는 것을 권장.</p>
+  </div>
+
+  <!-- ════ 03 문제점 ════ -->
+  <h2 id="s3"><span class="num">03</span>문제점 — 우선순위별</h2>
+  <p class="lead">심각도 × 영향도 순. 색상 배지로 우선순위를, 담당 배지로 사람/AI를 구분했다.</p>
+
+  <table>
+    <tr><th>우선</th><th>문제</th><th>근거</th><th>담당</th></tr>
+    <tr>
+      <td class="c"><span class="badge b-p0">P0</span></td>
+      <td><b>스토어 프로덕션 장애</b> — 상품 fetch 실패</td>
+      <td>라이브 <code>/store</code> 에러 · Supabase env 미설정</td>
+      <td class="c"><span class="badge b-human">사람</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p0">P0</span></td>
+      <td><b>정규 도메인 미결정</b> — 색인 분산</td>
+      <td>robots=vercel.app vs llms.txt=yohanstudio.co</td>
+      <td class="c"><span class="badge b-human">결정</span> <span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p1">P1</span></td>
+      <td><b>문서 SSOT 드리프트</b> — 시점 불일치</td>
+      <td>ssod.md(P2)·CLAUDE 현재상태(커밋 4dd0170)·next-task(Goal2)</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p1">P1</span></td>
+      <td><b>전환 추적 부재</b> — 퍼널 계측 없음</td>
+      <td>GA 페이지뷰만 · CTA/진단완료/결제 이벤트 없음</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p1">P1</span></td>
+      <td><b>발행 워크플로 마찰</b> — 하드코딩+빌드+배포</td>
+      <td>showroom/services/featured 코드 배열 · 20+필드 타입</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p2">P2</span></td>
+      <td>canonical 누락 (services·store·diagnosis)</td>
+      <td>SEO 에이전트 메타 점검</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p2">P2</span></td>
+      <td>AEO 보강 — llms-full.txt·AI크롤러 명시 규칙 부재</td>
+      <td>llms.txt만 존재 · robots <code>*</code>만</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p2">P2</span></td>
+      <td>orphan/dead code — <code>Featured.tsx</code>·<code>featured.ts</code></td>
+      <td>t0-audit: Home 미사용 · data/featured.ts 잔존</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p2">P2</span></td>
+      <td>원격 브랜치 12개+ 미정리</td>
+      <td>현 브랜치는 PR#13으로 이미 master 머지됨</td>
+      <td class="c"><span class="badge b-ai">AI</span></td>
+    </tr>
+    <tr>
+      <td class="c"><span class="badge b-p2">P2</span></td>
+      <td>네이버 이중 발행 수동 의존</td>
+      <td>자동 변환본 재편집 필수 · 이미지 수동 배치</td>
+      <td class="c"><span class="badge b-human">사람</span></td>
+    </tr>
+  </table>
+
+  <!-- ════ 04 축 A 구조 ════ -->
+  <h2 id="s4"><span class="num">04</span>축 A — 포트폴리오 웹 구조 <span class="badge b-ok" style="vertical-align:super">8.0</span></h2>
+  <p class="lead">"포트폴리오 역할을 하는 웹사이트로서 구조가 잘 설계됐는가."</p>
+  <div class="grid2">
+    <div class="call green">
+      <div class="h">✅ 잘 된 것</div>
+      <ul class="tight">
+        <li>라우트 13종이 <b>역할별로 명확</b>: 콘텐츠(blog)·작업물(showroom)·전환(diagnosis·services·store)·브랜드(vhk·open-source·design)</li>
+        <li>컴포넌트 65개가 <code>ui/layout/sections/blog/showroom/...</code> <b>도메인별 폴더링</b></li>
+        <li><code>siteConfig.ts</code>를 사이트 메타 SSOT로 둔 설계 — chatContext·SEO가 한 소스 참조</li>
+        <li>쇼룸이 <code>[slug]</code> 상세 URL + JSON-LD까지 — <b>개별 프로젝트가 독립 색인 단위</b></li>
+        <li>디자인 시스템(Editorial × Soft Brutalism)이 토큰화 → 일관성</li>
+      </ul>
+    </div>
+    <div class="call amber">
+      <div class="h">⚠️ 약한 것 / 강화점</div>
+      <ul class="tight">
+        <li><b>콘텐츠가 코드에 갇힘</b>: showroom/services는 <code>.ts</code> 배열. 프로젝트 추가 = 코드 커밋 = 배포 (축 F 참조)</li>
+        <li>orphan 잔존: <code>Featured.tsx</code>/<code>featured.ts</code>가 Home에서 미사용인데 남아있어 구조 노이즈</li>
+        <li><code>siteConfig.url</code>이 vercel.app로 하드코딩 — getSiteUrl()과 이원화</li>
+        <li><b>"작업물 → 의뢰" 동선</b>이 약함: 쇼룸 상세에서 services/contact로 잇는 CTA 부재(축 D)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="call blue">
+    <div class="h">💡 권장 — 쇼룸을 "포트폴리오 엔진"으로</div>
+    <p>포트폴리오 사이트의 본질은 <b>"작업물이 늘수록 강해지는 구조"</b>다. 지금은 프로젝트 추가가 코드 작업이라 마찰이 크다. 쇼룸 데이터를 <b>① MDX 콘텐츠 컬렉션</b>(블로그처럼 파일 1개=프로젝트 1개) 또는 <b>② Supabase <code>studio_projects</code> 테이블</b>로 옮기면, 새 프로젝트가 "파일 추가/폼 입력"만으로 sitemap·JSON-LD·OG·검색 인덱스에 자동 편입된다. (상세는 축 F)</p>
+  </div>
+
+  <!-- ════ 05 축 B 안정성 ════ -->
+  <h2 id="s5"><span class="num">05</span>축 B — 시스템 안정성 <span class="badge b-p1" style="vertical-align:super">6.5</span></h2>
+  <p class="lead">"시스템을 안정적이고 잘 구현할 수 있는가."</p>
+  <table>
+    <tr><th>지표</th><th>측정값</th><th>판정</th></tr>
+    <tr><td>TypeScript strict 타입체크</td><td><code>tsc --noEmit</code> exit 0</td><td class="c ok">✅</td></tr>
+    <tr><td>ESLint</td><td>exit 0 (경고 0)</td><td class="c ok">✅</td></tr>
+    <tr><td><code>as any</code> / <code>: any</code></td><td>1건 (사실상 strict 준수)</td><td class="c ok">✅</td></tr>
+    <tr><td>TODO/FIXME/HACK</td><td>0건</td><td class="c ok">✅</td></tr>
+    <tr><td>유닛 테스트 러너</td><td>없음 (vitest/jest 미도입)</td><td class="c bad">✗</td></tr>
+    <tr><td>E2E</td><td>Playwright 스모크 6라우트 (<code>qa:test</code>)</td><td class="c warn">△</td></tr>
+    <tr><td>API 라우트 견고성</td><td>chat/checkout/contact/webhook 가드 有</td><td class="c ok">✅</td></tr>
+    <tr><td>프로덕션 라이브 상태</td><td>스토어 장애 (env)</td><td class="c bad">🔴</td></tr>
+  </table>
+  <div class="grid2">
+    <div class="call green">
+      <div class="h">✅ 안정성 토대는 견고</div>
+      <p>strict 타입·린트 무결점, <code>any</code> 1건, TODO 0건은 <b>1인 프로젝트로는 드물게 깨끗</b>하다. API 라우트에 서명 검증·입력 가드가 들어가 있고, <code>server-only</code>로 서버 키 격리도 적용됐다.</p>
+    </div>
+    <div class="call amber">
+      <div class="h">⚠️ 안정성을 깎는 3가지</div>
+      <ul class="tight">
+        <li><b>회귀 안전망 부재</b>: 유닛 테스트가 없어 리팩터 시 회귀를 빌드/E2E에만 의존</li>
+        <li><b>환경 의존 실패가 사용자에게 노출</b>: env 누락이 곧 빈 화면 → 폴백 UX 필요</li>
+        <li><b>관측성(observability) 없음</b>: 에러 로깅/알림(Sentry 등) 미도입 → 라이브 장애를 수동 발견</li>
+      </ul>
+    </div>
+  </div>
+  <div class="call blue">
+    <div class="h">💡 권장 강화</div>
+    <ul class="tight">
+      <li><b>스토어 폴백 UX</b>: Supabase 실패 시 "준비 중" placeholder를 보여 dead end 방지 (env 복구 전까지 안전판)</li>
+      <li><b>경량 테스트</b>: 핵심 순수 로직(<code>aimScan.ts</code> 점수계산, <code>search.ts</code>)만 vitest로 — 풀 커버리지 불필요</li>
+      <li><b>빌드 게이트에 <code>tsc</code> 추가</b>: 현재 게이트는 build+lint. <code>.next</code> stale 타입 캐시 이슈 이력 있으니 <code>tsc --noEmit</code> 명시 추가</li>
+    </ul>
+  </div>
+
+  <!-- ════ 06 축 C SEO ════ -->
+  <h2 id="s6"><span class="num">06</span>축 C — SEO / AEO / GEO + 검색 유입 <span class="badge b-ok" style="vertical-align:super">8.0</span></h2>
+  <p class="lead">"검색 엔진 최적화 — SEO(구글) · AEO(답변엔진) · GEO(생성형 인용) + 유입."</p>
+  <table>
+    <tr><th>항목</th><th>상태</th><th>메모</th></tr>
+    <tr><td>동적 sitemap</td><td class="c ok">우수</td><td>blog/showroom 슬러그 자동 포함, priority/lastmod</td></tr>
+    <tr><td>JSON-LD 구조화 데이터</td><td class="c ok">우수</td><td>10종 (Person@graph·Org·WebSite·Article·Breadcrumb·FAQ·Service·SoftwareApp·CreativeWork·Collection)</td></tr>
+    <tr><td>동적 OG 이미지</td><td class="c ok">우수</td><td><code>next/og</code> · 제목길이 적응형 · 브랜드 일관</td></tr>
+    <tr><td>FAQPage (AEO)</td><td class="c ok">우수</td><td>6 Q&amp;A · "한 문장 정의+부연" 인용 친화 포맷</td></tr>
+    <tr><td>llms.txt (AEO/GEO)</td><td class="c warn">존재</td><td>도메인 불일치 · llms-full.txt 없음</td></tr>
+    <tr><td>GSC + Naver 인증</td><td class="c ok">완비</td><td>verification 메타 + Yeti robots 허용</td></tr>
+    <tr><td>canonical</td><td class="c warn">부분</td><td>services·store·diagnosis 누락</td></tr>
+    <tr><td>정규 도메인 통일</td><td class="c bad">분열</td><td><b>최우선 — 축 신호 분산</b></td></tr>
+    <tr><td>AI 크롤러 명시 규칙</td><td class="c warn">암묵</td><td>GPTBot/ClaudeBot/PerplexityBot <code>*</code>로 허용되나 명시 X</td></tr>
+  </table>
+  <div class="call red">
+    <div class="h">🔴 검색 유입을 위해 가장 먼저 풀 것 — 도메인 통일</div>
+    <p>인프라가 8점인데 종합 유입이 안 사는 이유는 <b>도메인 분열이 모든 신호를 반감</b>시키기 때문이다. 백링크·색인·AI 인용이 두 도메인으로 나뉘면 어느 쪽도 권위를 못 쌓는다. <b>정규 도메인 1개 확정 → env·llms.txt·siteConfig·showroomProjects 전부 그 도메인으로 통일 → 나머지는 301</b>이 검색 유입 1순위 액션이다.</p>
+  </div>
+  <div class="call blue">
+    <div class="h">💡 AEO/GEO 강화 (도메인 통일 후)</div>
+    <ul class="tight">
+      <li><b>llms-full.txt 자동 생성</b>: 빌드 시 모든 blog/showroom URL+요약 전개 → 생성형 엔진이 전체 콘텐츠 맵 확보</li>
+      <li><b>robots에 AI 크롤러 명시</b>: GPTBot·ClaudeBot·PerplexityBot·anthropic-ai·CCBot 명시 allow → "인용해도 된다"는 신호</li>
+      <li><b>canonical 3페이지 추가</b> + draft 글 <code>robots:{index:false}</code></li>
+      <li><b>FAQ를 페이지별로</b>: 현재 홈 1곳. 쇼룸/서비스 각 페이지에 맥락 FAQ → 롱테일 질의 흡수</li>
+    </ul>
+  </div>
+
+  <!-- ════ 07 축 D 선순환 ════ -->
+  <h2 id="s7"><span class="num">07</span>축 D — 선순환 설계 <span class="badge b-p1" style="vertical-align:super">5.0</span></h2>
+  <p class="lead">"검색 유입 → 전환 → 사례 → 다시 콘텐츠로 도는 선순환." 사용자가 특히 강조한 축.</p>
+
+  <div class="loop">
+    <b style="color:var(--accent)">이상적 선순환 루프</b><br><br>
+    <span class="node">블로그/쇼룸 콘텐츠</span> <span class="arrow">→</span>
+    <span class="node">SEO/AEO 유입</span> <span class="arrow">→</span>
+    <span class="node">진단(diagnosis)</span> <span class="arrow">→</span>
+    <span class="node">서비스/스토어 전환</span> <span class="arrow">→</span>
+    <span class="node">결과물·후기</span> <span class="arrow">→</span>
+    <span class="node">쇼룸/블로그 신규 콘텐츠</span> <span class="arrow">↺</span>
+  </div>
+  <p><b>지금 이 루프가 끊긴 지점:</b></p>
+  <div class="loop">
+    <span class="node">콘텐츠</span> <span class="arrow">→</span>
+    <span class="node">유입</span> <span class="arrow" style="color:var(--red)">⚡</span>
+    <span class="broken">진단결과 저장 미배포</span> <span class="arrow" style="color:var(--red)">⚡</span>
+    <span class="broken">스토어 장애(dead end)</span> <span class="arrow" style="color:var(--red)">⚡</span>
+    <span class="broken">전환 추적 없음</span> <span class="arrow">→</span>
+    <span class="node">사례화 수동</span>
+  </div>
+  <table>
+    <tr><th>루프 구간</th><th>현재</th><th>끊긴 원인</th><th>처방</th></tr>
+    <tr><td>유입→진단</td><td>진단 UI는 작동</td><td>결과 Supabase 저장 미배포 → 리드 미수집</td><td>env 복구 후 결과 저장 + 이메일 캡처</td></tr>
+    <tr><td>진단→전환</td><td>진단 후 동선 약함</td><td>결과 화면→services/store CTA 미연결</td><td>진단 레벨별 맞춤 서비스 추천 CTA</td></tr>
+    <tr><td>전환→결제</td><td class="bad">스토어 죽음</td><td>Supabase env (P0)</td><td>블로커 1·2 해소</td></tr>
+    <tr><td>전 구간 계측</td><td class="bad">없음</td><td>GA 페이지뷰만</td><td>CTA·진단완료·checkout 이벤트 추적</td></tr>
+    <tr><td>사례→콘텐츠</td><td>수동</td><td>쇼룸 추가가 코드작업(축 F)</td><td>발행 워크플로 간소화</td></tr>
+  </table>
+  <div class="call blue">
+    <div class="h">💡 선순환을 살리는 최소 개입 순서</div>
+    <p><b>1)</b> env 복구로 스토어·진단저장 부활(P0) <span class="arrow">→</span> <b>2)</b> 진단 결과 화면에 "레벨에 맞는 서비스/템플릿" CTA 연결 <span class="arrow">→</span> <b>3)</b> GA 이벤트로 어느 콘텐츠가 전환을 만드는지 측정 <span class="arrow">→</span> <b>4)</b> 잘 도는 콘텐츠 유형을 쇼룸/블로그로 재생산. 계측 없이는 어떤 콘텐츠가 선순환을 만드는지 알 수 없으므로 <b>(3) 계측이 사실상 모든 개선의 전제</b>다.</p>
+  </div>
+
+  <!-- ════ 08 축 E AI 친화 ════ -->
+  <h2 id="s8"><span class="num">08</span>축 E — AI가 일하기 좋은 구조 <span class="badge b-ok" style="vertical-align:super">7.5</span></h2>
+  <p class="lead">"AI(코드 에이전트)가 들어와 빠르게 맥락을 잡고 안전하게 작업하는 구조."</p>
+  <div class="grid2">
+    <div class="call green">
+      <div class="h">✅ 이미 좋은 토대</div>
+      <ul class="tight">
+        <li><code>CLAUDE.md</code>+<code>AGENTS.md</code>+<code>.agents/CORE-RULES.md</code> 3층 규칙, 마커블록 상속(YS1)</li>
+        <li><b>VHK Goal 워크플로</b>: goal list/next/check/done + 자동 검증 스크립트 — AI에게 "다음 할 일"을 구조화</li>
+        <li><code>docs/</code> 체계: SSOT·ADR·log·troubleshooting·patterns — 의사결정 추적</li>
+        <li>보호 파일·브랜치 정책·DB prefix가 규칙으로 명문화 → AI 사고 방지</li>
+        <li><code>chatContext.ts</code>·<code>search-docs</code> API — 사이트 자체가 AI에게 맥락 제공</li>
+      </ul>
+    </div>
+    <div class="call amber">
+      <div class="h">⚠️ AI 친화성을 깎는 것</div>
+      <ul class="tight">
+        <li><b>SSOT 드리프트가 최대 적</b>: AI가 <code>ssod.md</code>(Phase2)·<code>next-task.md</code>(Goal2)를 신뢰하면 <b>이미 끝난 일을 다시 하거나 잘못된 진입점</b>을 잡는다</li>
+        <li>"현재 상태" 블록이 <b>수동 갱신(자동 패치 금지)</b> → 실제 HEAD와 어긋남 (<code>4dd0170</code> 표기 vs 실제 <code>2fb54f2</code>)</li>
+        <li>Goal 트래커가 6/8 이후 정지</li>
+      </ul>
+    </div>
+  </div>
+  <div class="call blue">
+    <div class="h">💡 권장 — "AI가 읽는 단일 진실"을 자동 동기화</div>
+    <p>AI 친화 구조의 핵심은 <b>"AI가 가장 먼저 읽는 파일이 항상 진실"</b>이어야 한다는 것. 처방:</p>
+    <ul class="tight">
+      <li><b>현재상태 자동 생성</b>: <code>git log</code>+<code>goal status</code>를 읽어 CLAUDE.md "현재 상태" 블록을 <code>session:context</code> 스크립트로 자동 갱신 (수동 금지 규칙을 자동화로 대체)</li>
+      <li><b>SSOT 1개로 수렴</b>: ssod.md를 폐기하거나 "Phase 3" 현실로 업데이트 — 같은 사실을 3곳에 두지 않기</li>
+      <li><b>Goal 트래커 재가동</b>: <code>vhk goal next</code> 재실행으로 next-task.md를 현재 시점으로</li>
+    </ul>
+  </div>
+
+  <!-- ════ 09 축 F 워크플로 ════ -->
+  <h2 id="s9"><span class="num">09</span>축 F — 빠른 발행 워크플로 <span class="badge b-p1" style="vertical-align:super">5.0</span></h2>
+  <p class="lead">"프로젝트·제품을 완성하면 빠르고 간편하게 올리는 워크플로/시스템." 사용자 핵심 요구.</p>
+  <table>
+    <tr><th>발행 대상</th><th>현재 방식</th><th>필요 단계</th><th>마찰</th></tr>
+    <tr><td><b>블로그 글</b></td><td>MDX 파일 + 네이버 수동 재편집</td><td>5단계(작성·검증·변환·재편집·배치)</td><td class="warn">중</td></tr>
+    <tr><td><b>쇼룸 프로젝트</b></td><td><code>showroomProjects.ts</code> 배열에 20+필드 객체 추가 + 이미지 수동 저장 + 빌드·배포</td><td>3단계 전부 코드</td><td class="bad">높음</td></tr>
+    <tr><td><b>스토어 상품</b></td><td>Supabase 직접 입력 + Stripe Price 수동 동기화</td><td>3단계 이중관리</td><td class="bad">높음</td></tr>
+    <tr><td>이미지</td><td><code>public/blog·showroom</code> + 외부URL — 3곳 분산</td><td>경로 규칙 매번 확인</td><td class="warn">중</td></tr>
+  </table>
+  <div class="call red">
+    <div class="h">🔴 가장 큰 마찰 — "프로젝트 하나 올리려면 코드를 짜야 한다"</div>
+    <p>포트폴리오 사이트인데 <b>작업물 추가가 개발 작업</b>이다. <code>ShowroomProject</code> 타입이 slug·category·stack·keywords·problem·solution·result·valueProps·faq·relatedPosts 등 20개 필드 → 객체 하나 만드는 데 인지 부하가 크고, 빌드·배포까지 거쳐야 화면에 뜬다. "완성했으면 빠르게 올린다"는 목표와 정반대.</p>
+  </div>
+  <div class="grid2">
+    <div class="call blue">
+      <div class="h">💡 옵션 1 — MDX 콘텐츠화 (AI 친화·추천)</div>
+      <p>쇼룸을 블로그처럼 <code>src/content/showroom/&lt;slug&gt;.mdx</code> 파일 1개=프로젝트 1개로. frontmatter에 메타, 본문에 회고. <b>장점</b>: 빌드 시 sitemap·JSON-LD·OG·검색 자동 편입, AI가 파일 1개만 쓰면 됨, Git 이력. <b>단점</b>: 여전히 배포 필요(단 Vercel 자동).</p>
+    </div>
+    <div class="call blue">
+      <div class="h">💡 옵션 2 — Supabase studio_projects (무배포)</div>
+      <p>쇼룸을 DB 테이블로. <code>/showroom</code>이 런타임 쿼리(ISR). <b>장점</b>: 배포 없이 추가/수정, 간단한 어드민 폼 가능. <b>단점</b>: SSG 이점 일부 상실, 어드민 UI 구축 비용, Git 이력 없음.</p>
+    </div>
+  </div>
+  <div class="call green">
+    <div class="h">⚡ 즉효 처방 — 스캐폴드 스크립트 (옵션 선택 전에도 가능)</div>
+    <p><code>npm run new:project &lt;slug&gt;</code> 한 줄로 ① 타입 채운 객체 스텁 추가 ② <code>public/showroom/&lt;slug&gt;/</code> 폴더 생성 ③ OG·sitemap 자동 반영 검증까지. AI에게 "이 프로젝트 올려줘"라고 하면 스크립트+내용 채우기로 끝나도록. <b>네이버 발행</b>도 <code>blog:naver</code>가 이미 있으니, "초안→웹+네이버 동시 산출"을 <code>new:post</code> 스캐폴드로 묶으면 마찰이 크게 준다.</p>
+  </div>
+
+  <!-- ════ 10 로드맵 ════ -->
+  <h2 id="s10"><span class="num">10</span>실행 로드맵 — 사람 vs AI</h2>
+  <p class="lead">의존 순서대로. <span class="badge b-human">사람</span>=백요한만 가능, <span class="badge b-ai">AI</span>=에이전트 위임 가능.</p>
+
+  <h3>🟥 Sprint 0 — 라이브 마감 (이번 주, 임계 경로)</h3>
+  <table>
+    <tr><th>#</th><th>작업</th><th>담당</th><th>산출</th></tr>
+    <tr><td>1</td><td>정규 도메인 결정 (yohanstudio.co 권장)</td><td class="c"><span class="badge b-human">결정</span></td><td>이후 모든 SEO 통일의 전제</td></tr>
+    <tr><td>2</td><td>Vercel에 Supabase·Stripe·Resend env 등록</td><td class="c"><span class="badge b-human">사람</span></td><td>스토어 fetch 복구</td></tr>
+    <tr><td>3</td><td>Supabase 마이그레이션 001·002 실행 + seed</td><td class="c"><span class="badge b-human">사람</span></td><td><code>studio_products</code> 생성</td></tr>
+    <tr><td>4</td><td>재배포 → store·diagnosis·결제 E2E 손검증</td><td class="c"><span class="badge b-human">사람</span><span class="badge b-ai">보조</span></td><td>Phase3 "성공" 승격</td></tr>
+  </table>
+
+  <h3>🟧 Sprint 1 — SSOT·SEO 통일 (AI 위임 가능)</h3>
+  <table>
+    <tr><th>#</th><th>작업</th><th>담당</th><th>예상</th></tr>
+    <tr><td>5</td><td>도메인 SSOT 통일: getSiteUrl·llms.txt·siteConfig·showroomProjects를 정규 도메인으로 + env 가이드</td><td class="c"><span class="badge b-ai">AI</span></td><td>30분</td></tr>
+    <tr><td>6</td><td>문서 드리프트 해소: ssod 업데이트·CLAUDE 현재상태 자동화·goal next 재가동</td><td class="c"><span class="badge b-ai">AI</span></td><td>1시간</td></tr>
+    <tr><td>7</td><td>canonical 3페이지 + robots AI크롤러 명시 + llms-full.txt 자동생성</td><td class="c"><span class="badge b-ai">AI</span></td><td>1시간</td></tr>
+    <tr><td>8</td><td>GA 전환 이벤트(CTA·진단완료·checkout) 계측</td><td class="c"><span class="badge b-ai">AI</span></td><td>1.5시간</td></tr>
+  </table>
+
+  <h3>🟨 Sprint 2 — 선순환·발행 워크플로 (구조 강화)</h3>
+  <table>
+    <tr><th>#</th><th>작업</th><th>담당</th><th>예상</th></tr>
+    <tr><td>9</td><td>진단 결과→서비스/스토어 맞춤 CTA 연결 (전환 동선)</td><td class="c"><span class="badge b-ai">AI</span></td><td>2시간</td></tr>
+    <tr><td>10</td><td>쇼룸 발행 간소화: MDX화(옵션1) 또는 <code>new:project</code> 스캐폴드</td><td class="c"><span class="badge b-ai">AI</span></td><td>반나절</td></tr>
+    <tr><td>11</td><td>스토어 폴백 UX + 경량 vitest(aimScan·search)</td><td class="c"><span class="badge b-ai">AI</span></td><td>2시간</td></tr>
+    <tr><td>12</td><td>정리: orphan(Featured) 제거 · 머지된 원격 브랜치 정리</td><td class="c"><span class="badge b-ai">AI</span></td><td>30분</td></tr>
+  </table>
+
+  <div class="call amber">
+    <div class="h">⚠️ 의존성 주의</div>
+    <p>Sprint 1·2는 대부분 AI에게 위임 가능하지만, <b>#1(도메인 결정)과 #2·#3(env·마이그레이션)은 사람만</b> 할 수 있고 나머지의 전제다. <b>이 3개를 먼저 처리하지 않으면</b> SEO 통일도, 선순환 계측도 "죽은 사이트 위의 최적화"가 된다. → <b>Sprint 0가 모든 것의 잠금 해제 키.</b></p>
+  </div>
+
+  <!-- ════ 11 강점 ════ -->
+  <h2 id="s11"><span class="num">11</span>강점 요약 — 유지·발전시킬 것</h2>
+  <div class="grid2">
+    <div class="call green">
+      <div class="h">🏗️ 엔지니어링</div>
+      <ul class="tight">
+        <li>strict 타입·린트 무결점, any 1·TODO 0</li>
+        <li>Next.js 16·React 19·Tailwind v4 최신 스택</li>
+        <li>API 가드·서버키 격리·server-only</li>
+        <li>Playwright E2E + a11y 스모크</li>
+      </ul>
+    </div>
+    <div class="call green">
+      <div class="h">🔍 SEO/AEO 인프라</div>
+      <ul class="tight">
+        <li>JSON-LD 10종 (Person @graph 엔티티 링크)</li>
+        <li>동적 sitemap·OG·canonical(대부분)</li>
+        <li>FAQPage + llms.txt + GSC/Naver</li>
+        <li>시맨틱 HTML·heading 계층·alt</li>
+      </ul>
+    </div>
+    <div class="call green">
+      <div class="h">🤖 AI 운영 체계</div>
+      <ul class="tight">
+        <li>CLAUDE/AGENTS/CORE-RULES 3층 규칙</li>
+        <li>VHK Goal 워크플로 + 자동 검증</li>
+        <li>docs SSOT·ADR·log·troubleshooting</li>
+        <li>듀얼패널(Claude+Codex) 역검증</li>
+      </ul>
+    </div>
+    <div class="call green">
+      <div class="h">🎨 제품·브랜드</div>
+      <ul class="tight">
+        <li>Editorial × Soft Brutalism 토큰화</li>
+        <li>다크모드·모바일 퍼스트</li>
+        <li>퍼널형 Home(9섹션)·진단·서비스</li>
+        <li>VHK·오픈소스로 권위 축적 중</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="call blue" style="margin-top:30px">
+    <div class="h">🧭 한 문장 처방</div>
+    <p style="font-size:15.5px"><b>"인프라는 이미 8점짜리다. 지금 필요한 건 새 기능이 아니라 <span style="color:var(--accent)">라이브 마감(env·도메인) + 계측 + 발행 간소화</span>로 만들어 둔 것을 실제로 돌게 만드는 일"</b> — Sprint 0의 사람 작업 3개가 잠금을 풀면, 나머지는 AI에게 위임해 선순환 궤도에 올릴 수 있다.</p>
+  </div>
+
+  <div class="foot">
+    <div>YOHAN STUDIO · AUDIT REPORT · 2026-06-25</div>
+    <div style="margin-top:6px">
+      <span class="tag">검증: 코드 정적분석</span>
+      <span class="tag">tsc·eslint 실측</span>
+      <span class="tag">라이브 프로덕션 5엔드포인트</span>
+      <span class="tag">SEO/워크플로 전문 조사</span>
+    </div>
+    <div style="margin-top:8px">생성: Claude Code (Opus 4.8) · 파일: <code>docs/reviews/yohan-studio-audit-2026-06-25.html</code></div>
+  </div>
+
+</div>
+</body>
+</html>
