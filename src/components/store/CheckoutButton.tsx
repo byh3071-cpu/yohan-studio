@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { trackEvent } from "@/lib/analytics"
 
 const wrap: CSSProperties = {
   display: "flex",
@@ -71,6 +72,7 @@ export function CheckoutButton({
     setError(null)
     setLoading(true)
     try {
+      trackEvent("begin_checkout", { product_id: productId })
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,6 +84,7 @@ export function CheckoutButton({
       }
       window.location.href = json.url
     } catch (e) {
+      trackEvent("checkout_error", { product_id: productId })
       setError(e instanceof Error ? e.message : "결제 시작 실패")
       setLoading(false)
     }
