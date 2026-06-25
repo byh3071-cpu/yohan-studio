@@ -3,6 +3,9 @@
 import type { CSSProperties, FormEvent } from "react"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { trackEvent } from "@/lib/analytics"
+
+const LEAD_SOURCE = "contact_page"
 
 
 type Status = "idle" | "submitting" | "sent" | "error"
@@ -112,18 +115,21 @@ export function ContactForm() {
           phone: form.phone.trim(),
           subject: form.subject.trim(),
           message,
-          source: "contact_page",
+          source: LEAD_SOURCE,
         }),
       })
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!res.ok || !data.ok) {
+        trackEvent("form_error")
         setStatus("error")
         setErrMsg(data.error ?? "전송에 실패했습니다. 잠시 후 다시 시도해주세요.")
         return
       }
+      trackEvent("generate_lead", { source: LEAD_SOURCE })
       setStatus("sent")
       setForm({ name: "", email: "", phone: "", subject: "", message: "" })
     } catch (err) {
+      trackEvent("form_error")
       setStatus("error")
       setErrMsg(
         `네트워크 오류가 발생했습니다: ${err instanceof Error ? err.message : "unknown"}`,

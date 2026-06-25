@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
 import { getAllShowroomProjects } from "@/lib/showroom"
+import { TrackedLink } from "@/components/analytics/TrackedLink"
 
 const section: CSSProperties = {
   background: "var(--surface)",
@@ -125,9 +126,14 @@ export function ShowroomPreview() {
               쇼룸 미리보기<span style={accentMark}>.</span>
             </h2>
           </div>
-          <Link href="/showroom" style={link}>
+          <TrackedLink
+            href="/showroom"
+            event="cta_click"
+            params={{ location: "showroom_preview", target: "showroom" }}
+            style={link}
+          >
             전체 보기 →
-          </Link>
+          </TrackedLink>
         </div>
         <div style={grid}>
           {preview.map((p) => (

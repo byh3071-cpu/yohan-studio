@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
 import { services } from "@/data/services"
+import { TrackedLink } from "@/components/analytics/TrackedLink"
 
 const section: CSSProperties = {
   background: "var(--surface)",
@@ -129,9 +130,14 @@ export function ServicesPreview() {
               <span style={accent}>같이</span> 짓는 세 가지 깊이.
             </h2>
           </div>
-          <Link href="/services" style={allLink}>
+          <TrackedLink
+            href="/services"
+            event="cta_click"
+            params={{ location: "services_preview", target: "services" }}
+            style={allLink}
+          >
             전체 보기 →
-          </Link>
+          </TrackedLink>
         </div>
         <div style={grid}>
           {services.map((s) => (
