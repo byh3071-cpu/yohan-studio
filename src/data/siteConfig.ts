@@ -12,7 +12,7 @@ export const SITE_CONFIG = {
     name: "백요한",
     bio: "바리스타 출신 바이브코더, AI 코드 에이전트와 자동화 워크플로로 콘텐츠와 제품을 만드는 1인 기업가",
   },
-  url: "https://yohan-studio.vercel.app",
+  url: "https://yohanstudio.co",
   pages: [
     { path: "/blog", desc: "바이브코딩, AI 자동화, 1인 기업 운영 인사이트 (MDX)" },
     { path: "/showroom", desc: "프로젝트 쇼룸 (작업물 카드 + 카테고리 필터)" },

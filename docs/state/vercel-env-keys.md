@@ -10,7 +10,7 @@ PR 본문·대시보드 설정용. 값은 Vercel Settings → Environment Variab
 
 | Key | Required | Scope |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | ✅ | Production: `https://yohan-studio.vercel.app` |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | Production: `https://yohanstudio.co` (정규 도메인) |
 | `NEXT_PUBLIC_SUPABASE_URL` | ✅ | Supabase (Focus Feed shared) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | Supabase anon |
 | `SUPABASE_SERVICE_ROLE_KEY` | ✅ | Server only |
