@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react"
 import type { Service } from "@/data/services"
+import { TrackedLink } from "@/components/analytics/TrackedLink"
 
 const card: CSSProperties = {
   background: "var(--bg)",
@@ -177,14 +178,17 @@ export function ServiceCard({
       </div>
 
       <div style={ctaRow}>
-        <a
+        <TrackedLink
           href={ctaHref}
+          event="service_cta_click"
+          params={{ service: service.slug }}
+          external={isExternal}
           {...(isExternal ? { target: "_blank", rel: "noreferrer noopener" } : {})}
           style={cta}
           aria-label={`${service.name} ${service.ctaLabel}`}
         >
           {service.ctaLabel} →
-        </a>
+        </TrackedLink>
       </div>
     </article>
   )

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { TrackedLink } from "@/components/analytics/TrackedLink"
 
 const section: CSSProperties = {
   background: "var(--bg)",
@@ -178,12 +179,22 @@ export function Hero() {
             진단으로 빈 곳을 찾고, 템플릿으로 메우고, 같이 짓는다.
           </p>
           <div style={ctaRow}>
-            <a href="/diagnosis" style={btnPrimary}>
+            <TrackedLink
+              href="/diagnosis"
+              event="cta_click"
+              params={{ location: "hero", target: "diagnosis" }}
+              style={btnPrimary}
+            >
               A&rsquo;Im Scan 진단하기 →
-            </a>
-            <a href="/services" style={btnGhost}>
+            </TrackedLink>
+            <TrackedLink
+              href="/services"
+              event="cta_click"
+              params={{ location: "hero", target: "services" }}
+              style={btnGhost}
+            >
               서비스 보기
-            </a>
+            </TrackedLink>
           </div>
         </div>
 

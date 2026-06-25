@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
-import Link from "next/link"
 import { AREAS, AREA_LABELS_KO } from "@/data/aimScanQuestions"
+import { TrackedLink } from "@/components/analytics/TrackedLink"
 
 const section: CSSProperties = {
   background: "var(--bg)",
@@ -173,9 +173,14 @@ export function ScanIntro() {
             </div>
           </div>
           <div style={ctaRow}>
-            <Link href="/diagnosis" style={btnPrimary}>
+            <TrackedLink
+              href="/diagnosis"
+              event="cta_click"
+              params={{ location: "scan_intro", target: "diagnosis" }}
+              style={btnPrimary}
+            >
               지금 진단하기 →
-            </Link>
+            </TrackedLink>
           </div>
         </div>
 

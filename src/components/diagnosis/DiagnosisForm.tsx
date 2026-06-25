@@ -10,6 +10,7 @@ import {
   type Area,
 } from "@/data/aimScanQuestions"
 import { calculateScores, isAllAnswered, MAX_PER_QUESTION, type Answers } from "@/lib/aimScan"
+import { trackEvent } from "@/lib/analytics"
 import { ResultPanel } from "./ResultPanel"
 
 const DRAFT_KEY = "aimscan-draft-v1"
@@ -324,6 +325,8 @@ export function DiagnosisForm() {
   }
 
   const handleSubmit = () => {
+    const scored = calculateScores(answers)
+    trackEvent("scan_complete", { level: scored.level, percent: scored.percent })
     setSubmitted(true)
     clearDraft()
   }
