@@ -37,7 +37,8 @@ export function BlogImage({ src, alt = "", caption: cap, width, height }: Props)
     <figure style={figure}>
       <div style={wrap}>
         {isLocal && width && height ? (
-          <Image src={src} alt={alt} width={width} height={height} sizes="(max-width: 800px) 100vw, 680px" />
+          // 명시 크기 = 원본 비율 유지 + 컨테이너 폭에 맞춰 축소(고정 px 렌더는 좁은 본문에서 잘림)
+          <Image src={src} alt={alt} width={width} height={height} sizes="(max-width: 800px) 100vw, 680px" style={{ width: "100%", height: "auto", display: "block" }} />
         ) : isLocal ? (
           <Image src={src} alt={alt} fill sizes="(max-width: 800px) 100vw, 680px" style={{ objectFit: "cover" }} />
         ) : (

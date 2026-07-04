@@ -476,6 +476,11 @@ header {
 .mdx-content ul {
   padding-left: 1.35em;
 }
+/* 전역 리셋이 list-style을 지우므로 본문 번호 리스트는 여기서 복원 */
+.mdx-content ol {
+  list-style: decimal;
+  padding-left: 1.55em;
+}
 .mdx-content li {
   margin-top: 0.35em;
 }
