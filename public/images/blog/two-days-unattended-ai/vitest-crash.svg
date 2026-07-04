@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Consolas,'Cascadia Mono',monospace">
+  <rect width="1280" height="720" fill="#f2f3f4"/>
+
+  <!-- 터미널 창 -->
+  <rect x="60" y="40" width="1160" height="520" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+  <!-- 타이틀바 -->
+  <rect x="60" y="40" width="1160" height="40" rx="10" fill="#161b22"/>
+  <rect x="60" y="66" width="1160" height="14" fill="#161b22"/>
+  <circle cx="90" cy="60" r="7" fill="#ff5f57"/>
+  <circle cx="114" cy="60" r="7" fill="#febc2e"/>
+  <circle cx="138" cy="60" r="7" fill="#28c840"/>
+  <text x="640" y="66" text-anchor="middle" font-size="15" fill="#8b949e">PowerShell — yohan-voice</text>
+
+  <!-- 프롬프트 + 실행 -->
+  <text x="90" y="120" font-size="17" fill="#7ee787">PS C:\Users\Public\dev\yohan-voice&gt;</text>
+  <text x="482" y="120" font-size="17" fill="#c9d1d9">npx vitest run</text>
+
+  <text x="90" y="158" font-size="17" fill="#c9d1d9"><tspan fill="#8b949e">RUN</tspan>  v4.1.9</text>
+
+  <!-- 경고 -->
+  <text x="90" y="200" font-size="17" fill="#d29922">Vitest caught 1 unhandled error during the test run.</text>
+  <text x="90" y="228" font-size="17" fill="#d29922">This might cause false positive tests.</text>
+
+  <!-- 에러 블록 -->
+  <text x="90" y="272" font-size="16" fill="#8b949e">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯  Unhandled Error  ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</text>
+  <text x="90" y="304" font-size="17" fill="#f85149">Error: [vitest-pool]: Worker forks emitted error.</text>
+  <text x="90" y="336" font-size="17" fill="#f85149" font-weight="700">Caused by: Error: Worker exited unexpectedly</text>
+  <text x="110" y="366" font-size="15" fill="#8b949e">❯ ChildProcess.emitUnexpectedExit .../vitest/dist/chunks/cli-api...js:3023</text>
+  <text x="110" y="392" font-size="15" fill="#8b949e">❯ Process.ChildProcess._handle.onexit node:internal/child_process:294</text>
+
+  <!-- 결과 요약 — 숫자조차 못 셈 -->
+  <text x="90" y="444" font-size="17" fill="#c9d1d9"><tspan fill="#8b949e">Test Files</tspan>   (1)</text>
+  <text x="90" y="472" font-size="17" fill="#c9d1d9"><tspan fill="#8b949e">     Tests</tspan>   (1)</text>
+  <text x="90" y="500" font-size="17" fill="#f85149"><tspan fill="#8b949e">    Errors</tspan>   1 error</text>
+  <text x="640" y="472" font-size="15" fill="#d29922">← 통과/실패 숫자조차 없음 — 세기 전에 죽음</text>
+
+  <!-- 하단 설명 밴드 -->
+  <rect x="60" y="590" width="1160" height="94" rx="10" fill="#fdf6e3" stroke="#b3800a" stroke-width="2"/>
+  <text x="90" y="628" font-size="19" font-weight="700" fill="#7a5806">테스트가 실패한 게 아니라, 테스트를 돌리는 프로세스가 통째로 죽었다</text>
+  <text x="90" y="660" font-size="16" fill="#8a6a1c">원인: 표준 패턴 os.tmpdir()이 가리키는 임시 폴더 경로에 한글 사용자명(C:\Users\백요한\...)이 포함 — 2026-07-04 실측 재현 출력</text>
+</svg>
