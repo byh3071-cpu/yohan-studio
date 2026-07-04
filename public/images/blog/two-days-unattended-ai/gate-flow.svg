@@ -33,10 +33,10 @@
   <polygon points="1010,195 996,187 996,203" fill="#1c2226"/>
 
   <!-- step 4: 사람 (다른 형태 — 원형) -->
-  <circle cx="1120" cy="195" r="82" fill="#fdf6e3" stroke="#b3800a" stroke-width="3"/>
-  <text x="1120" y="180" text-anchor="middle" font-size="26" font-weight="700" fill="#7a5806">사람이</text>
-  <text x="1120" y="215" text-anchor="middle" font-size="26" font-weight="700" fill="#7a5806">승인한다</text>
-  <text x="1120" y="248" text-anchor="middle" font-size="16" fill="#8a6a1c">머지 버튼은 사람만</text>
+  <circle cx="1120" cy="195" r="92" fill="#fdf6e3" stroke="#b3800a" stroke-width="3"/>
+  <text x="1120" y="172" text-anchor="middle" font-size="26" font-weight="700" fill="#7a5806">사람이</text>
+  <text x="1120" y="207" text-anchor="middle" font-size="26" font-weight="700" fill="#7a5806">승인한다</text>
+  <text x="1120" y="242" text-anchor="middle" font-size="15" fill="#8a6a1c">머지 버튼은 사람만</text>
 
   <!-- 반려 경로 -->
   <line x1="490" y1="270" x2="490" y2="360" stroke="#b3452e" stroke-width="3" stroke-dasharray="8 6"/>
