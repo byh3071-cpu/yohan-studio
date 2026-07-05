@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 620" font-family="'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <rect width="1280" height="620" fill="#ffffff"/>
+
+  <!-- 밤 구간 배경 -->
+  <rect x="40" y="70" width="930" height="440" rx="14" fill="#0d1117" opacity="0.04"/>
+  <text x="60" y="105" font-size="17" font-weight="700" fill="#5c6870">🌙 밤 (무인)</text>
+  <text x="1020" y="105" font-size="17" font-weight="700" fill="#b3800a">☀️ 아침 (사람)</text>
+
+  <!-- 1 발굴 -->
+  <rect x="70" y="150" width="200" height="130" rx="10" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="2"/>
+  <text x="170" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#5c6870">1단계</text>
+  <text x="170" y="222" text-anchor="middle" font-size="24" font-weight="800" fill="#1c2226">발굴</text>
+  <text x="170" y="255" text-anchor="middle" font-size="14" fill="#5c6870">증거 없는 의심은 탈락</text>
+
+  <line x1="270" y1="215" x2="330" y2="215" stroke="#1c2226" stroke-width="3"/>
+  <polygon points="330,215 316,207 316,223" fill="#1c2226"/>
+
+  <!-- 2 수정 -->
+  <rect x="335" y="150" width="200" height="130" rx="10" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="2"/>
+  <text x="435" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#5c6870">2단계</text>
+  <text x="435" y="222" text-anchor="middle" font-size="24" font-weight="800" fill="#1c2226">수정</text>
+  <text x="435" y="255" text-anchor="middle" font-size="14" fill="#5c6870">밤 예산만큼, 심각한 순서로</text>
+
+  <line x1="535" y1="215" x2="595" y2="215" stroke="#1c2226" stroke-width="3"/>
+  <polygon points="595,215 581,207 581,223" fill="#1c2226"/>
+
+  <!-- 3 공격 검증 -->
+  <rect x="600" y="150" width="200" height="130" rx="10" fill="#e2efee" stroke="#0e7c7b" stroke-width="3"/>
+  <text x="700" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#33625f">3단계</text>
+  <text x="700" y="222" text-anchor="middle" font-size="24" font-weight="800" fill="#0e5958">공격 검증</text>
+  <text x="700" y="255" text-anchor="middle" font-size="14" fill="#33625f">다른 AI가 반려 3회면 포기</text>
+
+  <!-- 반려 회귀 화살표 (3→2) -->
+  <path d="M 640 280 C 600 330, 500 330, 460 280" stroke="#b3452e" stroke-width="2.5" fill="none" stroke-dasharray="7 5"/>
+  <polygon points="460,280 456,296 470,290" fill="#b3452e"/>
+  <text x="550" y="345" text-anchor="middle" font-size="14" font-weight="700" fill="#b3452e">반려 — 다시 고쳐라 (최대 3회)</text>
+
+  <line x1="800" y1="215" x2="860" y2="215" stroke="#0e7c7b" stroke-width="3"/>
+  <polygon points="860,215 846,207 846,223" fill="#0e7c7b"/>
+  <text x="830" y="200" text-anchor="middle" font-size="14" font-weight="700" fill="#0e7c7b">통과</text>
+
+  <!-- 4 PR 대기 -->
+  <rect x="865" y="150" width="80" height="130" rx="10" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="2"/>
+  <text x="905" y="205" text-anchor="middle" font-size="18" font-weight="800" fill="#1c2226">PR</text>
+  <text x="905" y="232" text-anchor="middle" font-size="12" fill="#5c6870">제안</text>
+  <text x="905" y="250" text-anchor="middle" font-size="12" fill="#5c6870">상태</text>
+
+  <!-- 밤/아침 경계선 -->
+  <line x1="985" y1="80" x2="985" y2="540" stroke="#b3800a" stroke-width="2" stroke-dasharray="10 7"/>
+
+  <line x1="945" y1="215" x2="1015" y2="215" stroke="#1c2226" stroke-width="3"/>
+  <polygon points="1015,215 1001,207 1001,223" fill="#1c2226"/>
+
+  <!-- 아침 보고 -->
+  <rect x="1020" y="150" width="210" height="130" rx="10" fill="#fdf6e3" stroke="#b3800a" stroke-width="3"/>
+  <text x="1125" y="190" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6a1c">4단계</text>
+  <text x="1125" y="222" text-anchor="middle" font-size="24" font-weight="800" fill="#7a5806">아침 보고</text>
+  <text x="1125" y="255" text-anchor="middle" font-size="14" fill="#8a6a1c">반영 결정은 사람만</text>
+
+  <!-- 미착수 이월 -->
+  <rect x="70" y="390" width="465" height="90" rx="10" fill="#f2f3f4" stroke="#c5cccc" stroke-width="2"/>
+  <text x="90" y="428" font-size="16" font-weight="700" fill="#5c6870">예산 밖 발굴분 (착수 못 한 것)</text>
+  <text x="90" y="458" font-size="14" fill="#8a949a">버리지 않고 목록째 다음 밤으로 이월된다</text>
+  <path d="M 300 390 C 300 330, 170 320, 170 285" stroke="#8a949a" stroke-width="2" fill="none" stroke-dasharray="6 5"/>
+  <polygon points="170,285 163,299 177,297" fill="#8a949a"/>
+
+  <!-- 하단 캡션 -->
+  <line x1="40" y1="545" x2="1240" y2="545" stroke="#dde3e3" stroke-width="1"/>
+  <text x="640" y="585" text-anchor="middle" font-size="20" font-weight="700" fill="#1c2226">네 단계 어디에도 "반영"이 없다 — 밤새 머지 0건</text>
+</svg>

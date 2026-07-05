@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <rect width="1280" height="640" fill="#f2f3f4"/>
+
+  <!-- 보고서 카드 -->
+  <rect x="70" y="40" width="1140" height="560" rx="12" fill="#ffffff" stroke="#d5dbdb" stroke-width="2"/>
+  <text x="110" y="100" font-size="25" font-weight="800" fill="#1c2226">🌙 아침 보고 — 제안 4건의 진실</text>
+  <text x="110" y="130" font-size="15" fill="#5c6870">전부 공격 검증을 통과했지만, 실제 결함은 2개였다 (같은 결함 2쌍)</text>
+  <line x1="110" y1="152" x2="1170" y2="152" stroke="#dde3e3" stroke-width="1"/>
+
+  <!-- 쌍 A -->
+  <text x="110" y="195" font-size="15" font-weight="700" fill="#8a949a">결함 A — 예약 작업이 설정에서 즉사하던 문제</text>
+  <rect x="110" y="210" width="510" height="80" rx="10" fill="#e9f4ec" stroke="#2e7d4f" stroke-width="2.5"/>
+  <text x="135" y="243" font-size="17" font-weight="700" fill="#1c2226">제안 ① 결함 A 수정</text>
+  <text x="135" y="270" font-size="14" fill="#5c6870">디스패치가 더 명시적 — 이쪽을 채택</text>
+  <rect x="530" y="222" width="70" height="28" rx="14" fill="#2e7d4f"/>
+  <text x="565" y="241" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">반영</text>
+
+  <rect x="660" y="210" width="510" height="80" rx="10" fill="#f7f8f8" stroke="#c5cccc" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="685" y="243" font-size="17" font-weight="700" fill="#8a949a">제안 ② 같은 결함 A를 또 수정</text>
+  <text x="685" y="270" font-size="14" fill="#8a949a">이름만 달랐던 중복 — 함께 반영하면 충돌</text>
+  <rect x="1080" y="222" width="70" height="28" rx="14" fill="#c5cccc"/>
+  <text x="1115" y="241" text-anchor="middle" font-size="14" font-weight="700" fill="#5c6870">버림</text>
+
+  <!-- 쌍 B -->
+  <text x="110" y="345" font-size="15" font-weight="700" fill="#8a949a">결함 B — 발행 브랜치가 이전 발행물을 물고 가던 문제</text>
+  <rect x="110" y="360" width="510" height="80" rx="10" fill="#e9f4ec" stroke="#2e7d4f" stroke-width="2.5"/>
+  <text x="135" y="393" font-size="17" font-weight="700" fill="#1c2226">제안 ③ 결함 B 수정</text>
+  <text x="135" y="420" font-size="14" fill="#5c6870">먼저 제출되고 검증 기록이 남은 쪽 채택</text>
+  <rect x="530" y="372" width="70" height="28" rx="14" fill="#2e7d4f"/>
+  <text x="565" y="391" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">반영</text>
+
+  <rect x="660" y="360" width="510" height="80" rx="10" fill="#f7f8f8" stroke="#c5cccc" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="685" y="393" font-size="17" font-weight="700" fill="#8a949a">제안 ④ 같은 결함 B를 또 수정</text>
+  <text x="685" y="420" font-size="14" fill="#8a949a">코드 내용이 사실상 동일 — 잃는 것 없이 버림</text>
+  <rect x="1080" y="372" width="70" height="28" rx="14" fill="#c5cccc"/>
+  <text x="1115" y="391" text-anchor="middle" font-size="14" font-weight="700" fill="#5c6870">버림</text>
+
+  <!-- 하단 밴드 -->
+  <rect x="110" y="480" width="1060" height="86" rx="10" fill="#fdf6e3" stroke="#b3800a" stroke-width="2"/>
+  <text x="135" y="516" font-size="17" font-weight="700" fill="#7a5806">중복을 잡은 것도 아침 보고였다 — 버리는 비용은 클릭 몇 번</text>
+  <text x="135" y="545" font-size="14" fill="#8a6a1c">이 헛돈은 다음 밤 전 개선 1순위가 됐고, 이제 같은 파일을 고치는 결함들은 묶여서 제안 하나로 나온다</text>
+</svg>
