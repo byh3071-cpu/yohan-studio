@@ -30,6 +30,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? meta.thumbnail
       : `${base}${meta.thumbnail}`
     : undefined
+  // thumbnail 없으면 파일 컨벤션 OG 카드(opengraph-image.tsx)가 뜨도록 images 키 자체를 생략한다.
+  // images: undefined 를 명시하면 카드가 죽어 SNS 공유 미리보기가 빈 링크가 된다(2026-07-05 실서빙 확인).
   const ogImages = thumbUrl
     ? [{ url: thumbUrl, alt: `${meta.title} 대표 이미지` }]
     : undefined
@@ -44,13 +46,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       publishedTime: meta.date,
       tags: meta.tags,
-      images: ogImages,
+      ...(ogImages ? { images: ogImages } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
-      images: thumbUrl ? [thumbUrl] : undefined,
+      ...(thumbUrl ? { images: [thumbUrl] } : {}),
     },
   }
 }
