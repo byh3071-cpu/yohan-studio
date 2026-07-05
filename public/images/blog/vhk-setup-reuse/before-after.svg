@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 620" font-family="'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <rect width="1280" height="620" fill="#ffffff"/>
+
+  <!-- 좌: BEFORE -->
+  <text x="70" y="70" font-size="20" font-weight="800" fill="#b3452e">그동안 — 프로젝트마다 백지부터</text>
+  <text x="70" y="98" font-size="14" fill="#8a949a">새 폴더를 열 때마다 같은 파일을 다시 씀</text>
+
+  <!-- 3개 프로젝트, 각각 파일 더미 반복 -->
+  <g>
+    <!-- 프로젝트 1 -->
+    <rect x="70" y="130" width="150" height="150" rx="8" fill="#fbeeea" stroke="#b3452e" stroke-width="1.5"/>
+    <text x="145" y="152" text-anchor="middle" font-size="13" font-weight="700" fill="#8f3722">프로젝트 A</text>
+    <rect x="85" y="164" width="120" height="16" rx="3" fill="#e07a5f"/><text x="92" y="176" font-size="10" fill="#fff">CLAUDE.md</text>
+    <rect x="85" y="184" width="120" height="16" rx="3" fill="#e07a5f"/><text x="92" y="196" font-size="10" fill="#fff">AGENTS.md</text>
+    <rect x="85" y="204" width="120" height="16" rx="3" fill="#e07a5f"/><text x="92" y="216" font-size="10" fill="#fff">.cursorrules</text>
+    <rect x="85" y="224" width="120" height="16" rx="3" fill="#e07a5f"/><text x="92" y="236" font-size="10" fill="#fff">PRD·구조·훅</text>
+    <text x="145" y="262" text-anchor="middle" font-size="11" fill="#8f3722">반나절</text>
+  </g>
+  <g>
+    <!-- 프로젝트 2 -->
+    <rect x="240" y="130" width="150" height="150" rx="8" fill="#fbeeea" stroke="#b3452e" stroke-width="1.5"/>
+    <text x="315" y="152" text-anchor="middle" font-size="13" font-weight="700" fill="#8f3722">프로젝트 B</text>
+    <rect x="255" y="164" width="120" height="16" rx="3" fill="#e07a5f"/><text x="262" y="176" font-size="10" fill="#fff">CLAUDE.md</text>
+    <rect x="255" y="184" width="120" height="16" rx="3" fill="#e07a5f"/><text x="262" y="196" font-size="10" fill="#fff">AGENTS.md</text>
+    <rect x="255" y="204" width="120" height="16" rx="3" fill="#e07a5f"/><text x="262" y="216" font-size="10" fill="#fff">.cursorrules</text>
+    <rect x="255" y="224" width="120" height="16" rx="3" fill="#e07a5f"/><text x="262" y="236" font-size="10" fill="#fff">PRD·구조·훅</text>
+    <text x="315" y="262" text-anchor="middle" font-size="11" fill="#8f3722">또 반나절</text>
+  </g>
+  <g>
+    <!-- 프로젝트 3 -->
+    <rect x="410" y="130" width="150" height="150" rx="8" fill="#fbeeea" stroke="#b3452e" stroke-width="1.5"/>
+    <text x="485" y="152" text-anchor="middle" font-size="13" font-weight="700" fill="#8f3722">프로젝트 C</text>
+    <rect x="425" y="164" width="120" height="16" rx="3" fill="#e07a5f"/><text x="432" y="176" font-size="10" fill="#fff">CLAUDE.md</text>
+    <rect x="425" y="184" width="120" height="16" rx="3" fill="#e07a5f"/><text x="432" y="196" font-size="10" fill="#fff">AGENTS.md</text>
+    <rect x="425" y="204" width="120" height="16" rx="3" fill="#e07a5f"/><text x="432" y="216" font-size="10" fill="#fff">.cursorrules</text>
+    <rect x="425" y="224" width="120" height="16" rx="3" fill="#e07a5f"/><text x="432" y="236" font-size="10" fill="#fff">PRD·구조·훅</text>
+    <text x="485" y="262" text-anchor="middle" font-size="11" fill="#8f3722">또또 반나절</text>
+  </g>
+
+  <!-- 중앙 구분 -->
+  <line x1="620" y1="110" x2="620" y2="510" stroke="#dde3e3" stroke-width="2"/>
+  <text x="620" y="330" text-anchor="middle" font-size="28" fill="#c4d2d2">→</text>
+
+  <!-- 우: AFTER -->
+  <text x="680" y="70" font-size="20" font-weight="800" fill="#0e7c7b">VHK — 원본 하나로 재사용</text>
+  <text x="680" y="98" font-size="14" fill="#5c6870">한 번 만든 세팅을 프로젝트마다 불러온다</text>
+
+  <!-- 원본 하나 -->
+  <rect x="680" y="150" width="180" height="110" rx="10" fill="#e2efee" stroke="#0e7c7b" stroke-width="3"/>
+  <text x="770" y="178" text-anchor="middle" font-size="14" font-weight="800" fill="#0e5958">원본 규칙·세팅</text>
+  <text x="770" y="200" text-anchor="middle" font-size="12" fill="#33625f">RULES.md 한 벌</text>
+  <text x="770" y="222" text-anchor="middle" font-size="12" fill="#33625f">+ .vhk/ 맥락·교훈</text>
+  <text x="770" y="244" text-anchor="middle" font-size="11" fill="#8a949a">딱 한 번만 관리</text>
+
+  <!-- 3갈래 화살표 -->
+  <line x1="870" y1="205" x2="960" y2="160" stroke="#0e7c7b" stroke-width="2.5"/>
+  <polygon points="960,160 946,162 952,174" fill="#0e7c7b"/>
+  <line x1="870" y1="205" x2="960" y2="205" stroke="#0e7c7b" stroke-width="2.5"/>
+  <polygon points="960,205 946,198 946,212" fill="#0e7c7b"/>
+  <line x1="870" y1="205" x2="960" y2="250" stroke="#0e7c7b" stroke-width="2.5"/>
+  <polygon points="960,250 952,236 946,248" fill="#0e7c7b"/>
+
+  <!-- vhk start 결과 프로젝트 3개 -->
+  <rect x="965" y="135" width="245" height="50" rx="8" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="1.5"/>
+  <text x="985" y="165" font-size="13" font-weight="700" fill="#1c2226">프로젝트 A  ✓ 세팅 완료</text>
+  <rect x="965" y="192" width="245" height="50" rx="8" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="1.5"/>
+  <text x="985" y="222" font-size="13" font-weight="700" fill="#1c2226">프로젝트 B  ✓ 세팅 완료</text>
+  <rect x="965" y="249" width="245" height="50" rx="8" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="1.5"/>
+  <text x="985" y="279" font-size="13" font-weight="700" fill="#1c2226">프로젝트 C  ✓ 세팅 완료</text>
+  <text x="1087" y="325" text-anchor="middle" font-size="13" font-weight="700" fill="#0e7c7b">각각 vhk start 한 번</text>
+
+  <!-- 하단 캡션 -->
+  <line x1="70" y1="540" x2="1210" y2="540" stroke="#dde3e3" stroke-width="1"/>
+  <text x="640" y="580" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2226">반나절 걸리던 세팅이, 명령 하나로 끝난다</text>
+</svg>
