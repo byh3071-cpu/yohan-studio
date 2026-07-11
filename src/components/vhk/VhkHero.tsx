@@ -128,7 +128,7 @@ export function VhkHero() {
           <VhkHeroCtas />
         </div>
 
-        <aside className="hero-meta">
+        <aside className="hero-meta hero-meta-lift">
           <VhkHeroDemo />
         </aside>
       </div>

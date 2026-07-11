@@ -6,7 +6,7 @@ import {
   type UIMessage,
 } from "ai"
 
-import { CHAT_SYSTEM_PROMPT } from "@/lib/chatContext"
+import { getChatSystemPrompt } from "@/lib/chatContext"
 
 export const runtime = "nodejs"
 export const maxDuration = 30
@@ -153,7 +153,7 @@ export async function POST(req: Request) {
     const modelMessages = await convertToModelMessages(safeMessages)
     const result = streamText({
       model: google("gemini-2.5-flash"),
-      system: CHAT_SYSTEM_PROMPT,
+      system: await getChatSystemPrompt(),
       messages: modelMessages,
       abortSignal: req.signal,
       onError: ({ error }) => {

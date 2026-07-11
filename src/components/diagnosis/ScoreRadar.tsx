@@ -3,6 +3,8 @@ import { AREAS, AREA_LABELS_KO, type Area } from "@/data/aimScanQuestions"
 
 const SIZE = 320
 const PAD = 56
+// 좌우 라벨(STRUCTURE·DECISION 등)이 viewBox 밖으로 잘리지 않게 캔버스만 수평 확장
+const HPAD = 48
 const CX = SIZE / 2
 const CY = SIZE / 2
 const R = SIZE / 2 - PAD
@@ -46,7 +48,7 @@ export function ScoreRadar({ byAreaPercent }: { byAreaPercent: Record<Area, numb
   return (
     <div style={wrap}>
       <svg
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        viewBox={`${-HPAD} 0 ${SIZE + HPAD * 2} ${SIZE}`}
         style={svgStyle}
         role="img"
         aria-label="영역별 점수 레이더 차트"

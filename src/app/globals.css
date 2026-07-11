@@ -583,9 +583,7 @@ header {
   box-shadow: var(--shadow);
 }
 
-/* Synced with Tailwind md=768px so Hero's md:grid-cols breakpoint and the
-   single-column overrides below flip on the same pixel — closes the 721–767
-   gap where Hero collapsed to 1 col but .hero-meta order: -1 didn't apply. */
+/* Synced with Tailwind md=768px so single-column overrides flip on the same pixel. */
 @media (max-width: 767px) {
   .post-card {
     grid-template-columns: 1fr !important;
@@ -594,8 +592,10 @@ header {
   .post-tags {
     display: none !important;
   }
-  /* Hero: lift the meta panel above the main copy so it reads first on mobile. */
-  .hero-meta {
+  /* Hero 모바일: 헤드라인+CTA가 첫 화면. 메타 카드를 위로 올리던 .hero-meta order:-1은
+     퍼스트뷰에서 전환 요소를 밀어내서 제거 (2026-07-12 라이브 QA).
+     /vhk는 터미널 데모가 훅이라 기존 순서(데모 먼저)를 .hero-meta-lift로 유지. */
+  .hero-meta-lift {
     order: -1;
   }
 }

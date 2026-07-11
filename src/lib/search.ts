@@ -1,6 +1,6 @@
 import Fuse, { type IFuseOptions } from "fuse.js"
 
-export type SearchDocumentKind = "blog" | "showroom" | "service" | "opensource"
+export type SearchDocumentKind = "blog" | "showroom" | "service" | "opensource" | "page"
 
 export type SearchDocument = {
   id: string

@@ -40,4 +40,45 @@ ${SITE_INFO}
 - 응답은 짧고 명확하게. 불필요한 인사·이모지 자제.
 - 코드 예시 요청 시 fenced code block 사용.
 - 외부 링크는 사이트 내부 경로 (/blog, /store 등) 우선 안내.
+- 링크는 반드시 마크다운 형식 [텍스트](/경로)로 쓴다. URL을 괄호 밖에 반복하지 않는다.
 `
+
+// 스토어 상품 요약을 시스템 프롬프트에 덧붙인다.
+// 상품 데이터는 studio_products(DB)가 단일 소스 — 10분 캐시로 조회 부하 억제.
+import { supabase } from "@/lib/supabase"
+import { STORE_SALES_ENABLED } from "@/data/storeConfig"
+
+const STORE_CTX_TTL_MS = 10 * 60 * 1000
+let storeCtxCache: { value: string; expiresAt: number } | null = null
+
+async function buildStoreContext(): Promise<string> {
+  try {
+    const { data, error } = await supabase
+      .from("studio_products")
+      .select("name, slug, description, product_type")
+      .eq("active", true)
+      .order("created_at", { ascending: false })
+    if (error || !data || data.length === 0) return ""
+
+    const lines = data
+      .map((p) => `- ${p.name} (/store/${p.slug}, ${p.product_type}): ${p.description ?? ""}`)
+      .join("\n")
+    const status = STORE_SALES_ENABLED
+      ? "판매 중."
+      : "현재 전 상품 준비 중(판매 일시 중지) — 가격·구매는 공개 예정이라고 안내할 것."
+
+    return `\n스토어 상품 (${status})\n${lines}\n`
+  } catch {
+    return ""
+  }
+}
+
+export async function getChatSystemPrompt(): Promise<string> {
+  const now = Date.now()
+  if (storeCtxCache && storeCtxCache.expiresAt > now) {
+    return CHAT_SYSTEM_PROMPT + storeCtxCache.value
+  }
+  const storeCtx = await buildStoreContext()
+  storeCtxCache = { value: storeCtx, expiresAt: now + STORE_CTX_TTL_MS }
+  return CHAT_SYSTEM_PROMPT + storeCtx
+}

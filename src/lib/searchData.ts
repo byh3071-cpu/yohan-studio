@@ -1,6 +1,7 @@
 import "server-only"
 
 import { blogSearchDocs } from "@/lib/blog"
+import { corePagesSearchDocs } from "@/data/corePages"
 import { opensourceSearchDocs } from "@/data/opensourceItems"
 import { servicesSearchDocs } from "@/data/services"
 import { showroomSearchDocs } from "@/lib/showroom"
@@ -11,6 +12,7 @@ import type { SearchDocument } from "@/lib/search"
 // 해당 데이터 모듈에 두고 여기엔 import 한 줄만 늘린다.
 export function getSearchDocuments(): SearchDocument[] {
   return [
+    ...corePagesSearchDocs(),
     ...blogSearchDocs(),
     ...showroomSearchDocs(),
     ...servicesSearchDocs(),

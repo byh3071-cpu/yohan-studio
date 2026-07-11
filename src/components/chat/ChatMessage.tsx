@@ -1,5 +1,6 @@
 "use client"
 
+import type { ReactElement } from "react"
 import type { UIMessage } from "ai"
 
 import { useTTS } from "@/hooks/useTTS"
@@ -15,6 +16,34 @@ function extractText(message: UIMessage): string {
     )
     .map((part) => part.text)
     .join("")
+}
+
+// 마크다운 링크 [텍스트](/경로 | https://…)만 앵커로 변환한다. 그 외 텍스트는 그대로.
+// 내부 경로는 단일 슬래시만 허용 — //host 형태(프로토콜 상대 URL)는 내부로 위장 가능해 매칭 제외.
+const MD_LINK_RE = /\[([^\]\n]+)\]\((\/(?!\/)[^\s)]*|https?:\/\/[^\s)]+)\)/g
+
+function renderWithLinks(text: string) {
+  const nodes: (string | ReactElement)[] = []
+  let last = 0
+  for (const m of text.matchAll(MD_LINK_RE)) {
+    const [full, label, href] = m
+    const idx = m.index ?? 0
+    if (idx > last) nodes.push(text.slice(last, idx))
+    const external = href.startsWith("http")
+    nodes.push(
+      <a
+        key={`${idx}-${href}`}
+        href={href}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        style={{ color: "var(--accent)", textDecoration: "underline", fontWeight: 600 }}
+      >
+        {label}
+      </a>,
+    )
+    last = idx + full.length
+  }
+  if (last < text.length) nodes.push(text.slice(last))
+  return nodes
 }
 
 function TTSButton({ text }: { text: string }) {
@@ -103,7 +132,7 @@ export function ChatMessage({ message }: Props) {
           borderRadius: 0,
         }}
       >
-        <div>{text}</div>
+        <div>{isUser ? text : renderWithLinks(text)}</div>
         {!isUser && <TTSButton text={text} />}
       </div>
     </div>
