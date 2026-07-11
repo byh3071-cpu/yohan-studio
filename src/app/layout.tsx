@@ -126,14 +126,18 @@ export const metadata: Metadata = {
     default: "요한 스튜디오 | Yohan Studio",
     template: "%s | 요한 스튜디오",
   },
-  description: "요한 — 바이브코더 · AI 기반 1인 기업",
+  description:
+    "AI 시대의 1인 기업 운영체계. 진단(A'Im Scan)으로 빈 곳을 찾고, 템플릿으로 메우고, 같이 짓는다 — 바이브코더 요한의 스튜디오.",
   openGraph: {
     siteName: "요한 스튜디오",
     locale: "ko_KR",
     type: "website",
   },
   twitter: { card: "summary_large_image" },
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": "/rss.xml" },
+  },
   verification: {
     google: GSC_GOOGLE_VERIFICATION,
     other: {

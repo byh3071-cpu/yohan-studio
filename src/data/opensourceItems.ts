@@ -39,7 +39,7 @@ export const opensourceItems: OpenSourceItem[] = [
     year: "2026",
     dateCreated: "2026-04-20",
     keywords: ["Notion", "Widget", "Embed", "오픈소스", "대시보드"],
-    github: "https://github.com/byh3071-cpu/notion-uiux-widgets",
+    github: "https://github.com/byh3071-cpu/notion-uiux",
     demo: "https://jealous-quilt-e0c.notion.site/36d540cd1ae18008824ef8c1610a2845",
   },
   {

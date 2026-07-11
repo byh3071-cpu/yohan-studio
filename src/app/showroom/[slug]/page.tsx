@@ -39,13 +39,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: project.summary,
       type: "article",
       url: `${base}${getShowroomCanonicalPath(slug)}`,
-      images: ogImages,
+      // images 키를 undefined로 넣으면 파일 기반 opengraph-image가 무시된다 (#35와 동일 패턴)
+      ...(ogImages ? { images: ogImages } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: project.title,
       description: project.summary,
-      images: ogImages?.map((i) => i.url),
+      ...(ogImages ? { images: ogImages.map((i) => i.url) } : {}),
     },
   }
 }
