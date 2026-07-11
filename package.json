@@ -13,7 +13,7 @@
     "start": "next start -p 3050",
     "lint": "eslint",
     "qa:install": "playwright install chromium",
-    "qa:test": "playwright test"
+    "qa:test": "playwright clear-cache && playwright test"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.80",

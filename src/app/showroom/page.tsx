@@ -60,8 +60,27 @@ const count: CSSProperties = {
   letterSpacing: "0.04em",
 }
 
+const sectionLabel: CSSProperties = {
+  fontFamily: "var(--font-mono)",
+  fontSize: "12px",
+  fontWeight: 700,
+  letterSpacing: "0.1em",
+  textTransform: "uppercase",
+  color: "var(--muted)",
+  margin: "48px 0 20px",
+}
+
+const lead: CSSProperties = {
+  maxWidth: "720px",
+  fontSize: "17px",
+  lineHeight: 1.7,
+  color: "var(--ink-2)",
+  marginTop: "20px",
+}
+
 export default function ShowroomPage() {
   const projects = getAllShowroomProjects()
+  const regularProjects = projects.filter((project) => project.tier !== "flagship")
 
   return (
     <section style={section}>
@@ -72,12 +91,17 @@ export default function ShowroomPage() {
             <h1 style={title}>
               쇼룸<span style={accentMark}>.</span>
             </h1>
+            <p style={lead}>
+              무엇을 만들었는지보다 왜 필요했고, 어떤 제약 속에서 검증했으며,
+              운영 결과에 어떻게 책임졌는지를 기록합니다.
+            </p>
           </div>
           <div style={count}>{projects.length} PROJECTS</div>
         </div>
         <FeaturedBanner projects={projects} />
+        <h2 style={sectionLabel}>기존 프로젝트 · 순차적으로 사례 전환 중</h2>
         <Suspense fallback={null}>
-          <ProjectGrid projects={projects} />
+          <ProjectGrid projects={regularProjects} />
         </Suspense>
       </div>
     </section>

@@ -56,7 +56,8 @@ const meta: CSSProperties = {
 }
 
 export function FeaturedBanner({ projects }: { projects: ShowroomProject[] }) {
-  const featured = projects.filter((p) => p.featured)
+  const flagship = projects.filter((p) => p.tier === "flagship")
+  const featured = flagship.length > 0 ? flagship : projects.filter((p) => p.featured)
   if (featured.length === 0) return null
 
   return (
@@ -64,13 +65,22 @@ export function FeaturedBanner({ projects }: { projects: ShowroomProject[] }) {
       {featured.map((p) => (
         <article key={p.slug} style={banner}>
           <div>
-            <div style={eyebrow}>★ FEATURED · {p.category}</div>
+            <div style={eyebrow}>★ 대표 문제 해결 사례 · {p.category}</div>
             <h3 style={title}>
               <Link href={`/showroom/${p.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
                 {p.title}
               </Link>
             </h3>
             <p style={summary}>{p.summary}</p>
+            {p.metrics?.[0] && (
+              <p style={{ ...summary, marginTop: "12px", fontWeight: 800, color: "var(--ink)" }}>
+                {p.metrics[0].before ? `${p.metrics[0].before} → ` : ""}
+                {p.metrics[0].after}
+                <span style={{ fontWeight: 500, color: "var(--muted)" }}>
+                  {` · ${p.metrics[0].basis}`}
+                </span>
+              </p>
+            )}
             <Link
               href={`/showroom/${p.slug}`}
               style={{

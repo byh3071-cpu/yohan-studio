@@ -16,6 +16,47 @@ export const SHOWROOM_CATEGORIES = [
 
 export type ShowroomCategory = (typeof SHOWROOM_CATEGORIES)[number]
 
+export const SHOWROOM_KINDS = [
+  "case-study",
+  "product",
+  "open-source",
+  "build-log",
+] as const
+export type ShowroomKind = (typeof SHOWROOM_KINDS)[number]
+
+export const SHOWROOM_STATUSES = [
+  "operating",
+  "shipped",
+  "prototype",
+  "archived",
+] as const
+export type ShowroomStatus = (typeof SHOWROOM_STATUSES)[number]
+
+export const SHOWROOM_TIERS = ["flagship", "standard", "legacy"] as const
+export type ShowroomTier = (typeof SHOWROOM_TIERS)[number]
+
+export type ShowroomMetric = {
+  label: string
+  before?: string
+  after: string
+  basis: string
+  verified: boolean
+}
+
+export type ShowroomDecision = {
+  choice: string
+  reason: string
+  alternatives: string[]
+  tradeoff: string
+}
+
+export type ShowroomEvidence = {
+  type: "image" | "demo" | "source" | "document"
+  label: string
+  href?: string
+  note?: string
+}
+
 export type ShowroomFaqItem = {
   question: string
   answer: string
@@ -47,4 +88,19 @@ export type ShowroomProject = {
   imageAlt?: string
   faq?: ShowroomFaqItem[]
   relatedPosts?: string[]
+  /** 확장 사례 타입. 기존 항목은 legacy 기본값으로 파싱한다. */
+  kind?: ShowroomKind
+  status?: ShowroomStatus
+  tier?: ShowroomTier
+  role?: string
+  duration?: string
+  context?: string
+  privacyNote?: string
+  constraints?: string[]
+  verification?: string[]
+  limitations?: string[]
+  nextSteps?: string[]
+  metrics?: ShowroomMetric[]
+  decisions?: ShowroomDecision[]
+  evidence?: ShowroomEvidence[]
 }

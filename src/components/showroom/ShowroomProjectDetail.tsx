@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactElement } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { CaseStudyDetails } from "@/components/showroom/CaseStudyDetails"
 import type { ShowroomFaqItem, ShowroomProject } from "@/data/showroomProjects"
 
 const section: CSSProperties = {
@@ -242,14 +243,16 @@ export function ShowroomProjectDetail({
           </div>
         )}
 
-        {sections.problem && (
+        <CaseStudyDetails project={project} />
+
+        {project.kind !== "case-study" && sections.problem && (
           <section style={block}>
             <h2 style={h2}>문제</h2>
             <p style={body}>{sections.problem}</p>
           </section>
         )}
 
-        {sections.solution && (
+        {project.kind !== "case-study" && sections.solution && (
           <section style={block}>
             <h2 style={h2}>해결</h2>
             {sections.valueProps ? (
@@ -267,7 +270,7 @@ export function ShowroomProjectDetail({
           </section>
         )}
 
-        {sections.result && (
+        {project.kind !== "case-study" && sections.result && (
           <section style={block}>
             <h2 style={h2}>결과</h2>
             <p style={body}>{sections.result}</p>
@@ -276,8 +279,8 @@ export function ShowroomProjectDetail({
 
         {content && (
           <section style={block}>
-            <h2 style={h2}>빌드로그</h2>
-            <div style={prose}>{content}</div>
+            <h2 style={h2}>{project.kind === "case-study" ? "회고" : "빌드로그"}</h2>
+            <div className="mdx-content" style={prose}>{content}</div>
           </section>
         )}
 

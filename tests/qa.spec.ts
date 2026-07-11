@@ -18,6 +18,41 @@ function collectConsoleErrors(page: import("@playwright/test").Page) {
   return errors
 }
 
+test("플렉시블 대표 사례 — 근거·한계·개인정보 회고 노출", async ({ page }) => {
+  const response = await page.goto("/showroom/flexible-seat-randomizer", {
+    waitUntil: "networkidle",
+  })
+
+  expect(response?.status()).toBe(200)
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "출석 기반 랜덤 자리배치기",
+  )
+  await expect(page.getByText("2~3분 → 10초 이내").first()).toBeVisible()
+  await expect(page.getByText("개인정보와 운영 책임")).toBeVisible()
+  await expect(page.getByText("당시 현장 측정 기록").first()).toBeVisible()
+  await expect(page.getByText("원본 기술스택과 소스 보존 상태")).toBeVisible()
+
+  // 공개 저장소이므로 노출 금지 대상(과거 데모 URL·기관 실명) 원문을 테스트에 두지 않는다.
+  // 익명 재구축판이 정식 연결되기 전까지 이 페이지에는 어떤 배포 링크도 없어야 한다.
+  await expect(page.locator('a[href*="vercel.app"]')).toHaveCount(0)
+  await expect(
+    page.locator('a[href*="github.com"][href*="flexible"]'),
+  ).toHaveCount(0)
+})
+
+test("쇼룸 — 대표 사례와 기존 프로젝트를 분리", async ({ page }) => {
+  await page.goto("/showroom", { waitUntil: "networkidle" })
+
+  await expect(page.getByText("대표 문제 해결 사례").first()).toBeVisible()
+  await expect(page.getByText("출석 기반 랜덤 자리배치기").first()).toBeVisible()
+  await expect(page.getByRole("heading", { name: /기존 프로젝트/ })).toBeVisible()
+
+  const flagshipLinks = page.getByRole("link", {
+    name: "출석 기반 랜덤 자리배치기",
+  })
+  await expect(flagshipLinks).toHaveCount(1)
+})
+
 function filterConsoleErrors(errors: string[]) {
   return errors.filter((e) => !IGNORE_CONSOLE.some((re) => re.test(e)))
 }

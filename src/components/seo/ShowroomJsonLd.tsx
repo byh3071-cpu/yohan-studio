@@ -22,6 +22,9 @@ export function ShowroomJsonLd({ project }: Props) {
     keywords: project.keywords,
     isPartOf: { "@id": `${base}/#website` },
     inLanguage: "ko-KR",
+    ...(project.kind ? { genre: project.kind } : {}),
+    ...(project.status ? { creativeWorkStatus: project.status } : {}),
+    ...(project.problem ? { abstract: project.problem } : {}),
   }
 
   if (image) {

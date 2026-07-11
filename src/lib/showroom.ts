@@ -5,9 +5,18 @@ import { compileMDX } from "next-mdx-remote/rsc"
 import type { ReactElement } from "react"
 import {
   SHOWROOM_CATEGORIES,
+  SHOWROOM_KINDS,
+  SHOWROOM_STATUSES,
+  SHOWROOM_TIERS,
   type ShowroomCategory,
+  type ShowroomDecision,
+  type ShowroomEvidence,
   type ShowroomFaqItem,
+  type ShowroomKind,
+  type ShowroomMetric,
   type ShowroomProject,
+  type ShowroomStatus,
+  type ShowroomTier,
 } from "@/data/showroomProjects"
 import type { SearchDocument } from "@/lib/search"
 import { getSiteUrl } from "@/lib/siteUrl"
@@ -29,6 +38,80 @@ function toOptionalString(value: unknown): string | undefined {
   if (typeof value !== "string") return undefined
   const trimmed = value.trim()
   return trimmed.length > 0 ? trimmed : undefined
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value)
+}
+
+function toOptionalEnum<T extends readonly string[]>(
+  value: unknown,
+  options: T,
+): T[number] | undefined {
+  return typeof value === "string" && options.includes(value)
+    ? (value as T[number])
+    : undefined
+}
+
+function toMetrics(value: unknown): ShowroomMetric[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const items = value
+    .map((entry): ShowroomMetric | null => {
+      if (!isRecord(entry)) return null
+      const label = toOptionalString(entry.label)
+      const after = toOptionalString(entry.after)
+      const basis = toOptionalString(entry.basis)
+      if (!label || !after || !basis) return null
+      return {
+        label,
+        before: toOptionalString(entry.before),
+        after,
+        basis,
+        verified: entry.verified === true || entry.verified === "true",
+      }
+    })
+    .filter((item): item is ShowroomMetric => item !== null)
+  return items.length > 0 ? items : undefined
+}
+
+function toDecisions(value: unknown): ShowroomDecision[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const items = value
+    .map((entry): ShowroomDecision | null => {
+      if (!isRecord(entry)) return null
+      const choice = toOptionalString(entry.choice)
+      const reason = toOptionalString(entry.reason)
+      const tradeoff = toOptionalString(entry.tradeoff)
+      if (!choice || !reason || !tradeoff) return null
+      return {
+        choice,
+        reason,
+        alternatives: toStringArray(entry.alternatives),
+        tradeoff,
+      }
+    })
+    .filter((item): item is ShowroomDecision => item !== null)
+  return items.length > 0 ? items : undefined
+}
+
+function toEvidence(value: unknown): ShowroomEvidence[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const allowedTypes = ["image", "demo", "source", "document"] as const
+  const items = value
+    .map((entry): ShowroomEvidence | null => {
+      if (!isRecord(entry)) return null
+      const type = toOptionalEnum(entry.type, allowedTypes)
+      const label = toOptionalString(entry.label)
+      if (!type || !label) return null
+      return {
+        type,
+        label,
+        href: toOptionalString(entry.href),
+        note: toOptionalString(entry.note),
+      }
+    })
+    .filter((item): item is ShowroomEvidence => item !== null)
+  return items.length > 0 ? items : undefined
 }
 
 function toFaq(value: unknown): ShowroomFaqItem[] | undefined {
@@ -78,6 +161,40 @@ export function parseShowroomFrontmatter(
 
   const valueProps = toStringArray(data.valueProps)
   const relatedPosts = toStringArray(data.relatedPosts)
+  const kind = toOptionalEnum(data.kind, SHOWROOM_KINDS) as
+    | ShowroomKind
+    | undefined
+  const status = toOptionalEnum(data.status, SHOWROOM_STATUSES) as
+    | ShowroomStatus
+    | undefined
+  const tier = toOptionalEnum(data.tier, SHOWROOM_TIERS) as
+    | ShowroomTier
+    | undefined
+  const metrics = toMetrics(data.metrics)
+  const decisions = toDecisions(data.decisions)
+  const verification = toStringArray(data.verification)
+  const privacyNote = toOptionalString(data.privacyNote)
+
+  if (kind === "case-study" && tier === "flagship") {
+    const missing = [
+      ["status", status],
+      ["role", toOptionalString(data.role)],
+      ["duration", toOptionalString(data.duration)],
+      ["context", toOptionalString(data.context)],
+      ["metrics", metrics?.length],
+      ["decisions", decisions?.length],
+      ["verification", verification.length],
+      ["privacyNote", privacyNote],
+    ]
+      .filter(([, value]) => !value)
+      .map(([field]) => field)
+
+    if (missing.length > 0) {
+      throw new Error(
+        `[showroom:${slug}] flagship case study is missing: ${missing.join(", ")}`,
+      )
+    }
+  }
 
   const project: ShowroomProject = {
     slug,
@@ -101,6 +218,20 @@ export function parseShowroomFrontmatter(
     imageAlt: toOptionalString(data.imageAlt),
     faq: toFaq(data.faq),
     relatedPosts: relatedPosts.length > 0 ? relatedPosts : undefined,
+    kind,
+    status,
+    tier,
+    role: toOptionalString(data.role),
+    duration: toOptionalString(data.duration),
+    context: toOptionalString(data.context),
+    privacyNote,
+    constraints: toStringArray(data.constraints),
+    verification: verification.length > 0 ? verification : undefined,
+    limitations: toStringArray(data.limitations),
+    nextSteps: toStringArray(data.nextSteps),
+    metrics,
+    decisions,
+    evidence: toEvidence(data.evidence),
   }
 
   return project

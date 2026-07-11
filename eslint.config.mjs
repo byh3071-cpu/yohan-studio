@@ -17,6 +17,9 @@ const eslintConfig = defineConfig([
     "test-results/**",
     "qa-artifacts/**",
     "public/qa-artifacts/**",
+    // Standalone packages keep their generated bundles outside the Next app.
+    "standalone/**/dist/**",
+    "standalone/**/coverage/**",
   ]),
 ]);
 
