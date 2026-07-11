@@ -9,6 +9,9 @@ import { ScanIntro } from "@/components/sections/ScanIntro"
 import { ServicesPreview } from "@/components/sections/ServicesPreview"
 import { ShowroomPreview } from "@/components/sections/ShowroomPreview"
 
+// Featured가 studio_products를 조회하므로 스토어와 동일한 주기로 재생성
+export const revalidate = 60
+
 export default function HomePage() {
   return (
     <>

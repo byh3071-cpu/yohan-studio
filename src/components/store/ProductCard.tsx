@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { CSSProperties } from "react"
 
 import { PriceTag } from "@/components/store/PriceTag"
+import { STORE_SALES_ENABLED } from "@/data/storeConfig"
 import type { Database } from "@/types/database"
 
 type ProductRow = Database["public"]["Tables"]["studio_products"]["Row"]
@@ -134,7 +135,12 @@ export function ProductCard({ product }: { product: ProductRow }) {
         <h3 style={title}>{product.name}</h3>
         {product.description && <p style={desc}>{product.description}</p>}
         <div style={footer}>
-          <PriceTag priceCents={product.price_cents} currency={product.currency} size="sm" />
+          <PriceTag
+            priceCents={product.price_cents}
+            currency={product.currency}
+            size="sm"
+            tbd={!STORE_SALES_ENABLED}
+          />
           <span style={cta}>자세히 →</span>
         </div>
       </div>

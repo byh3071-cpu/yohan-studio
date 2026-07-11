@@ -32,7 +32,11 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     console.error('[/api/checkout] supabase error:', error.message)
-    return NextResponse.json({ error: 'DB 조회 실패' }, { status: 500 })
+    Sentry.captureMessage(`[/api/checkout] supabase error: ${error.message}`, 'error')
+    return NextResponse.json(
+      { error: '일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
+      { status: 500 },
+    )
   }
   if (!product) {
     return NextResponse.json({ error: '상품을 찾을 수 없습니다' }, { status: 404 })

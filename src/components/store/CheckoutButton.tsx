@@ -2,6 +2,11 @@
 
 import { useState, type CSSProperties } from "react"
 import { trackEvent } from "@/lib/analytics"
+import {
+  STORE_PAUSED_LABEL,
+  STORE_PAUSED_NOTICE,
+  STORE_SALES_ENABLED,
+} from "@/data/storeConfig"
 
 const wrap: CSSProperties = {
   display: "flex",
@@ -57,6 +62,17 @@ export function CheckoutButton({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  if (!STORE_SALES_ENABLED) {
+    return (
+      <div style={wrap}>
+        <button type="button" style={buttonDisabled} disabled>
+          {STORE_PAUSED_LABEL}
+        </button>
+        <span style={hint}>{STORE_PAUSED_NOTICE}</span>
+      </div>
+    )
+  }
+
   if (!active) {
     return (
       <div style={wrap}>
@@ -103,7 +119,7 @@ export function CheckoutButton({
       >
         {loading ? "처리 중…" : "지금 구매하기 →"}
       </button>
-      <span style={hint}>Stripe 결제 (Phase 3 연결 예정)</span>
+      <span style={hint}>Stripe 안전 결제</span>
       {error && <span style={errorText}>{error}</span>}
     </div>
   )

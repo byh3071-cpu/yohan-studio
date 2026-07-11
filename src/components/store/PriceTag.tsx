@@ -54,11 +54,20 @@ export function PriceTag({
   priceCents,
   currency = "KRW",
   size = "md",
+  tbd = false,
 }: {
   priceCents: number
   currency?: string
   size?: Size
+  tbd?: boolean
 }) {
+  if (tbd) {
+    return (
+      <span style={{ ...base, ...sizes[size] }} aria-label="가격 공개 예정">
+        <strong style={{ fontSize: "0.72em", letterSpacing: "0.04em" }}>가격 공개 예정</strong>
+      </span>
+    )
+  }
   const isFree = priceCents === 0
   return (
     <span style={{ ...base, ...sizes[size] }} aria-label={`가격 ${priceCents} ${currency}`}>

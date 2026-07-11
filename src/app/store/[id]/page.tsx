@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 
 import { CheckoutButton } from "@/components/store/CheckoutButton"
 import { PriceTag } from "@/components/store/PriceTag"
+import { STORE_SALES_ENABLED } from "@/data/storeConfig"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/database"
 
@@ -57,7 +58,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: product.name,
       description: product.description ?? undefined,
-      images: product.image_url ? [{ url: product.image_url }] : undefined,
+      // images 키를 undefined로 넣으면 상위 파일 기반 opengraph-image가 무시된다 (#35와 동일 패턴)
+      ...(product.image_url ? { images: [{ url: product.image_url }] } : {}),
     },
   }
 }
@@ -218,7 +220,12 @@ export default async function StoreDetailPage({ params }: PageProps) {
             <div style={priceBlock}>
               <div style={priceRow}>
                 <span style={priceLabel}>가격</span>
-                <PriceTag priceCents={product.price_cents} currency={product.currency} size="lg" />
+                <PriceTag
+                  priceCents={product.price_cents}
+                  currency={product.currency}
+                  size="lg"
+                  tbd={!STORE_SALES_ENABLED}
+                />
               </div>
               <CheckoutButton
                 productId={product.id}

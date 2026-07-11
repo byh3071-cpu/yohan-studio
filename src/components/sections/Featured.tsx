@@ -1,11 +1,41 @@
 import type { CSSProperties } from "react"
 import Link from "next/link"
-import type { FeaturedProduct } from "@/data/featured"
-import { featuredProducts } from "@/data/featured"
+import { STORE_PAUSED_LABEL, STORE_SALES_ENABLED } from "@/data/storeConfig"
 import { getPublishedPosts } from "@/lib/blog"
+import { supabase } from "@/lib/supabase"
 import { BlogCard } from "@/components/blog/BlogCard"
+import { PriceTag } from "@/components/store/PriceTag"
 
-function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number }) {
+type FeaturedProduct = {
+  name: string
+  desc: string
+  slug: string
+  priceCents: number
+  currency: string
+}
+
+async function fetchFeaturedProducts(): Promise<FeaturedProduct[]> {
+  try {
+    const { data, error } = await supabase
+      .from("studio_products")
+      .select("name, description, slug, price_cents, currency")
+      .eq("active", true)
+      .order("created_at", { ascending: false })
+      .limit(3)
+    if (error || !data) return []
+    return data.map((p) => ({
+      name: p.name,
+      desc: p.description ?? "",
+      slug: p.slug,
+      priceCents: p.price_cents,
+      currency: p.currency,
+    }))
+  } catch {
+    return []
+  }
+}
+
+function ProductCard({ idx, name, desc, slug, priceCents, currency }: FeaturedProduct & { idx: number }) {
   const card: CSSProperties = {
     background: "var(--bg)",
     border: "var(--border-w) solid var(--line)",
@@ -59,12 +89,6 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
     paddingTop: "14px",
     borderTop: "1px solid var(--line)",
   }
-  const prc: CSSProperties = {
-    fontSize: "20px",
-    fontWeight: 800,
-    color: "var(--ink)",
-    letterSpacing: "-0.02em",
-  }
   const badge: CSSProperties = {
     fontSize: "12px",
     fontWeight: 700,
@@ -77,24 +101,29 @@ function ProductCard({ idx, name, desc, price }: FeaturedProduct & { idx: number
     letterSpacing: "0.05em",
   }
   return (
-    <article style={card}>
-      <div style={thumb}>
-        <span style={thumbNum}>SKU {String(idx).padStart(2, "0")}</span>
-        IMAGE / PLACEHOLDER
-      </div>
-      <div style={body}>
-        <h3 style={ttl}>{name}</h3>
-        <p style={dsc}>{desc}</p>
-        <div style={row}>
-          <span style={prc}>{price}</span>
-          <span style={badge} aria-label="판매 준비 중">준비 중</span>
+    <Link href={`/store/${slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <article style={card}>
+        <div style={thumb}>
+          <span style={thumbNum}>SKU {String(idx).padStart(2, "0")}</span>
+          IMAGE / PLACEHOLDER
         </div>
-      </div>
-    </article>
+        <div style={body}>
+          <h3 style={ttl}>{name}</h3>
+          <p style={dsc}>{desc}</p>
+          <div style={row}>
+            <PriceTag priceCents={priceCents} currency={currency} size="sm" tbd={!STORE_SALES_ENABLED} />
+            {!STORE_SALES_ENABLED && (
+              <span style={badge} aria-label="판매 준비 중">{STORE_PAUSED_LABEL}</span>
+            )}
+          </div>
+        </div>
+      </article>
+    </Link>
   )
 }
 
-export function Featured() {
+export async function Featured() {
+  const products = await fetchFeaturedProducts()
   const publishedPosts = getPublishedPosts().slice(0, 3)
   const blogs = publishedPosts.map((p) => ({
     date: p.date,
@@ -190,11 +219,27 @@ export function Featured() {
               스토어 보기 →
             </Link>
           </div>
-          <div style={grid}>
-            {featuredProducts.map((p, i) => (
-              <ProductCard key={p.name} idx={i + 1} {...p} />
-            ))}
-          </div>
+          {products.length > 0 ? (
+            <div style={grid}>
+              {products.map((p, i) => (
+                <ProductCard key={p.slug} idx={i + 1} {...p} />
+              ))}
+            </div>
+          ) : (
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "13px",
+                color: "var(--muted)",
+                letterSpacing: "0.04em",
+                border: "1.5px dashed var(--line)",
+                padding: "28px 24px",
+                margin: 0,
+              }}
+            >
+              {"// 스토어 준비 중 — 곧 공개됩니다"}
+            </p>
+          )}
         </div>
       </div>
     </section>

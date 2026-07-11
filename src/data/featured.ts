@@ -5,14 +5,4 @@ export type FeaturedBlog = {
   tags: string[]
 }
 
-export type FeaturedProduct = {
-  name: string
-  desc: string
-  price: string
-}
-
-export const featuredProducts: FeaturedProduct[] = [
-  { name: "요한 OS 노션 템플릿", desc: "개인 운영 시스템 풀 패키지", price: "₩29,000" },
-  { name: "카페사이 OS", desc: "GAS 기반 카페 자동화 시스템", price: "₩49,000" },
-  { name: "AI 프롬프트 킷", desc: "Cursor + Claude 실전 프롬프트 모음", price: "₩19,000" },
-]
+// 스토어 상품은 studio_products(DB)가 단일 소스다 — 하드코딩 금지 (2026-07-12 홈/스토어 불일치 사고 후 결정).
