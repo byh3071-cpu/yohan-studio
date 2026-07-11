@@ -86,6 +86,8 @@ export type ShowroomProject = {
   demo?: string
   image?: string
   imageAlt?: string
+  /** 히어로 데모 영상(mp4). image는 poster로 사용된다. */
+  video?: string
   faq?: ShowroomFaqItem[]
   relatedPosts?: string[]
   /** 확장 사례 타입. 기존 항목은 legacy 기본값으로 파싱한다. */

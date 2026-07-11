@@ -22,6 +22,7 @@ const body: CSSProperties = {
   lineHeight: 1.7,
   color: "var(--ink-2)",
   maxWidth: "760px",
+  wordBreak: "keep-all",
 }
 
 const metaGrid: CSSProperties = {
@@ -63,11 +64,13 @@ const metricGrid: CSSProperties = {
 
 const metricValue: CSSProperties = {
   fontFamily: "var(--font-en)",
-  fontSize: "clamp(24px, 4vw, 34px)",
+  fontSize: "clamp(22px, 3.2vw, 30px)",
   fontWeight: 800,
+  lineHeight: 1.2,
   letterSpacing: "-0.03em",
   color: "var(--accent)",
   marginBottom: "8px",
+  wordBreak: "keep-all",
 }
 
 const note: CSSProperties = {

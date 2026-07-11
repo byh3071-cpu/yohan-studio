@@ -29,10 +29,12 @@ test("플렉시블 대표 사례 — 근거·한계·개인정보 회고 노출"
   )
   await expect(page.getByText("2~3분 → 10초 이내").first()).toBeVisible()
   await expect(page.getByText("개인정보와 운영 책임")).toBeVisible()
-  await expect(page.getByText("당시 현장 측정 기록").first()).toBeVisible()
-  await expect(
-    page.getByText("원본 MVP의 성과로 귀속하지 않는다").first(),
-  ).toBeVisible()
+  await expect(page.getByText("평상시 기준으로만 표기").first()).toBeVisible()
+
+  // 히어로 데모 영상 + 썸네일 poster
+  const heroVideo = page.locator("video")
+  await expect(heroVideo).toHaveCount(1)
+  await expect(heroVideo).toHaveAttribute("poster", /cover\.png/)
 
   // 공개 저장소이므로 노출 금지 대상(과거 데모 URL·기관 실명) 원문을 테스트에 두지 않는다.
   // 이 페이지의 배포·저장소 링크는 익명 재구축판만 허용한다.
