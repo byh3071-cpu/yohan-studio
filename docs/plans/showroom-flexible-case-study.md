@@ -1,6 +1,6 @@
 # 쇼룸 혼합 개편 — 플렉시블 대표 사례 실행 계획
 
-상태: **Phase 0~5 구현 완료 · 별도 저장소 공개와 Phase 6 평가 대기**  
+상태: **Phase 0~5 완료 · 익명 재구축판 공개 완료 · Phase 6 평가 대기**  
 기준일: 2026-07-11  
 공개 기준 원본: `src/content/showroom/*.mdx`
 
@@ -92,7 +92,15 @@
 - 메인 앱 production build 통과, `/showroom/flexible-seat-randomizer` 정적 생성 확인
 - 익명 재구축판 단위 테스트 4건 통과 및 production build 통과
 - 과거 공개 URL과 실제 기관명 비노출 정적 검사 통과
-- 대기: 별도 공개 GitHub 저장소·Vercel 배포, 실제 링크 연결, 카페 프로젝트 Phase 6 평가
+- ~~대기: 별도 공개 GitHub 저장소·Vercel 배포, 실제 링크 연결~~ → 2026-07-12 완료
+- 대기: 카페 프로젝트 Phase 6 평가
+
+## 2026-07-12 익명 재구축판 공개 완료
+
+- 공개 저장소: https://github.com/byh3071-cpu/flexible-seat-randomizer (MIT, 단위 테스트·빌드 검증 후 푸시)
+- 익명 데모: https://flexible-seat-randomizer.vercel.app (production, 렌더링·무실명 확인)
+- 쇼룸 사례에 GitHub·데모 링크 연결, FAQ·한계·다음 개선 현행화
+- QA: 상세 페이지의 배포·저장소 링크는 재구축판 도메인만 허용하도록 검사 갱신
 
 ## 2026-07-12 과거 노출 차단 완료
 

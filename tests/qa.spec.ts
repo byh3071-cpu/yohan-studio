@@ -30,14 +30,25 @@ test("플렉시블 대표 사례 — 근거·한계·개인정보 회고 노출"
   await expect(page.getByText("2~3분 → 10초 이내").first()).toBeVisible()
   await expect(page.getByText("개인정보와 운영 책임")).toBeVisible()
   await expect(page.getByText("당시 현장 측정 기록").first()).toBeVisible()
-  await expect(page.getByText("원본 기술스택과 소스 보존 상태")).toBeVisible()
+  await expect(
+    page.getByText("원본 MVP의 성과로 귀속하지 않는다").first(),
+  ).toBeVisible()
 
   // 공개 저장소이므로 노출 금지 대상(과거 데모 URL·기관 실명) 원문을 테스트에 두지 않는다.
-  // 익명 재구축판이 정식 연결되기 전까지 이 페이지에는 어떤 배포 링크도 없어야 한다.
-  await expect(page.locator('a[href*="vercel.app"]')).toHaveCount(0)
+  // 이 페이지의 배포·저장소 링크는 익명 재구축판만 허용한다.
   await expect(
-    page.locator('a[href*="github.com"][href*="flexible"]'),
+    page.locator(
+      'a[href*="vercel.app"]:not([href*="flexible-seat-randomizer.vercel.app"])',
+    ),
   ).toHaveCount(0)
+  await expect(
+    page.locator(
+      'a[href*="github.com"][href*="flexible"]:not([href*="flexible-seat-randomizer"])',
+    ),
+  ).toHaveCount(0)
+  await expect(
+    page.locator('a[href="https://flexible-seat-randomizer.vercel.app"]').first(),
+  ).toBeVisible()
 })
 
 test("쇼룸 — 대표 사례와 기존 프로젝트를 분리", async ({ page }) => {
