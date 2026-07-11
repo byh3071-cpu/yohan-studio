@@ -230,7 +230,28 @@ export function ShowroomProjectDetail({
           <p style={lead}>{project.summary}</p>
         </header>
 
-        {project.image && (
+        {project.video ? (
+          <div style={heroImg}>
+            <video
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={project.image}
+              aria-label={project.imageAlt ?? `${project.title} 데모 영상`}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            >
+              <source src={project.video} type="video/mp4" />
+            </video>
+          </div>
+        ) : project.image ? (
           <div style={heroImg}>
             <Image
               src={project.image}
@@ -241,7 +262,7 @@ export function ShowroomProjectDetail({
               priority
             />
           </div>
-        )}
+        ) : null}
 
         <CaseStudyDetails project={project} />
 

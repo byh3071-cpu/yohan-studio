@@ -216,6 +216,7 @@ export function parseShowroomFrontmatter(
     demo: toOptionalString(data.demo),
     image: toOptionalString(data.image),
     imageAlt: toOptionalString(data.imageAlt),
+    video: toOptionalString(data.video),
     faq: toFaq(data.faq),
     relatedPosts: relatedPosts.length > 0 ? relatedPosts : undefined,
     kind,
