@@ -54,6 +54,8 @@ const cardValue: CSSProperties = {
   lineHeight: 1.55,
   fontWeight: 700,
   color: "var(--ink)",
+  wordBreak: "keep-all",
+  textWrap: "balance",
 }
 
 const metricGrid: CSSProperties = {
