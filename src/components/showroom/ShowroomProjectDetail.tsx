@@ -49,14 +49,13 @@ const lead: CSSProperties = {
   fontSize: "18px",
   lineHeight: 1.65,
   color: "var(--ink-2)",
-  maxWidth: "720px",
+  wordBreak: "keep-all",
   marginBottom: "32px",
 }
 
 const heroImg: CSSProperties = {
   position: "relative",
   aspectRatio: "16 / 9",
-  maxWidth: "960px",
   marginBottom: "48px",
   border: "var(--border-w) solid var(--line)",
   boxShadow: "var(--shadow)",
