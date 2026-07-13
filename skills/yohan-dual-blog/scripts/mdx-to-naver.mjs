@@ -41,7 +41,9 @@ function convertLinks(text) {
     if (url.startsWith("/blog/")) {
       return `${label}\nhttps://yohanstudio.co${url}`
     }
-    return `${label}\n${url}`
+    // 인라인 외부 링크(오픈소스 참조 등)는 URL을 떼고 라벨만 남긴다.
+    // 네이버 평문에서 문장 중간 URL은 흐름을 끊고 클릭도 안 되므로 최소화한다.
+    return label
   })
 }
 
@@ -66,12 +68,22 @@ function toHashtag(tag) {
 const converted = normalizeText(convertLinks(convertBlogImages(content)))
 const tags = Array.isArray(data.tags) ? data.tags.slice(0, 8).map(toHashtag) : []
 
+// 네이버 고정 서명 (studio 브랜드 보이스 — 도입/결말). 위치는 초안 후 수동 조정 가능.
+const INTRO_SIG = "- 비전공자가 AI와 함께 만들고 직접 검증한 기록입니다. -"
+const OUTRO_SIG =
+  "개발자가 아닌 사람이 AI와 함께 만드는 과정을 기록하고 있습니다.\n" +
+  "부족한 부분도 많지만, 하나씩 만들어가며 남기려고 합니다."
+
 const output = [
   "제목",
   String(data.title ?? slug),
   "",
   "본문",
+  INTRO_SIG,
+  "",
   converted,
+  "",
+  OUTRO_SIG,
   "",
   "원문",
   `https://yohanstudio.co/blog/${slug}`,
