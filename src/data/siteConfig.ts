@@ -15,6 +15,7 @@ export const SITE_CONFIG = {
   url: "https://yohanstudio.co",
   pages: [
     { path: "/blog", desc: "바이브코딩, AI 자동화, 1인 기업 운영 인사이트 (MDX)" },
+    { path: "/learning-log", desc: "노션 세컨드브레인 러닝 로그 — 특강·강연 배움 기록 (Notion API 렌더)" },
     { path: "/showroom", desc: "프로젝트 쇼룸 (작업물 카드 + 카테고리 필터)" },
     { path: "/store", desc: "디지털 상품 스토어 (Stripe 결제)" },
     { path: "/open-source", desc: "오픈소스 프로젝트 모음" },

@@ -45,6 +45,13 @@ const corePages: Omit<SearchDocument, "kind" | "badge">[] = [
     url: "/design",
     tags: ["디자인", "디자인 시스템", "브루탈리즘"],
   },
+  {
+    id: "page-learning-log",
+    title: "러닝 로그",
+    description: "특강·강연에서 배운 것의 현장 기록. 노션 세컨드브레인에서 쓰고 사이트에서 바로 읽는다.",
+    url: "/learning-log",
+    tags: ["러닝 로그", "특강", "배움", "노션"],
+  },
 ]
 
 export function corePagesSearchDocs(): SearchDocument[] {

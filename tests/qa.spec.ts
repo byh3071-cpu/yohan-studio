@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 import AxeBuilder from "@axe-core/playwright"
 
-const ROUTES = ["/", "/blog", "/showroom", "/diagnosis", "/services", "/store"] as const
+const ROUTES = ["/", "/blog", "/learning-log", "/showroom", "/diagnosis", "/services", "/store"] as const
 
 const IGNORE_CONSOLE = [
   /favicon/i,
