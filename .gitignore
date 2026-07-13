@@ -66,3 +66,6 @@ vhk-verify-*.png
 scripts/.verify/
 /.tmp-cover.html
 /.tmp-gif
+
+# serena MCP cache
+.serena/
