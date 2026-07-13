@@ -7,6 +7,7 @@
     "new:project": "node scripts/new-project.mjs",
     "new:post": "node scripts/new-post.mjs",
     "blog:naver": "node skills/yohan-dual-blog/scripts/mdx-to-naver.mjs",
+    "blog:naver:html": "node skills/yohan-dual-blog/scripts/naver-to-html.mjs",
     "dev": "next dev -p 3050",
     "dev:clean": "node scripts/dev-clean.mjs",
     "build": "next build",
