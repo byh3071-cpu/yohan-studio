@@ -93,6 +93,9 @@ export function Footer() {
             <Link href="/blog" style={link}>
               블로그
             </Link>
+            <Link href="/learning-log" style={link}>
+              러닝로그
+            </Link>
             <Link href="/showroom" style={link}>
               쇼룸
             </Link>

@@ -33,6 +33,11 @@ const auxiliaryEntries: NavEntry[] = [
   { label: "오픈소스", href: "/open-source", match: (p) => p === "/open-source" },
   { label: "VHK", href: "/vhk", match: (p) => p === "/vhk" },
   { label: "디자인", href: "/design", match: (p) => p === "/design" },
+  {
+    label: "러닝로그",
+    href: "/learning-log",
+    match: (p) => p === "/learning-log" || p.startsWith("/learning-log/"),
+  },
   { label: "문의", href: "/contact", match: (p) => p === "/contact" },
 ]
 
