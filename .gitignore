@@ -69,3 +69,6 @@ scripts/.verify/
 
 # serena MCP cache
 .serena/
+
+# 네이버 발행: .html은 .md에서 naver-to-html.mjs로 재생성 (소스 .md만 커밋)
+docs/content/naver/*.html
