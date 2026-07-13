@@ -32,4 +32,3 @@
 ## 상세 보고서
 
 - `docs/reviews/yohan-studio-browser-audit-2026-07-13.md`
-

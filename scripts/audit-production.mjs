@@ -1,7 +1,8 @@
 import { chromium } from "@playwright/test"
 import AxeBuilder from "@axe-core/playwright"
 
-const target = new URL(process.argv[2] ?? "https://yohanstudio.co")
+const targetArg = process.argv.slice(2).find((argument) => !argument.startsWith("--"))
+const target = new URL(targetArg ?? "https://yohanstudio.co")
 const mobile = process.argv.includes("--mobile")
 const routeArg = process.argv.find((argument) => argument.startsWith("--route="))
 const routes = routeArg
@@ -158,7 +159,7 @@ for (const route of routes) {
       [...new Set(
         links
           .map((link) => link.href)
-          .filter((href) => href.startsWith(origin))
+          .filter((href) => new URL(href).origin === origin)
           .map((href) => new URL(href).pathname),
       )],
     pageOrigin,
