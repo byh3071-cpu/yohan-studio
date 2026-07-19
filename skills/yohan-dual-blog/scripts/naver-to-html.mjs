@@ -3,11 +3,17 @@ import path from "node:path"
 import process from "node:process"
 import matter from "gray-matter"
 
-// 네이버 라이트 마크다운(.md) → SE ONE 친화 HTML(.html)
+// 네이버 라이트 마크다운(.md) → SE ONE 친화 HTML
 // 사용법: node naver-to-html.mjs <slug|입력.md>
-//   slug 주면 docs/content/naver/<slug>.md 를 읽어 같은 폴더에 .html 생성
-//   직접 .md 경로 주면 같은 위치에 .html 생성
-// 목적: 브라우저에서 [본문 복사] 클릭 → 네이버 글쓰기에 Ctrl+V → 굵게·소제목·리스트·링크 유지.
+// 출력 2개:
+//   <이름>.html          — 사람 미리보기 (안내 바·제목 복사·본문 복사 버튼 포함)
+//   <이름>.fragment.html — 클립보드/자동 주입용 순수 본문 (래퍼 0)
+//
+// 실발행 격식 (2026-07-19 발행글 실측 — m.blog.naver.com/yohan3071/224316171488):
+//   · 섹션(##)마다 앞에 구분선(<hr> → SE ONE 구분선 컴포넌트로 자동 매핑)
+//   · 섹션 제목 = 19px 굵게 (h2 태그가 아니라 인라인 font-size — 발행글과 동일한 시각 위계)
+//   · 문단 사이 제로폭 공백(U+200B) 단독 문단으로 여백 리듬
+//   · 해시태그 줄은 본문에서 제외 — 발행창 태그 입력에 등록 (발행글 본문엔 해시태그 없음)
 
 const arg = process.argv.slice(2).find((a) => a !== "--")
 if (!arg) {
@@ -25,6 +31,7 @@ if (!fs.existsSync(inputPath)) {
   process.exit(1)
 }
 const outputPath = inputPath.replace(/\.md$/i, ".html")
+const fragmentPath = inputPath.replace(/\.md$/i, ".fragment.html")
 
 const { content } = matter(fs.readFileSync(inputPath, "utf8"))
 
@@ -33,58 +40,135 @@ function esc(s) {
 }
 
 // 인라인 변환 (순서 중요: 마커 → 링크 → 굵게 → 기울임 → 코드)
-function inline(text) {
+// mode: "preview"(클래스) | "fragment"(인라인 스타일 — 페이스트 시 클래스는 소실되므로)
+function inline(text, mode) {
+  const img =
+    mode === "fragment"
+      ? '<span style="background-color:#fff19b;font-weight:700;">\u{1F5BC} 이미지: $1</span>'
+      : '<span class="imgmark">\u{1F5BC} 이미지: $1</span>'
+  const slot =
+    mode === "fragment"
+      ? '<span style="background-color:#ffe08a;font-weight:700;">\u{270D} 여기 네 말: $1</span>'
+      : '<span class="myslot">\u{270D} 여기 네 말: $1</span>'
   let t = esc(text)
-  t = t.replace(/\[이미지 삽입:\s*([^\]]+)\]/g, '<span class="imgmark">\u{1F5BC} 이미지: $1</span>')
-  t = t.replace(/\[여기 네 말:\s*([^\]]+)\]/g, '<span class="myslot">\u{270D} 여기 네 말: $1</span>')
+  t = t.replace(/\[이미지 삽입:\s*([^\]]+)\]/g, img)
+  t = t.replace(/\[여기 네 말:\s*([^\]]+)\]/g, slot)
   t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-  t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+  t = t.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
   t = t.replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, "$1<em>$2</em>")
   t = t.replace(/`([^`]+)`/g, "<code>$1</code>")
   return t
 }
 
 const lines = content.replace(/\r\n/g, "\n").split("\n")
-const out = []
 let title = ""
 let i = 0
+const hashtags = []
 
 const isSpecial = (s) =>
   /^#{1,3}\s+/.test(s) || /^>\s?/.test(s) || /^[-*]\s+/.test(s) || /^\d+\.\s+/.test(s) || /^---+$/.test(s)
 
+// 1패스: 블록 목록 수집 (렌더는 모드별 2패스)
+const blocks = []
 while (i < lines.length) {
   const t = lines[i].trim()
   if (t === "") { i++; continue }
   if (/^#\s+/.test(t) && !title) { title = t.replace(/^#\s+/, ""); i++; continue }
-  if (/^###\s+/.test(t)) { out.push(`<h3>${inline(t.replace(/^###\s+/, ""))}</h3>`); i++; continue }
-  if (/^##\s+/.test(t)) { out.push(`<h2>${inline(t.replace(/^##\s+/, ""))}</h2>`); i++; continue }
-  if (/^---+$/.test(t)) { out.push("<hr>"); i++; continue }
+  // 해시태그 줄 → 본문 제외, 태그 목록으로
+  if (/^#[^\s#]/.test(t) && t.split(/\s+/).every((w) => w.startsWith("#"))) {
+    hashtags.push(...t.split(/\s+/).map((w) => w.replace(/^#/, "")))
+    i++
+    continue
+  }
+  if (/^###\s+/.test(t)) { blocks.push({ type: "h3", text: t.replace(/^###\s+/, "") }); i++; continue }
+  if (/^##\s+/.test(t)) { blocks.push({ type: "h2", text: t.replace(/^##\s+/, "") }); i++; continue }
+  if (/^---+$/.test(t)) { blocks.push({ type: "hr" }); i++; continue }
   if (/^>\s?/.test(t)) {
     const q = []
     while (i < lines.length && /^>\s?/.test(lines[i].trim())) { q.push(lines[i].trim().replace(/^>\s?/, "")); i++ }
-    out.push(`<blockquote>${q.map(inline).join("<br>")}</blockquote>`)
+    blocks.push({ type: "quote", items: q })
     continue
   }
-  // 고정멘트 등 양끝 대시로 감싼 캡션 (예: "- 비개발자가 … 기록입니다. -") — 리스트로 오인 방지
-  if (/^-\s+.+\s-$/.test(t)) { out.push(`<p class="caption">${inline(t)}</p>`); i++; continue }
+  // 양끝 대시 캡션 (예: "- 비전공자가 … 기록입니다. -") — 리스트로 오인 방지
+  if (/^-\s+.+\s-$/.test(t)) { blocks.push({ type: "caption", text: t }); i++; continue }
   if (/^[-*]\s+/.test(t)) {
     const items = []
-    while (i < lines.length && /^[-*]\s+/.test(lines[i].trim()) && !/^-\s+.+\s-$/.test(lines[i].trim())) { items.push(lines[i].trim().replace(/^[-*]\s+/, "")); i++ }
-    out.push(`<ul>${items.map((x) => `<li>${inline(x)}</li>`).join("")}</ul>`)
+    while (i < lines.length && /^[-*]\s+/.test(lines[i].trim()) && !/^-\s+.+\s-$/.test(lines[i].trim())) {
+      items.push(lines[i].trim().replace(/^[-*]\s+/, "")); i++
+    }
+    blocks.push({ type: "ul", items })
     continue
   }
   if (/^\d+\.\s+/.test(t)) {
     const items = []
     while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) { items.push(lines[i].trim().replace(/^\d+\.\s+/, "")); i++ }
-    out.push(`<ol>${items.map((x) => `<li>${inline(x)}</li>`).join("")}</ol>`)
+    blocks.push({ type: "ol", items })
     continue
   }
   const para = []
   while (i < lines.length && lines[i].trim() !== "" && !isSpecial(lines[i].trim())) { para.push(lines[i].trim()); i++ }
-  out.push(`<p>${para.map(inline).join("<br>")}</p>`)
+  blocks.push({ type: "p", lines: para })
 }
 
-const body = out.join("\n")
+// 2패스: 모드별 렌더. 격식 규칙은 여기 한 곳에만 둔다.
+function render(mode) {
+  const out = []
+  const GAP = "<p>​</p>"
+  for (const b of blocks) {
+    switch (b.type) {
+      case "h2":
+        out.push("<hr>")
+        out.push(
+          mode === "fragment"
+            ? `<p><span style="font-size:19px;"><b>${inline(b.text, mode)}</b></span></p>`
+            : `<h2>${inline(b.text, mode)}</h2>`,
+        )
+        break
+      case "h3":
+        out.push(
+          mode === "fragment"
+            ? `<p><b>${inline(b.text, mode)}</b></p>`
+            : `<h3>${inline(b.text, mode)}</h3>`,
+        )
+        break
+      case "hr":
+        out.push("<hr>")
+        break
+      case "quote":
+        out.push(`<blockquote>${b.items.map((x) => inline(x, mode)).join("<br>")}</blockquote>`)
+        break
+      case "caption":
+        out.push(
+          mode === "fragment"
+            ? `<p><em>${inline(b.text, mode)}</em></p>`
+            : `<p class="caption">${inline(b.text, mode)}</p>`,
+        )
+        break
+      case "ul":
+        out.push(`<ul>${b.items.map((x) => `<li>${inline(x, mode)}</li>`).join("")}</ul>`)
+        break
+      case "ol":
+        out.push(`<ol>${b.items.map((x) => `<li>${inline(x, mode)}</li>`).join("")}</ol>`)
+        break
+      case "p":
+        out.push(`<p>${b.lines.map((x) => inline(x, mode)).join("<br>")}</p>`)
+        break
+    }
+  }
+  // 문단 사이 여백 리듬: hr 인접부를 제외한 모든 블록 사이에 제로폭 공백 문단
+  const spaced = []
+  for (let k = 0; k < out.length; k++) {
+    spaced.push(out[k])
+    const cur = out[k], next = out[k + 1]
+    if (next && cur !== "<hr>" && next !== "<hr>") spaced.push(GAP)
+  }
+  return spaced.join("\n")
+}
+
+const previewBody = render("preview")
+const fragmentBody = render("fragment")
+
+fs.writeFileSync(fragmentPath, `<div>\n${fragmentBody}\n</div>\n`, "utf8")
 
 const style = `
 .wrap{max-width:720px;margin:0 auto;padding:16px;background:#fbfbfb;color:#1a1a1a;line-height:1.75;font-family:'Apple SD Gothic Neo',Pretendard,'Malgun Gothic',sans-serif}
@@ -96,10 +180,10 @@ const style = `
 .copybtn{display:block;width:100%;background:#03c75a;color:#fff;border:0;border-radius:8px;padding:12px;font-size:15px;font-weight:700;margin-bottom:14px}
 .copybtn:active{opacity:.8}
 article{background:#fff;border:1px solid #eee;border-radius:8px;padding:20px;color:#1a1a1a}
-article h2{font-size:20px;margin:22px 0 10px;font-weight:800}
-article h3{font-size:17px;margin:18px 0 8px;font-weight:700}
+article h2{font-size:19px;margin:22px 0 10px;font-weight:800}
+article h3{font-size:16px;margin:18px 0 8px;font-weight:700}
 article p{margin:0 0 14px}
-article strong{font-weight:800}
+article b,article strong{font-weight:800}
 article blockquote{background:#f7f7f9;border-left:4px solid #03c75a;margin:0 0 14px;padding:10px 14px;border-radius:0 8px 8px 0}
 article ul,article ol{margin:0 0 14px;padding-left:22px}
 article li{margin:4px 0}
@@ -109,6 +193,7 @@ article hr{border:0;border-top:1px dashed #ccc;margin:18px 0}
 .imgmark{display:inline-block;background:#fff4e5;border:1px dashed #f0a94b;border-radius:6px;padding:1px 8px;color:#a5651a;font-size:13px}
 .myslot{display:inline-block;background:#fff3c4;border:1px dashed #e0c000;border-radius:6px;padding:1px 8px;color:#7a6a00;font-size:13px}
 .legend{margin-top:12px;font-size:12px;color:#888}
+.tags{margin-top:8px;font-size:13px;color:#175c33;background:#eafaf0;border:1px solid #b6e6c9;border-radius:8px;padding:8px 12px}
 `
 
 const script = `
@@ -127,17 +212,24 @@ function copyText(id){
 }
 `
 
+const tagsLine = hashtags.length
+  ? `<div class="tags">\u{1F3F7} 발행창 태그 입력에 등록 (본문에 넣지 않음): ${hashtags.map(esc).join(", ")}</div>`
+  : ""
+
 const page = `<style>${style}</style>
 <div class="wrap">
-  <div class="bar"><strong>네이버 붙여넣기 미리보기</strong> — [본문 복사]를 누르고 네이버 글쓰기(SE ONE)에 Ctrl+V. 굵게·소제목·리스트·링크는 유지, 인용·구분선·스티커는 에디터에서 수동.</div>
+  <div class="bar"><strong>네이버 붙여넣기 미리보기</strong> — [본문 복사]를 누르고 네이버 글쓰기(SE ONE)에 Ctrl+V. 구분선·19px 소제목·여백까지 자동. 이미지는 형광펜 자리에 수동.</div>
   <div class="titlebox"><span class="lbl">제목</span><span id="ttl">${esc(title)}</span><button onclick="copyText('ttl')">제목 복사</button></div>
   <button class="copybtn" id="cpbtn" data-o="\u{1F4CB} 본문 복사 (서식 유지)" onclick="copyRich('article')">\u{1F4CB} 본문 복사 (서식 유지)</button>
   <article id="article">
-${body}
+${fragmentBody}
   </article>
-  <div class="legend">\u{1F5BC} = 이미지 넣을 자리 · ✍ = 네가 직접 쓸 진솔 슬롯(자동생성 안 함)</div>
+  ${tagsLine}
+  <div class="legend">\u{1F5BC} = 이미지 넣을 자리 · ✍ = 네가 직접 쓸 진솔 슬롯(자동생성 안 함) · 자동 주입은 .fragment.html 사용</div>
 </div>
 <script>${script}</script>`
 
 fs.writeFileSync(outputPath, page, "utf8")
 console.log(`생성: ${outputPath}`)
+console.log(`생성: ${fragmentPath} (클립보드/자동 주입용 — 래퍼 없음)`)
+if (hashtags.length) console.log(`태그(발행창에 등록): ${hashtags.join(", ")}`)
