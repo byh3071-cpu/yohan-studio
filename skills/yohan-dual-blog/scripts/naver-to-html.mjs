@@ -142,9 +142,10 @@ function render(mode) {
         out.push(`<blockquote>${b.items.map((x) => inline(x, mode)).join("<br>")}</blockquote>`)
         break
       case "caption":
+        // 고정멘트 취향: 가운데 정렬 + 회색(#c2c2c2), 이탤릭 없음 (2026-07-20 발행본 요한 수동수정 실측)
         out.push(
           mode === "fragment"
-            ? `<p><em>${inline(b.text, mode)}</em></p>`
+            ? `<p style="text-align: center;"><span style="color: #c2c2c2;">${inline(b.text, mode)}</span></p>`
             : `<p class="caption">${inline(b.text, mode)}</p>`,
         )
         break
@@ -193,6 +194,7 @@ article ul,article ol{margin:0 0 14px;padding-left:22px}
 article li{margin:4px 0}
 article a{color:#0a6cff;text-decoration:underline}
 article hr{border:0;border-top:1px dashed #ccc;margin:18px 0}
+article img{max-width:100%;height:auto;display:block;border:1px solid #eee;border-radius:8px}
 .caption{text-align:center;color:#8a8a8a;font-size:14px}
 .imgmark{display:inline-block;background:#fff4e5;border:1px dashed #f0a94b;border-radius:6px;padding:1px 8px;color:#a5651a;font-size:13px}
 .myslot{display:inline-block;background:#fff3c4;border:1px dashed #e0c000;border-radius:6px;padding:1px 8px;color:#7a6a00;font-size:13px}
