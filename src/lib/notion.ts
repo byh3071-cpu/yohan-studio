@@ -86,6 +86,7 @@ export async function getLearningLogIndex(): Promise<LearningLogSummary[]> {
         id: stripHyphens(block.id),
         title: block.type === "child_page" ? block.child_page.title : "",
         lastEdited: block.last_edited_time,
+        created: block.created_time,
       }))
   } catch (err) {
     console.error(
