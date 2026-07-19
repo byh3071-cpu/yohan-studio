@@ -3,6 +3,7 @@ import { Contact } from "@/components/sections/Contact"
 import { Faq } from "@/components/sections/Faq"
 import { Featured } from "@/components/sections/Featured"
 import { Hero } from "@/components/sections/Hero"
+import { NowFeed } from "@/components/sections/NowFeed"
 import { Philosophy } from "@/components/sections/Philosophy"
 import { ProblemSection } from "@/components/sections/ProblemSection"
 import { ScanIntro } from "@/components/sections/ScanIntro"
@@ -20,6 +21,7 @@ export default function HomePage() {
       <ProblemSection />
       <ShowroomPreview />
       <Featured />
+      <NowFeed />
       <ScanIntro />
       <ServicesPreview />
       <About />
