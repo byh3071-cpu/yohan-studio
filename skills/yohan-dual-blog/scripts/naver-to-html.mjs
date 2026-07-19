@@ -51,6 +51,10 @@ function inline(text, mode) {
       ? '<span style="background-color:#ffe08a;font-weight:700;">\u{270D} 여기 네 말: $1</span>'
       : '<span class="myslot">\u{270D} 여기 네 말: $1</span>'
   let t = esc(text)
+  // 확장 문법: [이미지 삽입: 설명 | https://…] — URL이 있으면 실제 <img>로.
+  // SE ONE은 붙여넣은 외부 <img>를 이미지 컴포넌트로 변환한다 (2026-07-20 에디터 실측).
+  // 라이브 블로그 이미지 URL을 쓰면 수동 삽입 단계가 사라진다.
+  t = t.replace(/\[이미지 삽입:\s*([^\]|]+?)\s*\|\s*(https?:[^\]\s]+)\]/g, '<img src="$2" alt="$1">')
   t = t.replace(/\[이미지 삽입:\s*([^\]]+)\]/g, img)
   t = t.replace(/\[여기 네 말:\s*([^\]]+)\]/g, slot)
   t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
