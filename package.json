@@ -8,6 +8,7 @@
     "new:post": "node scripts/new-post.mjs",
     "new:update": "node scripts/new-update.mjs",
     "blog:cover": "node scripts/gen-cover.mjs",
+    "naver": "node scripts/naver-publish.mjs",
     "blog:naver": "node skills/yohan-dual-blog/scripts/mdx-to-naver.mjs",
     "blog:naver:html": "node skills/yohan-dual-blog/scripts/naver-to-html.mjs",
     "dev": "next dev -p 3050",
