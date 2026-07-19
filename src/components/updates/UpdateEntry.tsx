@@ -72,10 +72,11 @@ export function UpdateEntry({ meta, content }: Props) {
     <article style={article}>
       <header style={head}>
         <span style={productLabel}>{PRODUCTS[meta.product]}</span>
-        <h2 style={version}>
+        {/* 릴리즈 제목이 heading — 버전 번호는 시각적으로 크지만 의미상 보조 라벨(스크린리더 heading 탐색 기준). */}
+        <span style={version}>
           <span style={versionAccent}>v</span>
           {meta.version}
-        </h2>
+        </span>
         <time dateTime={meta.date} style={date}>
           {meta.date}
         </time>
@@ -84,7 +85,7 @@ export function UpdateEntry({ meta, content }: Props) {
             <UpdateTypeBadge key={t} type={t} />
           ))}
         </span>
-        <p style={title}>{meta.title}</p>
+        <h2 style={title}>{meta.title}</h2>
       </header>
       <div style={body}>
         <div className="mdx-content">{content}</div>

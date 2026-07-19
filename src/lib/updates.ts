@@ -41,13 +41,15 @@ function toTypes(value: unknown): UpdateType[] {
   )
 }
 
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
+
 export function parseUpdateFrontmatter(
   slug: string,
   data: Record<string, unknown>,
 ): UpdateEntryMeta | null {
   const product = toProduct(data.product)
   const version = typeof data.version === "string" ? data.version : ""
-  const date = typeof data.date === "string" ? data.date : ""
+  const date = typeof data.date === "string" && DATE_RE.test(data.date) ? data.date : ""
   const title = typeof data.title === "string" ? data.title : ""
   const types = toTypes(data.types)
   if (!product || !version || !date || !title || types.length === 0) return null
@@ -116,17 +118,23 @@ export type CompiledUpdate = {
 }
 
 // 목록 페이지 하나에 전체 항목 본문을 인라인 렌더하므로 published 전부를 한 번에 컴파일한다.
+// 항목 하나의 본문 구문 오류가 페이지 전체 빌드를 막지 않도록 실패 항목은 경고 후 제외.
 export async function getCompiledUpdates(): Promise<CompiledUpdate[]> {
   return Promise.all(
     getPublishedUpdates().map(async (meta) => {
       const raw = readFileRaw(meta.slug)
       if (!raw) return null
-      const { content } = await compileMDX({
-        source: raw,
-        components: mdxComponents,
-        options: { parseFrontmatter: true },
-      })
-      return { meta, content }
+      try {
+        const { content } = await compileMDX({
+          source: raw,
+          components: mdxComponents,
+          options: { parseFrontmatter: true },
+        })
+        return { meta, content }
+      } catch (err) {
+        console.warn(`[updates] MDX 컴파일 실패로 제외: ${meta.slug}`, err)
+        return null
+      }
     }),
   ).then((entries) => entries.filter((e): e is CompiledUpdate => e !== null))
 }

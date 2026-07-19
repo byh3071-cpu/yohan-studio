@@ -92,7 +92,12 @@ export function UpdatesFeed({ entries }: Props) {
   return (
     <div>
       <div style={chipRow} role="group" aria-label="제품 필터">
-        <button type="button" onClick={() => onProductClick(null)} style={chipStyle(null)}>
+        <button
+          type="button"
+          onClick={() => onProductClick(null)}
+          style={chipStyle(null)}
+          aria-pressed={activeProduct === null && !unknownProduct}
+        >
           전체
         </button>
         {productIds.map((id) => (
@@ -101,6 +106,7 @@ export function UpdatesFeed({ entries }: Props) {
             type="button"
             onClick={() => onProductClick(id)}
             style={chipStyle(id)}
+            aria-pressed={activeProduct === id}
           >
             {PRODUCTS[id]}
           </button>
