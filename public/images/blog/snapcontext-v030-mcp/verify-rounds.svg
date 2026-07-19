@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 560" font-family="'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <rect width="1280" height="560" fill="#ffffff"/>
+
+  <text x="40" y="52" font-size="20" font-weight="700" fill="#1c2226">적대 검증 4라운드 — 실제 판정 기록</text>
+  <line x1="40" y1="66" x2="1240" y2="66" stroke="#dde3e3" stroke-width="2"/>
+
+  <!-- R1: FAIL -->
+  <rect x="40" y="110" width="270" height="190" rx="10" fill="#fbeeea" stroke="#b3452e" stroke-width="3"/>
+  <text x="175" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#8f3722">라운드 1 · codex</text>
+  <text x="175" y="188" text-anchor="middle" font-size="34" font-weight="800" fill="#b3452e">FAIL</text>
+  <text x="175" y="224" text-anchor="middle" font-size="16" font-weight="700" fill="#8f3722">치명 2 · 중대 5</text>
+  <text x="175" y="252" text-anchor="middle" font-size="14" fill="#8f3722">"1,000개 넘으면 조용히 누락"</text>
+  <text x="175" y="274" text-anchor="middle" font-size="14" fill="#8f3722">같은 결함이 잡혔다</text>
+
+  <!-- 수정 루프 -->
+  <line x1="310" y1="205" x2="380" y2="205" stroke="#b3452e" stroke-width="3"/>
+  <polygon points="380,205 366,197 366,213" fill="#b3452e"/>
+  <text x="345" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#b3452e">전부 수정</text>
+
+  <!-- R2: PASS -->
+  <rect x="385" y="110" width="270" height="190" rx="10" fill="#e2efee" stroke="#0e7c7b" stroke-width="3"/>
+  <text x="520" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#0e5958">라운드 2 · codex 재검증</text>
+  <text x="520" y="188" text-anchor="middle" font-size="34" font-weight="800" fill="#0e7c7b">PASS</text>
+  <text x="520" y="224" text-anchor="middle" font-size="16" font-weight="700" fill="#33625f">잔여 지적 0건</text>
+  <text x="520" y="252" text-anchor="middle" font-size="14" fill="#33625f">지적 7건 전부 해소를</text>
+  <text x="520" y="274" text-anchor="middle" font-size="14" fill="#33625f">파일·라인 근거로 재확인</text>
+
+  <line x1="655" y1="205" x2="725" y2="205" stroke="#0e7c7b" stroke-width="3"/>
+  <polygon points="725,205 711,197 711,213" fill="#0e7c7b"/>
+
+  <!-- R3: PASS -->
+  <rect x="730" y="110" width="245" height="190" rx="10" fill="#e2efee" stroke="#0e7c7b" stroke-width="3"/>
+  <text x="852" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#0e5958">라운드 3 · claude</text>
+  <text x="852" y="188" text-anchor="middle" font-size="34" font-weight="800" fill="#0e7c7b">PASS</text>
+  <text x="852" y="224" text-anchor="middle" font-size="16" font-weight="700" fill="#33625f">치명·중대 0</text>
+  <text x="852" y="252" text-anchor="middle" font-size="14" fill="#33625f">수집 파이프라인 검증</text>
+
+  <line x1="975" y1="205" x2="1030" y2="205" stroke="#0e7c7b" stroke-width="3"/>
+  <polygon points="1030,205 1016,197 1016,213" fill="#0e7c7b"/>
+
+  <!-- R4: PASS -->
+  <rect x="1035" y="110" width="205" height="190" rx="10" fill="#e2efee" stroke="#0e7c7b" stroke-width="3"/>
+  <text x="1137" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#0e5958">라운드 4 · claude</text>
+  <text x="1137" y="188" text-anchor="middle" font-size="34" font-weight="800" fill="#0e7c7b">PASS</text>
+  <text x="1137" y="224" text-anchor="middle" font-size="16" font-weight="700" fill="#33625f">치명·중대 0</text>
+  <text x="1137" y="252" text-anchor="middle" font-size="14" fill="#33625f">분석 도구 검증</text>
+
+  <!-- 하단: 자동 검증 -->
+  <rect x="40" y="350" width="1200" height="110" rx="10" fill="#f2f6f6" stroke="#c4d2d2" stroke-width="2"/>
+  <text x="640" y="396" text-anchor="middle" font-size="20" font-weight="700" fill="#1c2226">+ 자동 테스트 83개 · 배포본 실호출 점검 10항목 전부 통과</text>
+  <text x="640" y="430" text-anchor="middle" font-size="15" fill="#5c6870">인증 없는 접근 401 · 위조 출처 403 · 없는 캡처 조회는 명시적 에러 — 배포된 서버에 직접 쏴서 확인</text>
+
+  <line x1="40" y1="500" x2="1240" y2="500" stroke="#dde3e3" stroke-width="1"/>
+  <text x="640" y="535" text-anchor="middle" font-size="20" font-weight="700" fill="#1c2226">한 번 깨지고, 고치고, 세 번 통과한 뒤에야 배포했다</text>
+</svg>
