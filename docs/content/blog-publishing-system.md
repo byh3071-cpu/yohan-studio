@@ -49,3 +49,23 @@ docs/content/naver/vhk-npm-cli-launch.txt
 - 같은 수치와 링크가 채널마다 달라지지 않는다.
 - 반복 CTA와 과도한 감정 표현을 줄인다.
 - 질문형 제목 바로 아래에 답부터 쓴다.
+
+## 커버 이미지 (2026-07-19 도입)
+
+```powershell
+pnpm blog:cover -- <slug> "<영문 컨셉 1~3문장>"
+```
+
+- `public/images/blog/<slug>/cover.png` 생성 → frontmatter `thumbnail`에 연결.
+- 시리즈 톤(다크 차콜+오렌지 소프트 브루탈리즘, 텍스트 없음)은 `scripts/gen-cover.mjs`에 고정 — 컨셉 문장만 글마다 바꾼다.
+- 모델 기본 `gpt-image-2` (API 실조회로 확인, `OPENAI_IMAGE_MODEL`로 재정의). `OPENAI_API_KEY` 필요.
+- 이미지 자산 원칙: 스크린샷·로그·다이어그램은 **실제 데이터만** — 실호출 응답, 검증 보고서 원문, 배포 로그에서 가져온다. 연출 재구성 시 캡션에 "실제 데이터로 재구성" 명시.
+
+## 업데이트 섹션과의 이원화 (ADR-004)
+
+릴리즈 소식은 두 층으로 나뉜다.
+
+1. **모든 버전** → `pnpm new:update -- <product> <version> "요약"` 으로 `src/content/updates/` 항목(불릿 3~10줄, 5분). /updates 타임라인에 쌓인다.
+2. **큰 릴리즈만** → 블로그 글 승격(이 문서의 절차) 후, 업데이트 항목 frontmatter `blogSlug`로 상호 연결.
+
+블로그 글을 쓴 릴리즈도 업데이트 항목은 반드시 남긴다(전수 기록 원칙). 제품 추가는 `src/lib/updatesShared.ts`의 `PRODUCTS`에 1줄.
