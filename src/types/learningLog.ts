@@ -1,10 +1,12 @@
 import type { BlockObjectResponse } from "@notionhq/client"
 
 // 목록 카드용 요약. id는 하이픈 없는 32hex (URL 세그먼트로 사용).
+// created는 홈 Now 피드의 시간순 정렬 기준 — lastEdited를 쓰면 옛 글 편집 시 피드 상단으로 점프한다.
 export type LearningLogSummary = {
   id: string
   title: string
   lastEdited: string
+  created: string
 }
 
 // 노션 블록 + 재귀로 채운 자식들. Notion API는 자식을 별도 요청으로 주므로
