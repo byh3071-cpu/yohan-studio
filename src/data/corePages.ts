@@ -52,6 +52,13 @@ const corePages: Omit<SearchDocument, "kind" | "badge">[] = [
     url: "/learning-log",
     tags: ["러닝 로그", "특강", "배움", "노션"],
   },
+  {
+    id: "page-updates",
+    title: "업데이트 — 제품 릴리즈 노트",
+    description: "SnapContext·VHK 모든 버전의 변경 사항을 버전 단위로 기록한다.",
+    url: "/updates",
+    tags: ["업데이트", "릴리즈", "SnapContext", "VHK"],
+  },
 ]
 
 export function corePagesSearchDocs(): SearchDocument[] {

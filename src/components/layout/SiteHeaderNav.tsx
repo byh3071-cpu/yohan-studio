@@ -23,6 +23,7 @@ type NavEntry = { label: string; href: string; match: (p: string) => boolean }
 
 const primaryEntries: NavEntry[] = [
   { label: "블로그", href: "/blog", match: (p) => p === "/blog" || p.startsWith("/blog/") },
+  { label: "업데이트", href: "/updates", match: (p) => p === "/updates" },
   { label: "쇼룸", href: "/showroom", match: (p) => p === "/showroom" },
   { label: "진단", href: "/diagnosis", match: (p) => p === "/diagnosis" },
   { label: "서비스", href: "/services", match: (p) => p === "/services" },
