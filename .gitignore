@@ -87,7 +87,7 @@ scripts/.verify/
 # 검증용 임시 글 (published:true로 두고 로컬 확인 후 버린다)
 src/content/blog/tmp-*.mdx
 docs/content/naver/_tmp-*.md
-# 이모지 gpt/시안 드래프트 (실험분 — 최종은 <name>-chip.png만 커밋)
+# 이모지 시안·생성 드래프트 (실험분 — 최종은 <name>-solid.png만 커밋)
 /public/images/emoji/_drafts/
 
 # serena MCP cache

@@ -76,11 +76,28 @@ function brandEmojiTag(concept, px) {
 
 // 줄 맨 앞 이모지만 치환한다. 문장 중간 이모지는 그대로 두어(유니코드 유지)
 // 같은 줄에서 커스텀과 유니코드가 정렬 차이로 비교되는 상황 자체를 만들지 않는다.
+//
+// 치환은 선두 이모지 "하나"만 소비한다. 매치에 딸려온 나머지는 반드시 되돌려 놔야 한다 —
+// 예전엔 매치 전체를 버려서 `📊✅ 제목`의 ✅가 조용히 사라졌다(2026-07-22 적대검증에서 발견).
+const 이모지경고 = []
 function brandEmoji(html, px = EMOJI_PX_BODY) {
-  return html.replace(/^(\s*)([\p{Extended_Pictographic}️]+)\s*/u, (m, pre, emo) => {
+  return html.replace(/^(\s*)([\p{Extended_Pictographic}️]+)(\s*)/u, (m, pre, emo, tail) => {
     const key = BRAND_EMOJI_KEYS.find((k) => emo.startsWith(k))
-    return key ? pre + brandEmojiTag(BRAND_EMOJI_MAP[key], px) : m
+    if (!key) return m
+    const rest = emo.slice(key.length)
+    // 선두에 이모지를 여러 개 쓰면 브랜드 아이콘과 유니코드가 한 줄에 나란히 서게 된다.
+    // 네이버에선 둘의 baseline이 3.6px 어긋나 눈에 띄므로(보정 불가) 사람이 원고를 고쳐야 한다.
+    if (rest) 이모지경고.push(`선두 이모지 여러 개 — "${emo}" (첫 개만 아이콘으로 바뀌고 나머지는 유니코드로 남는다)`)
+    return pre + brandEmojiTag(BRAND_EMOJI_MAP[key], px) + rest + (rest ? tail : "")
   })
+}
+
+// 서식(**굵게**·[링크])으로 감싼 선두 이모지는 inline()이 먼저 <b>/<a>로 바꿔버려
+// ^ 앵커에 안 걸린다 → 유니코드로 남는다. 조용히 섞이지 않게 경고로 알린다.
+function 서식감싼선두이모지검출(text) {
+  if (/^\s*(\*\*|\[|`|\*)\s*[\p{Extended_Pictographic}]/u.test(text)) {
+    이모지경고.push(`서식으로 감싼 선두 이모지 — "${text.slice(0, 24)}…" (아이콘 치환 안 됨. 이모지를 서식 밖으로 빼라)`)
+  }
 }
 
 // 인라인 변환 (순서 중요: 마커 → 링크 → 굵게 → 기울임 → 코드)
@@ -88,6 +105,7 @@ function brandEmoji(html, px = EMOJI_PX_BODY) {
 function inline(text, emojiPx = EMOJI_PX_BODY) {
   const img = '<span style="background-color:#fff19b;font-weight:700;">\u{1F5BC} 이미지: $1</span>'
   const slot = '<span style="background-color:#ffe08a;font-weight:700;">\u{270D} 여기 네 말: $1</span>'
+  서식감싼선두이모지검출(text)
   let t = esc(text)
   // 확장 문법: [이미지 삽입: 설명 | https://…] — URL이 있으면 실제 <img>로.
   // SE ONE은 붙여넣은 외부 <img>를 이미지 컴포넌트로 변환한다 (2026-07-20 에디터 실측).
@@ -267,3 +285,10 @@ fs.writeFileSync(outputPath, page, "utf8")
 console.log(`생성: ${outputPath}`)
 console.log(`생성: ${fragmentPath} (클립보드/자동 주입용 — 래퍼 없음)`)
 if (hashtags.length) console.log(`태그(발행창에 등록): ${hashtags.join(", ")}`)
+
+// 이모지 경고는 발행 전에 사람이 원고를 고쳐야 하는 사항이라 마지막에 눈에 띄게 낸다.
+if (이모지경고.length) {
+  console.log("")
+  console.log(`⚠ 이모지 주의 ${이모지경고.length}건 — 원고(.md)를 고치는 게 맞다:`)
+  for (const w of [...new Set(이모지경고)]) console.log(`  · ${w}`)
+}
