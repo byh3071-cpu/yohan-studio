@@ -66,6 +66,7 @@ vhk-verify-*.png
 scripts/.verify/
 /.tmp-cover.html
 /.tmp-gif
+/.tmp-emoji/
 # 브라우저 세션 덤프·검증 스크린샷 (루트) — 스크래치패드로 저장하는 게 정석이나 루트 유출 방어
 /update-mode-*.md
 /naver-*.jpeg
