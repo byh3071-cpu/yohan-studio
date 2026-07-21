@@ -70,8 +70,10 @@ scripts/.verify/
 # 브라우저 세션 덤프·검증 스크린샷 (루트) — 스크래치패드로 저장하는 게 정석이나 루트 유출 방어
 /update-mode-*.md
 /naver-*.jpeg
+/naver-*.png
 /mock-*.jpeg
 /chk-*.png
+/emoji-*.png
 # 이모지 gpt/시안 드래프트 (실험분 — 최종은 <name>-chip.png만 커밋)
 /public/images/emoji/_drafts/
 
