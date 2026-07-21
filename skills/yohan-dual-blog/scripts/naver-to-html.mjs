@@ -39,9 +39,53 @@ function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 }
 
+// ── 브랜드 이모지 (2026-07-21 SE ONE 실측 확정) ────────────────────────────
+// 유니코드 이모지를 요한 브랜드 아이콘(오렌지 실루엣 PNG)으로 치환한다.
+// SoT: src/data/emojiSet.ts · 규칙 상세: references/naver-structure.md §4
+//
+// 실측으로 확정된 제약 (전부 우회 불가):
+//   · style 속성은 붙여넣기에서 통째로 제거 → margin·vertical-align 보정 불가
+//   · height≠width로 줘도 정사각으로 강제 정규화됨
+//   · data URI img는 제거됨 → 외부 http URL만 생존
+//   · 간격은 &nbsp;만 통함 (일반 공백·margin 모두 소실)
+//   · img는 baseline에 고정되어 유니코드 이모지보다 3.6px 위에 앉는다.
+//     보정 수단이 없어, 비교 대상이 생기는 문장 중간 사용은 금지하고
+//     줄 맨 앞에서만 쓴다(요한 확정 2026-07-21).
+const EMOJI_BASE = "https://yohanstudio.co/images/emoji"
+// 크기는 그 줄의 글자 크기에 비례해야 한다(글자 15px→16px / 소제목 19px→20px).
+// 고정값을 쓰면 19px 소제목 옆에서 아이콘만 작아 보인다.
+const EMOJI_PX_BODY = 16 // 본문 15px 기준 — 14px는 작고 17px부터 위로 뜨는 게 보인다
+const EMOJI_PX_H2 = 20 // 소제목 19px 기준 (16 × 19/15 ≈ 20)
+const BRAND_EMOJI_MAP = {
+  "📊": "result",
+  "❓": "question",
+  "💡": "idea",
+  "✅": "success",
+  "💥": "fail",
+  "🛠️": "tool",
+  "🛠": "tool",
+  "🚀": "launch",
+  "🛡️": "security",
+  "🛡": "security",
+}
+
+function brandEmojiTag(concept, px) {
+  return `<img src="${EMOJI_BASE}/${concept}-solid.png" width="${px}" height="${px}" />&nbsp;`
+}
+
+// 줄 맨 앞 이모지만 치환한다. 문장 중간 이모지는 그대로 두어(유니코드 유지)
+// 같은 줄에서 커스텀과 유니코드가 정렬 차이로 비교되는 상황 자체를 만들지 않는다.
+function brandEmoji(html, mode, px = EMOJI_PX_BODY) {
+  if (mode !== "fragment") return html // 미리보기는 유니코드 그대로 (로컬에서 이미지 로드 불필요)
+  return html.replace(/^(\s*)([\p{Extended_Pictographic}️]+)\s*/u, (m, pre, emo) => {
+    const key = Object.keys(BRAND_EMOJI_MAP).find((k) => emo.startsWith(k))
+    return key ? pre + brandEmojiTag(BRAND_EMOJI_MAP[key], px) : m
+  })
+}
+
 // 인라인 변환 (순서 중요: 마커 → 링크 → 굵게 → 기울임 → 코드)
 // mode: "preview"(클래스) | "fragment"(인라인 스타일 — 페이스트 시 클래스는 소실되므로)
-function inline(text, mode) {
+function inline(text, mode, emojiPx = EMOJI_PX_BODY) {
   const img =
     mode === "fragment"
       ? '<span style="background-color:#fff19b;font-weight:700;">\u{1F5BC} 이미지: $1</span>'
@@ -61,6 +105,7 @@ function inline(text, mode) {
   t = t.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
   t = t.replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, "$1<em>$2</em>")
   t = t.replace(/`([^`]+)`/g, "<code>$1</code>")
+  t = brandEmoji(t, mode, emojiPx)
   return t
 }
 
@@ -124,7 +169,7 @@ function render(mode) {
         out.push("<hr>")
         out.push(
           mode === "fragment"
-            ? `<p><span style="font-size:19px;"><b>${inline(b.text, mode)}</b></span></p>`
+            ? `<p><span style="font-size:19px;"><b>${inline(b.text, mode, EMOJI_PX_H2)}</b></span></p>`
             : `<h2>${inline(b.text, mode)}</h2>`,
         )
         break
