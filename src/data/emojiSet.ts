@@ -6,12 +6,26 @@
 //  - chip:  오렌지 원 + 디테일(라이트=검정/다크=흰) (네이버·외부 채널 — 흰 배경서 브랜드 각인)
 //
 // 아이콘 출처·라이선스 (상업·수정·재배포·공개 안전 — 감사용 기록):
-export const EMOJI_LICENSE = {
-  source: "Material Symbols (Google)",
-  license: "Apache-2.0",
-  url: "https://github.com/google/material-design-icons",
-  note: "Apache-2.0 — 상업·수정·재배포 허용, 저작자표시 불요. Iconify(api.iconify.design)로 취득.",
-} as const
+// 세트 2종을 쓴다. 사물 실루엣은 Material Symbols, 기호(체크·X·물음표)는 MDI 굵은 획 변형.
+// 이유: 원 안에 기호를 파낸 아이콘(help·cancel·task-alt)은 본문 16px에서 파낸 홈이 1px 미만으로
+//       메워져 "주황 덩어리"로만 읽혔다(2026-07-21 실측). 기호는 획으로 그려야 소형에서 산다.
+export const EMOJI_LICENSE = [
+  {
+    source: "Material Symbols (Google)",
+    license: "Apache-2.0",
+    url: "https://github.com/google/material-design-icons",
+    used: ["result", "idea", "tool", "launch", "security"],
+  },
+  {
+    source: "Material Design Icons (Pictogrammers)",
+    license: "Apache-2.0",
+    url: "https://github.com/Templarian/MaterialDesign/blob/master/LICENSE",
+    used: ["question", "success", "fail"],
+  },
+] as const
+
+export const EMOJI_LICENSE_NOTE =
+  "둘 다 Apache-2.0 — 상업·수정·재배포 허용, 저작자표시 불요. Iconify(api.iconify.design)로 취득." as const
 
 export const EMOJI_ACCENT = "#FF5C28" as const
 
@@ -43,9 +57,9 @@ export const BRAND_EMOJI = {
     concept: "question",
     label: "질문",
     unicode: "❓",
-    iconify: "material-symbols:help",
+    iconify: "mdi:help",
     viewBox: "0 0 24 24",
-    paths: ["M12.838 17.638q.362-.363.362-.888t-.362-.888t-.888-.362t-.887.363t-.363.887t.363.888t.887.362t.888-.363M11.05 14.15h1.85q0-.825.188-1.3t1.062-1.3q.65-.65 1.025-1.238T15.55 8.9q0-1.4-1.025-2.15T12.1 6q-1.425 0-2.312.75T8.55 8.55l1.65.65q.125-.45.563-.975T12.1 7.7q.8 0 1.2.438t.4.962q0 .5-.3.938t-.75.812q-1.1.975-1.35 1.475t-.25 1.825M12 22q-2.075 0-3.9-.787t-3.175-2.138T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"],
+    paths: ["M10 19h3v3h-3zm2-17c5.35.22 7.68 5.62 4.5 9.67c-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08c.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6"],
   },
   idea: {
     concept: "idea",
@@ -59,17 +73,17 @@ export const BRAND_EMOJI = {
     concept: "success",
     label: "성공",
     unicode: "✅",
-    iconify: "material-symbols:task-alt",
+    iconify: "mdi:check-bold",
     viewBox: "0 0 24 24",
-    paths: ["M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2q1.625 0 3.075.475T17.75 3.8L16.3 5.275q-.95-.6-2.025-.937T12 4Q8.675 4 6.337 6.338T4 12t2.338 5.663T12 20t5.663-2.337T20 12q0-.45-.05-.9t-.15-.875L21.425 8.6q.275.8.425 1.65T22 12q0 2.075-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m-1.4-5.4l-4.25-4.25l1.4-1.4l2.85 2.85l10-10.025l1.4 1.4z"],
+    paths: ["m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z"],
   },
   fail: {
     concept: "fail",
     label: "실패",
     unicode: "💥",
-    iconify: "material-symbols:cancel",
+    iconify: "mdi:close-thick",
     viewBox: "0 0 24 24",
-    paths: ["m8.4 17l3.6-3.6l3.6 3.6l1.4-1.4l-3.6-3.6L17 8.4L15.6 7L12 10.6L8.4 7L7 8.4l3.6 3.6L7 15.6zm3.6 5q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"],
+    paths: ["M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12z"],
   },
   tool: {
     concept: "tool",
