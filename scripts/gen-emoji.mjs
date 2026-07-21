@@ -1,8 +1,8 @@
 // 요한 브랜드 이모지 chip PNG 생성 — 네이버·외부 채널용 (흰 배경 브랜드 각인).
 // 웹(solid 오렌지)은 src/components/blog/mdx/EmojiIcon.tsx 가 emojiSet.ts path로 직접 렌더 → 스크립트 불요.
 //
-// 방식: Iconify API(api.iconify.design)에서 Material Symbols SVG 취득 → 오렌지 원 + 검정 디테일 chip PNG.
-// 라이선스: Material Symbols = Apache-2.0 (상업·수정·재배포 허용). SoT: src/data/emojiSet.ts EMOJI_LICENSE.
+// 방식: Iconify API(api.iconify.design)에서 SVG 취득 → 오렌지 원 + 검정 디테일 chip PNG.
+// 라이선스: Material Symbols · MDI 둘 다 Apache-2.0. SoT: src/data/emojiSet.ts EMOJI_LICENSE.
 //
 // 사용: node scripts/gen-emoji.mjs            # 8개 chip PNG 재생성 (public/images/emoji/)
 import fs from "node:fs"
@@ -12,10 +12,11 @@ import sharp from "sharp"
 // SoT = src/data/emojiSet.ts 의 BRAND_EMOJI iconify 매핑과 동일 (아이콘 교체 시 양쪽 갱신).
 const SET = {
   result: "material-symbols:bar-chart-4-bars",
-  question: "material-symbols:help",
+  // 기호 3종은 MDI 굵은 획 — 원 안에 파낸 형태는 소형에서 뭉개진다(2026-07-21 실측)
+  question: "mdi:help",
   idea: "material-symbols:lightbulb",
-  success: "material-symbols:task-alt",
-  fail: "material-symbols:cancel",
+  success: "mdi:check-bold",
+  fail: "mdi:close-thick",
   tool: "material-symbols:settings",
   launch: "material-symbols:rocket",
   security: "material-symbols:lock",
