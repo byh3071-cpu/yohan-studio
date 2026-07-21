@@ -76,8 +76,7 @@ function brandEmojiTag(concept, px) {
 
 // 줄 맨 앞 이모지만 치환한다. 문장 중간 이모지는 그대로 두어(유니코드 유지)
 // 같은 줄에서 커스텀과 유니코드가 정렬 차이로 비교되는 상황 자체를 만들지 않는다.
-function brandEmoji(html, mode, px = EMOJI_PX_BODY) {
-  if (mode !== "fragment") return html // 미리보기는 유니코드 그대로 (로컬에서 이미지 로드 불필요)
+function brandEmoji(html, px = EMOJI_PX_BODY) {
   return html.replace(/^(\s*)([\p{Extended_Pictographic}️]+)\s*/u, (m, pre, emo) => {
     const key = BRAND_EMOJI_KEYS.find((k) => emo.startsWith(k))
     return key ? pre + brandEmojiTag(BRAND_EMOJI_MAP[key], px) : m
@@ -85,16 +84,10 @@ function brandEmoji(html, mode, px = EMOJI_PX_BODY) {
 }
 
 // 인라인 변환 (순서 중요: 마커 → 링크 → 굵게 → 기울임 → 코드)
-// mode: "preview"(클래스) | "fragment"(인라인 스타일 — 페이스트 시 클래스는 소실되므로)
-function inline(text, mode, emojiPx = EMOJI_PX_BODY) {
-  const img =
-    mode === "fragment"
-      ? '<span style="background-color:#fff19b;font-weight:700;">\u{1F5BC} 이미지: $1</span>'
-      : '<span class="imgmark">\u{1F5BC} 이미지: $1</span>'
-  const slot =
-    mode === "fragment"
-      ? '<span style="background-color:#ffe08a;font-weight:700;">\u{270D} 여기 네 말: $1</span>'
-      : '<span class="myslot">\u{270D} 여기 네 말: $1</span>'
+// 서식은 인라인 스타일로 낸다 — SE ONE 붙여넣기에서 클래스는 소실된다.
+function inline(text, emojiPx = EMOJI_PX_BODY) {
+  const img = '<span style="background-color:#fff19b;font-weight:700;">\u{1F5BC} 이미지: $1</span>'
+  const slot = '<span style="background-color:#ffe08a;font-weight:700;">\u{270D} 여기 네 말: $1</span>'
   let t = esc(text)
   // 확장 문법: [이미지 삽입: 설명 | https://…] — URL이 있으면 실제 <img>로.
   // SE ONE은 붙여넣은 외부 <img>를 이미지 컴포넌트로 변환한다 (2026-07-20 에디터 실측).
@@ -106,7 +99,7 @@ function inline(text, mode, emojiPx = EMOJI_PX_BODY) {
   t = t.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
   t = t.replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, "$1<em>$2</em>")
   t = t.replace(/`([^`]+)`/g, "<code>$1</code>")
-  t = brandEmoji(t, mode, emojiPx)
+  t = brandEmoji(t, emojiPx)
   return t
 }
 
@@ -160,49 +153,39 @@ while (i < lines.length) {
   blocks.push({ type: "p", lines: para })
 }
 
-// 2패스: 모드별 렌더. 격식 규칙은 여기 한 곳에만 둔다.
-function render(mode) {
+// 2패스: 렌더. 격식 규칙은 여기 한 곳에만 둔다.
+// 미리보기 HTML도 이 결과를 그대로 보여준다 — 실제 붙여넣기 결과와 다른 화면을 보여주면
+// 미리보기의 의미가 없다(예전엔 preview 전용 렌더가 따로 있었지만 쓰이지 않았다).
+function render() {
   const out = []
   const GAP = "<p>​</p>"
   for (const b of blocks) {
     switch (b.type) {
       case "h2":
         out.push("<hr>")
-        out.push(
-          mode === "fragment"
-            ? `<p><span style="font-size:19px;"><b>${inline(b.text, mode, EMOJI_PX_H2)}</b></span></p>`
-            : `<h2>${inline(b.text, mode)}</h2>`,
-        )
+        out.push(`<p><span style="font-size:19px;"><b>${inline(b.text, EMOJI_PX_H2)}</b></span></p>`)
         break
       case "h3":
-        out.push(
-          mode === "fragment"
-            ? `<p><b>${inline(b.text, mode)}</b></p>`
-            : `<h3>${inline(b.text, mode)}</h3>`,
-        )
+        out.push(`<p><b>${inline(b.text)}</b></p>`)
         break
       case "hr":
         out.push("<hr>")
         break
       case "quote":
-        out.push(`<blockquote>${b.items.map((x) => inline(x, mode)).join("<br>")}</blockquote>`)
+        out.push(`<blockquote>${b.items.map((x) => inline(x)).join("<br>")}</blockquote>`)
         break
       case "caption":
         // 고정멘트 취향: 가운데 정렬 + 회색(#c2c2c2), 이탤릭 없음 (2026-07-20 발행본 요한 수동수정 실측)
-        out.push(
-          mode === "fragment"
-            ? `<p style="text-align: center;"><span style="color: #c2c2c2;">${inline(b.text, mode)}</span></p>`
-            : `<p class="caption">${inline(b.text, mode)}</p>`,
-        )
+        out.push(`<p style="text-align: center;"><span style="color: #c2c2c2;">${inline(b.text)}</span></p>`)
         break
       case "ul":
-        out.push(`<ul>${b.items.map((x) => `<li>${inline(x, mode)}</li>`).join("")}</ul>`)
+        out.push(`<ul>${b.items.map((x) => `<li>${inline(x)}</li>`).join("")}</ul>`)
         break
       case "ol":
-        out.push(`<ol>${b.items.map((x) => `<li>${inline(x, mode)}</li>`).join("")}</ol>`)
+        out.push(`<ol>${b.items.map((x) => `<li>${inline(x)}</li>`).join("")}</ol>`)
         break
       case "p":
-        out.push(`<p>${b.lines.map((x) => inline(x, mode)).join("<br>")}</p>`)
+        out.push(`<p>${b.lines.map((x) => inline(x)).join("<br>")}</p>`)
         break
     }
   }
@@ -216,8 +199,7 @@ function render(mode) {
   return spaced.join("\n")
 }
 
-const previewBody = render("preview")
-const fragmentBody = render("fragment")
+const fragmentBody = render()
 
 fs.writeFileSync(fragmentPath, `<div>\n${fragmentBody}\n</div>\n`, "utf8")
 
