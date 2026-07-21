@@ -26,23 +26,31 @@ const ACCENT = "#FF5C28"
 const DETAIL = "#0A0A0A" // chip 디테일 (네이버 흰 배경용). 웹 다크에서 chip 쓸 일이 생기면 흰 변형 추가.
 const outDir = path.join(process.cwd(), "public", "images", "emoji")
 
-async function fetchInner(iconify) {
+async function fetchInner(iconify, fill) {
   const [prefix, name] = iconify.split(":")
   const res = await fetch(`https://api.iconify.design/${prefix}/${name}.svg`)
   if (!res.ok) throw new Error(`Iconify ${iconify} → ${res.status}`)
   const svg = await res.text()
   const inner = svg.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>[\s\S]*$/, "")
   // Material path는 fill="currentColor" — 명시 색으로 치환 (미치환 시 검정 폴백 사고)
-  return inner.replace(/fill="currentColor"/g, `fill="${DETAIL}"`)
+  return inner.replace(/fill="currentColor"/g, `fill="${fill}"`)
 }
 
 fs.mkdirSync(outDir, { recursive: true })
 for (const [concept, iconify] of Object.entries(SET)) {
-  const inner = await fetchInner(iconify)
-  // 오렌지 원 배경 + 디테일 70% 스케일 중앙
-  const chip = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="${ACCENT}"/><g transform="translate(3.6 3.6) scale(0.7)">${inner}</g></svg>`
-  const out = path.join(outDir, `${concept}-chip.png`)
-  await sharp(Buffer.from(chip)).resize(128, 128).png().toFile(out)
-  console.log(`  ✓ ${path.relative(process.cwd(), out)}`)
+  // ① chip — 오렌지 원 + 검정 디테일 70% 스케일 중앙
+  const detail = await fetchInner(iconify, DETAIL)
+  const chip = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="${ACCENT}"/><g transform="translate(3.6 3.6) scale(0.7)">${detail}</g></svg>`
+  const chipOut = path.join(outDir, `${concept}-chip.png`)
+  await sharp(Buffer.from(chip)).resize(128, 128).png().toFile(chipOut)
+
+  // ② solid — 원 없는 오렌지 실루엣(투명 배경). 웹 EmojiIcon과 같은 톤을 외부 채널에서도 쓰기 위함.
+  //    네이버는 style 속성을 통째로 제거하므로 SVG를 못 쓴다 → PNG로 굽는다.
+  const orange = await fetchInner(iconify, ACCENT)
+  const solid = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">${orange}</svg>`
+  const solidOut = path.join(outDir, `${concept}-solid.png`)
+  await sharp(Buffer.from(solid)).resize(128, 128).png().toFile(solidOut)
+
+  console.log(`  ✓ ${concept}: chip + solid`)
 }
-console.log("chip PNG 8개 생성 완료.")
+console.log("chip·solid PNG 각 8개 생성 완료.")
