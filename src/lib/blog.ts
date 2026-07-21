@@ -5,6 +5,7 @@ import { compileMDX } from "next-mdx-remote/rsc"
 import type { ReactElement } from "react"
 import { BlogImage } from "@/components/blog/mdx/BlogImage"
 import { CodeBlock } from "@/components/blog/mdx/CodeBlock"
+import { EmojiIcon } from "@/components/blog/mdx/EmojiIcon"
 import {
   getComponentPostContent,
   getComponentPostMeta,
@@ -17,6 +18,7 @@ const mdxComponents = {
   pre: CodeBlock,
   CodeBlock,
   BlogImage,
+  EmojiIcon,
 }
 
 const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog")
