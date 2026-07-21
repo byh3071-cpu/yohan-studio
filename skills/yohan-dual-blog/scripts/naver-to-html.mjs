@@ -55,7 +55,9 @@ const EMOJI_BASE = "https://yohanstudio.co/images/emoji"
 // 크기는 그 줄의 글자 크기에 비례해야 한다(글자 15px→16px / 소제목 19px→20px).
 // 고정값을 쓰면 19px 소제목 옆에서 아이콘만 작아 보인다.
 const EMOJI_PX_BODY = 16 // 본문 15px 기준 — 14px는 작고 17px부터 위로 뜨는 게 보인다
-const EMOJI_PX_H2 = 20 // 소제목 19px 기준 (16 × 19/15 ≈ 20)
+// 소제목은 <b>로 굵어져 글자의 시각 무게가 커진다. 폰트 크기 비례(19/15 → 20px)만 쓰면
+// 아이콘이 눌려 보인다 — 실측으로 굵기 보정분을 더해 22px로 잡았다(24px는 줄을 밀어낸다).
+const EMOJI_PX_H2 = 22
 // 매핑은 SoT에서 읽는다 — 하드코딩하면 세트를 늘릴 때 여기만 빠진다.
 // 변이 선택자(️ U+FE0F)가 붙은 형태도 함께 등록해야 원고에서 어느 쪽으로 써도 잡힌다.
 const emojiSet = JSON.parse(
