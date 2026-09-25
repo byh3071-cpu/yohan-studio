@@ -4,11 +4,10 @@
 요한 스튜디오: AI 시대의 1인 기업가를 위한 First Platform.
 바이브코딩으로 구축하는 AI 운영체계 웹 플랫폼.
 
-## 현재 Phase: 2 (블로그 + SEO + AI'm OS 확장)
-⚠️ Phase 2 범위만 구현. Supabase/결제/DB는 Phase 3.
-Phase 1 완료: 랜딩 + 포트폴리오 배포 완료.
-블로그 + SEO (①~⑬): 완료.
-AI'm OS 확장 (⑭~⑰): /showroom, /diagnosis, /services, Home 리뉴얼.
+## 현재 작업 범위
+- 현재 범위는 `CLAUDE.md`의 LIVE와 `docs/SSOT.md`, 실제 코드·Git 상태를 확인한다.
+- Phase 숫자·완료 상태를 이 파일에 복제하지 않는다. 기존 Supabase·Stripe 구현을 과거 Phase 제한으로 제거하지 않는다.
+- 실결제 전환·배포·시크릿 변경은 기존 사람 승인을 따른다.
 
 ## 기술 스택
 - Next.js 16 (App Router) + TypeScript (strict)
@@ -37,16 +36,6 @@ AI'm OS 확장 (⑭~⑰): /showroom, /diagnosis, /services, Home 리뉴얼.
 - `"use client"`: 인터랙션 있는 컴포넌트만 (DiagnosisForm, CategoryFilter 등)
 - 그 외 Server Component 우선
 - 컴포넌트: PascalCase.tsx, 데이터·유틸: camelCase.ts
-
-## Phase 2 허용
-✅ MDX 블로그 | next-sitemap | @vercel/og | JSON-LD (Article/FAQ/HowTo)
-✅ GA/GSC | 다크모드 | 정적 데이터 (src/data/) | 클라이언트 진단 로직
-✅ 외부 폼 URL (NEXT_PUBLIC_CONTACT_FORM_URL)
-✅ /showroom, /diagnosis, /services 신규 라우트
-
-## Phase 2 금지
-❌ Supabase/DB | Stripe/결제 | API Routes (OG 제외) | n8n 웹훅
-❌ 진단 결과 서버 저장 | 예약/결제 기능 | RAG/Qdrant
 
 ## ⚠️ 007~010 보호
 - 기존 /blog, /design, SEO, 다크모드 시스템 수정 금지
