@@ -53,6 +53,10 @@ npm run content:archive-design -- --source-root "C:\path\to\workspace" --manifes
 
 ## 승인과 디자인 인텔리전스
 
+ChatGPT 모바일의 선택 제작 묶음은 [design-context.json](design-context.json)을 입력으로 Agent Kit `scripts/export-design-context.mjs`에서 내보낸다. 작업별 원고·크기·선택 레퍼런스·다음 행동은 로컬 요청 파일에 둔다. 내보낸 사본은 `.mova/chatgpt/<revision>/`에 두며 정본으로 편집하지 않는다. 원본 이미지와 기록은 이 프로젝트, 공통 방법은 Agent Kit, 색인은 Brain이 계속 소유한다.
+
+현재 등록된 표지는 정보형 카드뉴스의 승인 자산이다. 개인 인스타 썸네일·릴스·하이라이트·스토리에 그 문체·페이지 구조·브랜드 색상을 자동 적용하지 않는다. `design-context.json`의 요소 해석은 적용 후보이며 새 취향 승인 기록이 아니다.
+
 - `status: approved`는 해당 프로젝트 결과물로 승인됐다는 뜻입니다.
 - 승인 뒤 사실·명령어 오류가 발견되면 기존 바이너리를 덮어쓰지 않고 `status: superseded`, `golden_candidate: false`로 강등합니다.
 - 교정본은 작업공간에서 다시 검증하고, 사용자 승인 뒤 새 revision slug로 보관합니다.
